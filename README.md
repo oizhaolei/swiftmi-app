@@ -1,7 +1,7 @@
 Swiftmi-APP (Dev Share)
 =========
 
-**Dev Share**为www.swiftmi.com 社区app(已上线),纯Swift实现,现将开源~.
+**Dev Share**为[www.swiftmi.com](http://www.swiftmi.com) 社区app(已上线),纯Swift实现,现将开源~.
 
 Swift开发QQ交流群：305170435
 
@@ -25,6 +25,7 @@ Swift开发QQ交流群：305170435
 ##环境
 
 - Xcode 6.4 编译通过
+- Swift
 
 
 swift迷社区 http://www.swiftmi.com
