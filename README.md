@@ -10,11 +10,14 @@ Swift开发QQ交流群：305170435
 [<img src="https://cloud.githubusercontent.com/assets/219689/5575342/963e0ee8-9013-11e4-8091-7ece67d64729.png" width="135" height="40" alt="AppStore"/>](https://appsto.re/cn/C3Hn7.i)
  
 
+
  
 ##Screenshots
 ![demo](swiftmi.gif)
 
 ##build
+
+程序中 [Alamofire](https://github.com/Alamofire/Alamofire)、[Kingfisher](https://github.com/onevcat/Kingfisher)、[SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) 为submodule引用方式
 
 
 - git clone 项目
