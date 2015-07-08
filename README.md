@@ -19,9 +19,10 @@ Swift开发QQ交流群：305170435
 
 程序中 [Alamofire](https://github.com/Alamofire/Alamofire)、[Kingfisher](https://github.com/onevcat/Kingfisher)、[SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) 为submodule引用方式
 
+有些不熟悉git朋友不清楚怎么获取,请按如下步奏即可
 
-- git clone 项目
-- git submodule 更新
+- git clone git@github.com:feiin/swiftmi-app.git  swiftmi
+- cd swiftmi && git submodule update --init --recursive
 - build
 
  
