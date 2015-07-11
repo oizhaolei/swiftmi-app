@@ -48,11 +48,21 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidAppear(animated: Bool) {
+        
+        self.userActivity = NSUserActivity(activityType: "com.swiftmi.handoff.view-web")
+        self.userActivity?.title = "view article on mac"
+        self.userActivity?.webpageURL  =  NSURL(string: ServiceApi.getTopicShareDetail(article!.valueForKey("postId") as! Int))
+        self.userActivity?.becomeCurrent()
+        
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     
+        self.userActivity?.invalidate()
     }
     
     func keyboardWillShow(notification: NSNotification) {

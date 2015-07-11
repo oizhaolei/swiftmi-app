@@ -28,6 +28,16 @@ class CodeDetailViewController: UIViewController,UIWebViewDelegate {
         
         // Do any additional setup after loading the view.
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        
+        self.userActivity = NSUserActivity(activityType: "com.swiftmi.handoff.view-web")
+        self.userActivity?.title = "view source on mac"
+        self.userActivity?.webpageURL  =  NSURL(string: ServiceApi.getCodeShareDetail(shareCode!.valueForKey("codeId") as! Int))
+        self.userActivity?.becomeCurrent()
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -193,8 +203,10 @@ class CodeDetailViewController: UIViewController,UIWebViewDelegate {
     
     override func viewDidDisappear(animated: Bool) {
         
-        super.viewDidDisappear(animated)
         self.clearAllNotice()
+        self.userActivity?.invalidate()
+        super.viewDidDisappear(animated)
+       
     }
 
     
