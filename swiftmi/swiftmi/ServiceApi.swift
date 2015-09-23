@@ -44,29 +44,29 @@ class ServiceApi: NSObject {
     
     internal class func getBookUrl(type:Int,maxId:Int,count:Int) -> String{
         
-        var url="\(host)/api/books/\(type)/\(maxId)/\(count)"
+        let url="\(host)/api/books/\(type)/\(maxId)/\(count)"
         return url
     }
     
     class func getLoginUrl()->String {
-        var url = "\(host)/api/user/login"
+        let url = "\(host)/api/user/login"
         return url;
     }
     
     class func getRegistUrl() -> String {
         
-        var url = "\(host)/api/user/reg"
+        let url = "\(host)/api/user/reg"
         return url;
     }
     class func getTopicCommentUrl() -> String {
         
-        var url = "\(host)/api/topic/comment"
+        let url = "\(host)/api/topic/comment"
         return url;
     }
     
     class func getCreateTopicUrl() -> String {
         
-        var url = "\(host)/api/topic/create"
+        let url = "\(host)/api/topic/create"
         return url;
     }
 }

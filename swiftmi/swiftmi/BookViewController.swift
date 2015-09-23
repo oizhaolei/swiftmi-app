@@ -39,7 +39,7 @@ class BookViewController: UITableViewController {
         self.tableView.addFooterWithCallback{
             
             if(self.data.count>0) {
-                var  maxId = self.data.last!.valueForKey("bookId") as! Int
+                let  maxId = self.data.last!.valueForKey("bookId") as! Int
                 self.loadData(self.GetBookType(),maxId:maxId, isPullRefresh: false)
             }
         }
@@ -124,7 +124,7 @@ class BookViewController: UITableViewController {
     
     @IBAction func segmentClick(segment: UISegmentedControl) {
         
-        var index = segment.selectedSegmentIndex
+        let index = segment.selectedSegmentIndex
         
         switch(index){
         case 0:
@@ -148,7 +148,7 @@ class BookViewController: UITableViewController {
         }
         //self.tableView.reloadData()
         
-       println(index)
+       print(index)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -158,7 +158,7 @@ class BookViewController: UITableViewController {
     func loadData(type:Int,maxId:Int,isPullRefresh:Bool){
         
         Alamofire.request(Router.BookList(type: type, maxId: maxId, count: 16)).responseJSON{
-            (_,_,json,error) in
+            closureResponse in
             
             
             if(isPullRefresh){
@@ -167,17 +167,17 @@ class BookViewController: UITableViewController {
             else{
                 self.tableView.footerEndRefreshing()
             }
-            if error != nil {
+            if closureResponse.result.isFailure {
                 return
             }
             
+            let json = closureResponse.result.value
             
-            
-            var result = JSON(json!)
+            let result = JSON(json!)
             
             if result["isSuc"].boolValue {
                 
-                var items = result["result"].object as! [AnyObject]
+                let items = result["result"].object as! [AnyObject]
                 
                 if(items.count==0){
                     return
@@ -214,20 +214,20 @@ class BookViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BookCell", forIndexPath: indexPath) as! BookCell
         
-        var item: AnyObject = self.getBookData(indexPath.row)
+        let item: AnyObject = self.getBookData(indexPath.row)
         
         // Configure the cell
         var cover = item.valueForKey("cover") as? String
         if cover != nil {
-            if (cover!.hasPrefix("http://swiftmi.")){
+            if (cover!.hasPrefix("http://img.swiftmi.com")){
                 cover = "\(cover!)-book"
             }
             cell.cover.kf_setImageWithURL(NSURL(string: cover!)!, placeholderImage: nil)
         }
         cell.author.text = item.valueForKey("author") as? String
         
-        var pubTime = item.valueForKey("publishTime") as! Double
-        var createDate = NSDate(timeIntervalSince1970: pubTime)
+        let pubTime = item.valueForKey("publishTime") as! Double
+        let createDate = NSDate(timeIntervalSince1970: pubTime)
         cell.year.text = Utility.formatDate(createDate)
         cell.title.text = item.valueForKey("title") as? String
         
@@ -237,12 +237,12 @@ class BookViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        var item: AnyObject = self.getBookData(indexPath.row)
+        let item: AnyObject = self.getBookData(indexPath.row)
         
-        var bookUrl = item.valueForKey("link") as? String
+        let bookUrl = item.valueForKey("link") as? String
         if bookUrl != nil {
             
-            var webViewController:WebViewController = Utility.GetViewController("webViewController")
+            let webViewController:WebViewController = Utility.GetViewController("webViewController")
             webViewController.webUrl = bookUrl
             webViewController.isPop = true
             

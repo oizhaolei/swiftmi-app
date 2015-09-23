@@ -38,43 +38,44 @@ class RegisterController: UIViewController {
         
         
         
-        if username.text.isEmpty {
+        if username.text!.isEmpty {
             Utility.showMessage("用户名不能为空")
             return
         }
-        if password.text.isEmpty || (password.text as NSString).length<6 {
+        if password.text!.isEmpty || (password.text! as NSString).length<6 {
             Utility.showMessage("密码不能为空且长度大于6位数")
             return
         }
         
-        if email.text.isEmpty {
+        if email.text!.isEmpty {
             Utility.showMessage("email不能为空")
             return
         }
         
         
-        let params = ["username":username.text,"password":password.text,"email":email.text]
+        let params:[String:AnyObject] = ["username":username.text!,"password":password.text!,"email":email.text!]
         
         self.btnReg.enabled  = false
-        self.btnReg.setTitle("注册ing...", forState: UIControlState.allZeros)
+        self.btnReg.setTitle("注册ing...", forState: UIControlState())
        
         self.pleaseWait()
         
         Alamofire.request(Router.UserRegister(parameters: params)).responseJSON{
-            (_,_,json,error) in
+            closureResponse in
             self.btnReg.enabled  = true
-            self.btnReg.setTitle("注册", forState: UIControlState.allZeros)
+            self.btnReg.setTitle("注册", forState: UIControlState.Normal)
             
             self.clearAllNotice()
             
-            if error != nil {
+            
+            if closureResponse.result.isFailure {
                 
-                var alert = UIAlertView(title: "网络异常", message: "请检查网络设置", delegate: nil, cancelButtonTitle: "确定")
+                let alert = UIAlertView(title: "网络异常", message: "请检查网络设置", delegate: nil, cancelButtonTitle: "确定")
                 alert.show()
                 return
             }
             
-            
+            let json = closureResponse.result.value
             
             var result = JSON(json!)
             
@@ -82,30 +83,29 @@ class RegisterController: UIViewController {
                 
                 var user = result["result"]
                 
-                var token = user["token"].stringValue
+                let token = user["token"].stringValue
                 
                 KeychainWrapper.setString(token, forKey: "token")
                 Router.token  = token
                 
-                var dalUser = UsersDal()
+                let dalUser = UsersDal()
                 
                 dalUser.deleteAll()
-                var currentUser  =  dalUser.addUser(user, save: true)
-                
-                println(self.navigationController?.viewControllers.count)
-                var toView = self.navigationController?.viewControllers[self.navigationController!.viewControllers.count-3] as? UIViewController;// 2
-                if toView != nil {
-                    
-                    self.navigationController?.popToViewController(toView!, animated: true)
+                dalUser.addUser(user, save: true)
+                if self.navigationController!.viewControllers.count>=3
+                {
+                    let toView = self.navigationController!.viewControllers[self.navigationController!.viewControllers.count-3] as UIViewController;// 2
+                     self.navigationController?.popToViewController(toView, animated: true)
                 }
                 else{
-                    self.navigationController?.popViewControllerAnimated(true)
+                     self.navigationController?.popViewControllerAnimated(true)
                 }
+                
                 
             } else {
                 
-                var errMsg = result["msg"].stringValue
-                var alert = UIAlertView(title: "登录失败", message: "\(errMsg)", delegate: nil, cancelButtonTitle: "确定")
+                let errMsg = result["msg"].stringValue
+                let alert = UIAlertView(title: "登录失败", message: "\(errMsg)", delegate: nil, cancelButtonTitle: "确定")
                 alert.show()
             }
         }

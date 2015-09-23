@@ -25,12 +25,12 @@ class CodeDal: NSObject {
     func addCode(obj:JSON,save:Bool){
         
         
-        var context=CoreDataManager.shared.managedObjectContext;
+        let context=CoreDataManager.shared.managedObjectContext;
         
         
         let model = NSEntityDescription.entityForName("Codedown", inManagedObjectContext: context)
         
-        var codeDown = ShareCode(entity: model!, insertIntoManagedObjectContext: context)
+        let codeDown = ShareCode(entity: model!, insertIntoManagedObjectContext: context)
         
         if model != nil {
             
@@ -51,20 +51,23 @@ class CodeDal: NSObject {
     
     func save(){
         
-        var context=CoreDataManager.shared.managedObjectContext;
-        context.save(nil)
+        let context=CoreDataManager.shared.managedObjectContext;
+        do {
+            try context.save()
+        } catch _ {
+        }
     }
     
     func getCodeList()->[AnyObject]? {
         
-        var request = NSFetchRequest(entityName: "Codedown")
-        var sort1=NSSortDescriptor(key: "createTime", ascending: false)
+        let request = NSFetchRequest(entityName: "Codedown")
+        let sort1=NSSortDescriptor(key: "createTime", ascending: false)
         
         // var sort2=NSSortDescriptor(key: "postId", ascending: false)
         request.fetchLimit = 30
         request.sortDescriptors = [sort1]
         request.resultType = NSFetchRequestResultType.DictionaryResultType
-        var result = CoreDataManager.shared.executeFetchRequest(request)
+        let result = CoreDataManager.shared.executeFetchRequest(request)
         return result
         
     }

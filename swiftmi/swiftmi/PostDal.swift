@@ -11,7 +11,7 @@ import CoreData
 import SwiftyJSON
 
 extension Optional {
-    func valueOrDefault(defaultValue: T) -> T {
+    func valueOrDefault(defaultValue: Wrapped) -> Wrapped {
         switch(self) {
         case .None:
             return defaultValue
@@ -37,12 +37,12 @@ class PostDal:NSObject {
     func addPost(obj:AnyObject,save:Bool){
         
         
-        var context=CoreDataManager.shared.managedObjectContext;
+        let context=CoreDataManager.shared.managedObjectContext;
         
         
         let model = NSEntityDescription.entityForName("Post", inManagedObjectContext: context)
         
-        var post = Post(entity: model!, insertIntoManagedObjectContext: context)
+        let post = Post(entity: model!, insertIntoManagedObjectContext: context)
         
         if model != nil {
             //var article = model as Article;
@@ -62,20 +62,23 @@ class PostDal:NSObject {
     }
     
     func save(){
-        var context=CoreDataManager.shared.managedObjectContext;
-        context.save(nil)
+        let context=CoreDataManager.shared.managedObjectContext;
+        do {
+            try context.save()
+        } catch _ {
+        }
     }
     
     func getPostList()->[AnyObject]? {
         
-        var request = NSFetchRequest(entityName: "Post")
-        var sort1=NSSortDescriptor(key: "lastCommentTime", ascending: false)
+        let request = NSFetchRequest(entityName: "Post")
+        let sort1=NSSortDescriptor(key: "lastCommentTime", ascending: false)
        
        // var sort2=NSSortDescriptor(key: "postId", ascending: false)
         request.fetchLimit = 30
         request.sortDescriptors = [sort1]
         request.resultType = NSFetchRequestResultType.DictionaryResultType
-        var result = CoreDataManager.shared.executeFetchRequest(request)
+        let result = CoreDataManager.shared.executeFetchRequest(request)
         return result
     
     }
@@ -84,25 +87,25 @@ class PostDal:NSObject {
         
          var data = JSON(obj)
     
-        var postId = data["postId"].int64!
-        var title = data["title"].string!
-        var content = data["content"].string
-        var createTime = data["createTime"].int64!
-        var updateTime = data["updateTime"].int64
+        let postId = data["postId"].int64!
+        let title = data["title"].string!
+        let content = data["content"].string
+        let createTime = data["createTime"].int64!
+        let updateTime = data["updateTime"].int64
 
-        var channelId = data["channelId"].int64!
-        var channelName = data["channelName"].string
-        var commentCount = data["commentCount"].int32!
-        var lastCommentId = data["lastCommentId"].int64
-        var lastCommentTime =  data["lastCommentTime"].int64!
-        var viewCount = data["viewCount"].int32!
-        var authorId = data["authorId"].int64!
-        var authorName = data["authorName"].string
-        var avatar = data["avatar"].string
-        var cmtUserId = data["cmtUserId"].int64
-        var cmtUserName = data["cmtUserName"].string
-        var desc = data["desc"].string
-        var isHtml = data["commentCount"].int32!
+        let channelId = data["channelId"].int64!
+        let channelName = data["channelName"].string
+        let commentCount = data["commentCount"].int32!
+        let lastCommentId = data["lastCommentId"].int64
+        let lastCommentTime =  data["lastCommentTime"].int64!
+        let viewCount = data["viewCount"].int32!
+        let authorId = data["authorId"].int64!
+        let authorName = data["authorName"].string
+        let avatar = data["avatar"].string
+        // _ = data["cmtUserId"].int64
+        let cmtUserName = data["cmtUserName"].string
+        let desc = data["desc"].string
+        let isHtml = data["commentCount"].int32!
         
         post.postId = postId
         post.title = title

@@ -18,16 +18,16 @@ class UsersDal: NSObject {
     func addUser(obj:JSON,save:Bool)->Users? {
         
         
-        var context=CoreDataManager.shared.managedObjectContext;
+        let context=CoreDataManager.shared.managedObjectContext;
         
         
         let model = NSEntityDescription.entityForName("Users", inManagedObjectContext: context)
         
-        var user = Users(entity: model!, insertIntoManagedObjectContext: context)
+        let user = Users(entity: model!, insertIntoManagedObjectContext: context)
         
         if model != nil {
            
-            var addUser = self.JSON2Object(obj, user: user)
+            let addUser = self.JSON2Object(obj, user: user)
             
             if(save)
             {
@@ -46,17 +46,20 @@ class UsersDal: NSObject {
     }
     
    internal  func save(){
-        var context=CoreDataManager.shared.managedObjectContext;
-        context.save(nil)
+        let context=CoreDataManager.shared.managedObjectContext;
+        do {
+            try context.save()
+        } catch _ {
+        }
     }
     
    internal  func getCurrentUser()->Users? {
         
-        var request = NSFetchRequest(entityName: "Users")
+        let request = NSFetchRequest(entityName: "Users")
         request.fetchLimit = 1
         
     
-        var result = CoreDataManager.shared.executeFetchRequest(request)
+        let result = CoreDataManager.shared.executeFetchRequest(request)
         if let users = result {
             
             if (users.count > 0 ){
@@ -75,19 +78,19 @@ class UsersDal: NSObject {
         
         var data = obj
         
-        var userId = data["userId"].int64!
-        var username = data["username"].string!
-        var email = data["email"].string
-        var following_count = data["following_count"].int32!
-        var follower_count = data["follower_count"].int32!
-        var points = data["points"].int32!
+        let userId = data["userId"].int64!
+        let username = data["username"].string!
+        let email = data["email"].string
+        let following_count = data["following_count"].int32!
+        let follower_count = data["follower_count"].int32!
+        let points = data["points"].int32!
         
-        var signature = data["signature"].string
-        var profile = data["profile"].string
-        var isAdmin = data["isAdmin"].int32!
-        var avatar = data["avatar"].string
-        var createTime =  data["createTime"].int64!
-        var updateTime = data["updateTime"].int64!
+        let signature = data["signature"].string
+        let profile = data["profile"].string
+        let isAdmin = data["isAdmin"].int32!
+        let avatar = data["avatar"].string
+        let createTime =  data["createTime"].int64!
+        let updateTime = data["updateTime"].int64!
        
         
         user.userId = userId

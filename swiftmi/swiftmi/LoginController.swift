@@ -34,67 +34,68 @@ class LoginController: UIViewController {
     }
 
     private func showMsg(msg:String) {
-        var alert = UIAlertView(title: "提醒", message: msg, delegate: nil, cancelButtonTitle: "确定")
+        let alert = UIAlertView(title: "提醒", message: msg, delegate: nil, cancelButtonTitle: "确定")
         alert.show()
     }
     
     private func login() {
         
-        if username.text.isEmpty {
+        if username.text!.isEmpty {
             showMsg("用户名不能为空")
             return
         }
-        if password.text.isEmpty || (password.text as NSString).length<6 {
+        if password.text!.isEmpty || (password.text! as NSString).length<6 {
             showMsg("密码不能为空且长度大于6位数")
             return
         }
-        var loginname = username.text
-        var loginpass = password.text
+        let loginname = username.text
+        let loginpass = password.text
         
-        let params = ["username":loginname,"password":loginpass]
+        let params:[String:AnyObject] = ["username":loginname!,"password":loginpass!]
         
         self.pleaseWait()
         
         self.loginBtn.enabled  = false
-        self.loginBtn.setTitle("登录ing...", forState: UIControlState.allZeros)
+        self.loginBtn.setTitle("登录ing...", forState: UIControlState())
         Alamofire.request(Router.UserLogin(parameters: params)).responseJSON{
-            (_,_,json,error) in
+            closureResponse in
             
             self.clearAllNotice()
             
             self.loginBtn.enabled  = true
-            self.loginBtn.setTitle("登录", forState: UIControlState.allZeros)
-            if error != nil {
+            self.loginBtn.setTitle("登录", forState: UIControlState.Normal)
+            if closureResponse.result.isFailure {
                 
-                var alert = UIAlertView(title: "网络异常", message: "请检查网络设置", delegate: nil, cancelButtonTitle: "确定")
+                let alert = UIAlertView(title: "网络异常", message: "请检查网络设置", delegate: nil, cancelButtonTitle: "确定")
                 alert.show()
                 return
             }
             
             
+            let json = closureResponse.result.value;
             
-            var result = JSON(json!)
+            let result = JSON(json!)
             
             if result["isSuc"].boolValue {
                 
                 var user = result["result"]
                 
-                var token = user["token"].stringValue
+                let token = user["token"].stringValue
                 
                 KeychainWrapper.setString(token, forKey: "token")
                 Router.token  = token
               
-                var dalUser = UsersDal()
+                let dalUser = UsersDal()
                 
                 dalUser.deleteAll()
-                var currentUser  =  dalUser.addUser(user, save: true)
+                let currentUser  =  dalUser.addUser(user, save: true)
                 
                 self.goToBackView(currentUser!)
                 
             } else {
                 
-                var errMsg = result["msg"].stringValue
-                var alert = UIAlertView(title: "登录失败", message: "\(errMsg)", delegate: nil, cancelButtonTitle: "确定")
+                let errMsg = result["msg"].stringValue
+                let alert = UIAlertView(title: "登录失败", message: "\(errMsg)", delegate: nil, cancelButtonTitle: "确定")
                 alert.show()
             }
         }
@@ -108,14 +109,14 @@ class LoginController: UIViewController {
     
     @IBAction func regAction(sender: AnyObject) {
         
-        var toViewController:RegisterController = Utility.GetViewController("registerController")
+        let toViewController:RegisterController = Utility.GetViewController("registerController")
         
         self.navigationController?.pushViewController(toViewController, animated: true)
     }
     
     private func goToBackView(user:Users) {
         
-        var desController = self.navigationController?.popViewControllerAnimated(true)
+         self.navigationController?.popViewControllerAnimated(true)
         
         
     }

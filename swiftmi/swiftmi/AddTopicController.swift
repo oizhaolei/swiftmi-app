@@ -26,10 +26,10 @@ class AddTopicController: UIViewController {
     
     @IBAction func publishClick(sender: AnyObject) {
         
-        var title = self.titleField.text
-        var content = self.contentField.text
+        let title = self.titleField.text
+        let content = self.contentField.text
         
-        if title.isEmpty {
+        if title!.isEmpty {
             Utility.showMessage("标题不能为空!")
             return
             
@@ -43,23 +43,27 @@ class AddTopicController: UIViewController {
         
         if title != nil {
             
-            var btn = sender as! UIButton
+            let btn = sender as! UIButton
             
             btn.enabled = false
           
-            let params:[String:AnyObject] = ["title":title,"content":content,"channelId":1]
+            let params:[String:AnyObject] = ["title":title!,"content":content!,"channelId":1]
             
             
             Alamofire.request(Router.TopicCreate(parameters: params)).responseJSON{
-                (_,_,json,error) in
+                closureResponse in
+                
+            
                 
                  btn.enabled = true 
-                if error != nil {
+                if closureResponse.result.isFailure {
                     
-                    var alert = UIAlertView(title: "网络异常", message: "请检查网络设置", delegate: nil, cancelButtonTitle: "确定")
+                    let alert = UIAlertView(title: "网络异常", message: "请检查网络设置", delegate: nil, cancelButtonTitle: "确定")
                     alert.show()
                     return
                 }
+                
+                let json = closureResponse.result.value
                 
                 
                 
@@ -72,7 +76,7 @@ class AddTopicController: UIViewController {
                     
                 } else {
                     
-                    var errMsg = result["msg"].stringValue
+                    let errMsg = result["msg"].stringValue
                     Utility.showMessage("发布失败!:\(errMsg)")
                 }
             }
@@ -80,8 +84,8 @@ class AddTopicController: UIViewController {
         
     }
     private func setView() {
-        var border = CALayer()
-        var width = CGFloat(1.0)
+        let border = CALayer()
+        let width = CGFloat(1.0)
         border.borderColor = UIColor.lightGrayColor().CGColor
         border.frame = CGRect(x: 0, y: titleField.frame.size.height - width, width:  titleField.frame.size.width,height: width)
 
@@ -90,7 +94,7 @@ class AddTopicController: UIViewController {
        titleField.layer.masksToBounds = true
         
         
-        var center: NSNotificationCenter = NSNotificationCenter.defaultCenter()
+        let center: NSNotificationCenter = NSNotificationCenter.defaultCenter()
         center.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         center.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
         
@@ -110,34 +114,32 @@ class AddTopicController: UIViewController {
     }
     
     func keyboardWillShow(notification: NSNotification) {
-        var info:NSDictionary = notification.userInfo!
+        let info:NSDictionary = notification.userInfo!
         
         
         let duration = (info[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        var beginKeyboardRect = (info[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
-        var endKeyboardRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        
+        let endKeyboardRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
         
         
         
-        
-        var yOffset = endKeyboardRect.origin.y - beginKeyboardRect.origin.y
         
         
         UIView.animateWithDuration(duration, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
          
             
-            for constraint in self.view.constraints() {
+            for constraint in self.view.constraints {
                 
               
-                var cons = constraint as? NSLayoutConstraint
+                let cons = constraint as NSLayoutConstraint
                 
-                if let view = cons!.secondItem as? UITextView
+                if let _ = cons.secondItem as? UITextView
                 {
                     
-                    if cons!.secondAttribute == NSLayoutAttribute.Bottom {
+                    if cons.secondAttribute == NSLayoutAttribute.Bottom {
                         
                         
-                        cons!.constant = 10 + endKeyboardRect.height
+                        cons.constant = 10 + endKeyboardRect.height
                         
                         
                         
@@ -152,10 +154,8 @@ class AddTopicController: UIViewController {
     }
 
     func keyboardWillHide(notification: NSNotification) {
-        var info:NSDictionary = notification.userInfo!
-        var keyboardSize = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        let info:NSDictionary = notification.userInfo!
         
-        var keyboardHeight:CGFloat = keyboardSize.height
         
         let duration = (info[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
         
@@ -164,18 +164,18 @@ class AddTopicController: UIViewController {
         UIView.animateWithDuration(duration, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut,
             animations: {
             
-                for constraint in self.view.constraints() {
+                for constraint in self.view.constraints {
                 
                 
-                var cons = constraint as? NSLayoutConstraint
+                let cons = constraint as NSLayoutConstraint
                 
-                if let view = cons!.secondItem as? UITextView
+                if let _ = cons.secondItem as? UITextView
                 {
                     
-                    if cons!.secondAttribute == NSLayoutAttribute.Bottom {
+                    if cons.secondAttribute == NSLayoutAttribute.Bottom {
                         
                         
-                        cons!.constant = 10
+                        cons.constant = 10
                         
                         
                         

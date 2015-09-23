@@ -41,10 +41,10 @@ class WebViewController: UIViewController,UIWebViewDelegate {
     private func setWebViewTop(){
         
         if self.isPop {
-            for constraint in self.view.constraints() {
+            for constraint in self.view.constraints {
                 if constraint.firstAttribute == NSLayoutAttribute.Top {
-                    var inputWrapContraint = constraint as? NSLayoutConstraint
-                    inputWrapContraint?.constant =  UIApplication.sharedApplication().statusBarFrame.height+self.navigationController!.navigationBar.frame.height
+                    let inputWrapContraint = constraint as NSLayoutConstraint
+                    inputWrapContraint.constant =  UIApplication.sharedApplication().statusBarFrame.height+self.navigationController!.navigationBar.frame.height
                      
                     break;
                 }
@@ -104,13 +104,11 @@ class WebViewController: UIViewController,UIWebViewDelegate {
     
     @IBAction func shareClick(sender: AnyObject) {
         
-        var url = NSURL(fileURLWithPath:self.webView.request!.URL!.absoluteString!)
-        var title = self.webView.stringByEvaluatingJavaScriptFromString("document.title")
+        let url = NSURL(fileURLWithPath:self.webView.request!.URL!.absoluteString)
+        let title = self.webView.stringByEvaluatingJavaScriptFromString("document.title")
         
-        if url != nil {
-            var activityViewController = UIActivityViewController(activityItems: [title!,url!], applicationActivities: nil)
-            self.presentViewController(activityViewController, animated: true,completion:nil)
-        }
+        let activityViewController = UIActivityViewController(activityItems: [title!,url], applicationActivities: nil)
+        self.presentViewController(activityViewController, animated: true,completion:nil)
        
     }
     
@@ -132,7 +130,7 @@ class WebViewController: UIViewController,UIWebViewDelegate {
         
         
     }
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError)
+    func webView(webView: UIWebView, didFailLoadWithError error: NSError?)
     {
     
     

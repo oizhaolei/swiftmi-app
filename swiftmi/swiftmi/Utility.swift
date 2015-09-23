@@ -20,16 +20,16 @@ class Utility: NSObject {
     
     class func formatDate(date:NSDate)->String {
     
-        var fmt = NSDateFormatter()
+        let fmt = NSDateFormatter()
          
         fmt.dateFormat = "yyyy-MM-dd"
-        var dateString = fmt.stringFromDate(date)
+        let dateString = fmt.stringFromDate(date)
         return dateString
     }
     
     class func showMessage(msg:String) {
         
-        var alert = UIAlertView(title: "提醒", message: msg, delegate: nil, cancelButtonTitle: "确定")
+        let alert = UIAlertView(title: "提醒", message: msg, delegate: nil, cancelButtonTitle: "确定")
         alert.show()
     }
     
@@ -41,12 +41,12 @@ class Utility: NSObject {
             img = "http://swiftmi.qiniudn.com/swiftmi180icon.png"
         }
         
-        var imgAttach = ShareSDK.imageWithUrl(img)
-        var content = "\(title) \(linkUrl)"
+        let imgAttach = ShareSDK.imageWithUrl(img)
+        let content = "\(title) \(linkUrl)"
         
         
         
-        var publishContent:ISSContent = ShareSDK.content(content, defaultContent:"Swift迷分享",image:nil, title:title,url:linkUrl,description:nil,mediaType:SSPublishContentMediaTypeNews)
+        let publishContent:ISSContent = ShareSDK.content(content, defaultContent:"Swift迷分享",image:nil, title:title,url:linkUrl,description:nil,mediaType:SSPublishContentMediaTypeNews)
         
         publishContent.addSinaWeiboUnitWithContent(content, image: nil)
         
@@ -60,13 +60,13 @@ class Utility: NSObject {
         ShareSDK.showShareActionSheet(nil, shareList: nil, content: publishContent, statusBarTips: true, authOptions: nil, shareOptions: nil, result: {(type:ShareType,state:SSResponseState,statusInfo:ISSPlatformShareInfo!,error:ICMErrorInfo!,end:Bool) in
             // println(state.value)
             
-            if (state.value == SSResponseStateSuccess.value){
-                println("分享成功")
-                var alert = UIAlertView(title: "提示", message:"分享成功", delegate:self, cancelButtonTitle: "ok")
+            if (state.rawValue == SSResponseStateSuccess.rawValue){
+                print("分享成功")
+                let alert = UIAlertView(title: "提示", message:"分享成功", delegate:self, cancelButtonTitle: "ok")
                 alert.show()
             }
-            else {if (state.value == 2) {
-                var alert = UIAlertView(title: "提示", message:"您没有安装客户端，无法使用分享功能！", delegate:self, cancelButtonTitle: "ok")
+            else {if (state.rawValue == 2) {
+                let alert = UIAlertView(title: "提示", message:"您没有安装客户端，无法使用分享功能！", delegate:self, cancelButtonTitle: "ok")
                 alert.show()
                 // println(error.errorCode())
                   //println(error.errorDescription())

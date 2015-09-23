@@ -21,9 +21,9 @@ class PostTableViewController: UITableViewController {
     
     private func getDefaultData(){
     
-        var dalPost = PostDal()
+        let dalPost = PostDal()
         
-        var result = dalPost.getPostList()
+        let result = dalPost.getPostList()
         
         if result != nil {
             self.data = result!
@@ -50,7 +50,7 @@ class PostTableViewController: UITableViewController {
         self.tableView.addFooterWithCallback{
             
             if(self.data.count>0) {
-                var  maxId = self.data.last!.valueForKey("postId") as! Int
+                let  maxId = self.data.last!.valueForKey("postId") as! Int
                 self.loadData(maxId, isPullRefresh: false)
             }
         }
@@ -85,14 +85,14 @@ class PostTableViewController: UITableViewController {
        //let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as! PostCell
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PostCell
         
-        var item: AnyObject = self.data[indexPath.row]
+        let item: AnyObject = self.data[indexPath.row]
         
-        var commentCount = item.valueForKey("viewCount") as? Int
+        let commentCount = item.valueForKey("viewCount") as? Int
         
         cell.commentCount.text = "\(commentCount!)"
         
-        var pubTime = item.valueForKey("createTime") as! Double
-        var createDate = NSDate(timeIntervalSince1970: pubTime)
+        let pubTime = item.valueForKey("createTime") as! Double
+        let createDate = NSDate(timeIntervalSince1970: pubTime)
         
         cell.timeLabel.text = Utility.formatDate(createDate)
         
@@ -131,7 +131,7 @@ class PostTableViewController: UITableViewController {
     
     private func configureCell(cell:PostCell,indexPath: NSIndexPath,isForOffscreenUse:Bool){
         
-        var item: AnyObject = self.data[indexPath.row]
+        let item: AnyObject = self.data[indexPath.row]
         cell.title.text = item.valueForKey("title") as? String
         cell.channelName.text = item.valueForKey("channelName") as? String
         cell.selectionStyle = .None;
@@ -152,7 +152,7 @@ class PostTableViewController: UITableViewController {
         self.prototypeCell?.layoutIfNeeded()
         
         
-        var size = self.prototypeCell!.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+        let size = self.prototypeCell!.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
        
         return size.height;
         
@@ -173,8 +173,9 @@ class PostTableViewController: UITableViewController {
         }
         self.loading = true
         
+      
        Alamofire.request(Router.TopicList(maxId: maxId, count: 16)).responseJSON{
-            (_,_,json,error) in
+            closureResponse in
             
             self.loading = false
             
@@ -184,19 +185,19 @@ class PostTableViewController: UITableViewController {
             else{
                 self.tableView.footerEndRefreshing()
             }
-            if error != nil {
-                var alert = UIAlertView(title: "网络异常", message: "请检查网络设置", delegate: nil, cancelButtonTitle: "确定")
+            if closureResponse.result.isFailure {
+                let alert = UIAlertView(title: "网络异常", message: "请检查网络设置", delegate: nil, cancelButtonTitle: "确定")
                 alert.show()
                 return
             }
             
             
-
+            let json = closureResponse.result.value
             var result = JSON(json!)
             
             if result["isSuc"].boolValue {
                 
-                var items = result["result"].object as! [AnyObject]
+                let items = result["result"].object as! [AnyObject]
                
                 if(items.count==0){
                     return
@@ -207,7 +208,7 @@ class PostTableViewController: UITableViewController {
                     
 
                     
-                    var dalPost = PostDal()
+                    let dalPost = PostDal()
                     dalPost.deleteAll()
                     
                     dalPost.addPostList(items)
@@ -273,14 +274,14 @@ class PostTableViewController: UITableViewController {
            
             //未登录
             
-            var loginController:LoginController = Utility.GetViewController("loginController")
+            let loginController:LoginController = Utility.GetViewController("loginController")
             
             self.navigationController?.pushViewController(loginController, animated: true)
             
         }
     }
    
-    override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
  
         if identifier == "toAddTopic" {
         
@@ -304,10 +305,10 @@ class PostTableViewController: UITableViewController {
         if segue.identifier == "PostDetail" {
             
             if segue.destinationViewController is PostDetailController {
-                var view = segue.destinationViewController as! PostDetailController
-                var indexPath = self.tableView.indexPathForSelectedRow()
+                let view = segue.destinationViewController as! PostDetailController
+                let indexPath = self.tableView.indexPathForSelectedRow
                 
-                var article: AnyObject = self.data[indexPath!.row]
+                let article: AnyObject = self.data[indexPath!.row]
                 view.article = article
                 
                 

@@ -47,8 +47,6 @@ enum Router: URLRequestConvertible {
             return .POST
         case .UserLogin:
             return .POST
-        default:
-            return .GET
         }
         
     }
@@ -72,9 +70,9 @@ enum Router: URLRequestConvertible {
             return ServiceApi.getCodeUrl(maxId,count:count)
         case .BookList(let type,let maxId,let count):
             return ServiceApi.getBookUrl(type, maxId: maxId, count: count)
-        case .UserLogin(let parameters):
+        case .UserLogin(_):
             return ServiceApi.getLoginUrl()
-        case .UserRegister(let parameters):
+        case .UserRegister(_):
             return ServiceApi.getRegistUrl()
         case .CodeDetail(let codeId):
             return ServiceApi.getCodeDetailUrl(codeId)
@@ -82,7 +80,7 @@ enum Router: URLRequestConvertible {
     }
     
     
-    var URLRequest: NSURLRequest {
+    var URLRequest: NSMutableURLRequest {
         let URL = NSURL(string: path)!
         let mutableURLRequest = NSMutableURLRequest(URL: URL)
         mutableURLRequest.HTTPMethod = method.rawValue
@@ -90,9 +88,7 @@ enum Router: URLRequestConvertible {
         if let token = Router.token {
             mutableURLRequest.setValue("\(token)", forHTTPHeaderField: "token")
         }
-        
-        mutableURLRequest.setValue("com.swiftmi.demo", forHTTPHeaderField: "clientid")
-        mutableURLRequest.setValue("1.0", forHTTPHeaderField: "appversion")
+         
         
         switch self {
         case .TopicComment(let parameters):

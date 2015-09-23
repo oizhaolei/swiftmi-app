@@ -108,7 +108,7 @@ class BreakOutToRefreshView: SKView {
     presentScene(StartScene(size: frame.size))
   }
 
-  required init(coder aDecoder: NSCoder) {
+  required init?(coder aDecoder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
   }
   
@@ -172,7 +172,7 @@ extension BreakOutToRefreshView: UIScrollViewDelegate {
   func scrollViewDidScroll(scrollView: UIScrollView) {
 //    println("\(scrollView.contentOffset)")
 
-    let frameHeight = frame.size.height
+    //let frameHeight = frame.size.height
     let yPosition = sceneHeight - (-scrollView.contentInset.top-scrollView.contentOffset.y)*2
     
     breakOutScene.moveHandle(yPosition)

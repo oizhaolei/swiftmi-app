@@ -34,7 +34,7 @@ class CodeCell: UICollectionViewCell {
         
         self.layer.shadowOffset = CGSize(width: 0, height: 0)
         self.layer.shadowPath =  UIBezierPath(rect: self.bounds).CGPath
-         println(" ...add... shadow.....")
+         print(" ...add... shadow.....")
     }
     
     

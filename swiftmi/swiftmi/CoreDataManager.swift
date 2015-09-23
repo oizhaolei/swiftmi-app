@@ -52,7 +52,7 @@ class CoreDataManager: NSObject {
 
             }
             else{
-                 println("using old context")
+                 print("using old context")
             }
             return threadContext!;
 
@@ -77,10 +77,13 @@ class CoreDataManager: NSObject {
     
     if !(_persistentStoreCoordinator != nil){
           let storeURL=self.applicationDocumentsDirectory.URLByAppendingPathComponent(storeName)
-        var error:NSError?=nil
+        //var error:NSError?=nil
         _persistentStoreCoordinator=NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         
-        if _persistentStoreCoordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: self.databaseOptions(), error:&error)==nil {
+        do {
+            try _persistentStoreCoordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: self.databaseOptions())
+        } catch _ as NSError {
+            //error = error1
             abort()
         }
         
@@ -98,9 +101,16 @@ class CoreDataManager: NSObject {
         self.managedObjectContext.performBlockAndWait{
              var fetchError:NSError?
             
-            results=self.managedObjectContext.executeFetchRequest(request, error: &fetchError);
+             do {
+                 results=try self.managedObjectContext.executeFetchRequest(request)
+             } catch let error as NSError {
+                 fetchError = error
+                 results = nil
+             } catch {
+                 fatalError()
+             };
             if let error=fetchError{
-                println("Warning!! \(error.description)")
+                print("Warning!! \(error.description)")
             }
         }
         return results;
@@ -112,9 +122,16 @@ class CoreDataManager: NSObject {
             var fetchError:NSError?
             var results:Array<AnyObject>?
             
-            results=self.managedObjectContext.executeFetchRequest(request, error: &fetchError)
+            do {
+                results=try self.managedObjectContext.executeFetchRequest(request)
+            } catch let error as NSError {
+                fetchError = error
+                results = nil
+            } catch {
+                fatalError()
+            }
             if let error=fetchError {
-                 println("Warning!! \(error.description)")
+                 print("Warning!! \(error.description)")
             }
             
             completionHandler(results: results)
@@ -123,26 +140,44 @@ class CoreDataManager: NSObject {
     }
     
     func save(){
-        var context:NSManagedObjectContext = self.managedObjectContext
+        let context:NSManagedObjectContext = self.managedObjectContext
         if context.hasChanges {
             context.performBlock{
                 
                 var saveError:NSError?
-                let saved=context.save(&saveError);
+                let saved: Bool
+                do {
+                    try context.save()
+                    saved = true
+                } catch let error as NSError {
+                    saveError = error
+                    saved = false
+                } catch {
+                    fatalError()
+                };
                 if !saved {
                     if let error = saveError{
-                        println("Warning!! Saving error \(error.description)")
+                        print("Warning!! Saving error \(error.description)")
                     }
                 }
                 
                 if (context.parentContext != nil) {
                     context.parentContext!.performBlockAndWait{
                         var saveError:NSError?
-                        let saved = context.parentContext!.save(&saveError)
+                        let saved: Bool
+                        do {
+                            try context.parentContext!.save()
+                            saved = true
+                        } catch let error as NSError {
+                            saveError = error
+                            saved = false
+                        } catch {
+                            fatalError()
+                        }
                         
                         if !saved{
                             if let error = saveError{
-                                println("Warning!! Saving parent error \(error.description)")
+                                print("Warning!! Saving parent error \(error.description)")
                             }
                         }
                     }
@@ -156,15 +191,22 @@ class CoreDataManager: NSObject {
     
     func contextWillSave(notification:NSNotification){
         let context : NSManagedObjectContext! = notification.object as! NSManagedObjectContext
-        var insertedObjects:NSSet = context.insertedObjects;
+        let insertedObjects:NSSet = context.insertedObjects;
         
         if insertedObjects.count != 0 {
              var obtainError:NSError?
             
-            context.obtainPermanentIDsForObjects(insertedObjects.allObjects, error: &obtainError)
+            
+            
+             do {
+                 try context.obtainPermanentIDsForObjects(insertedObjects.allObjects as! [NSManagedObject])
+                
+             } catch let error as NSError {
+                 obtainError = error
+             }
             
             if let error = obtainError {
-                println("Warning!! obtaining ids error \(error.description)")
+                print("Warning!! obtaining ids error \(error.description)")
             }
         }
     }
@@ -176,16 +218,16 @@ class CoreDataManager: NSObject {
     }
     
     func deleteTable(tableName:String){
-        var managedObjectContext=self.managedObjectContext;
-        var entity=NSEntityDescription.entityForName(tableName, inManagedObjectContext: managedObjectContext)
-        var request=NSFetchRequest()
+        let managedObjectContext=self.managedObjectContext;
+        let entity=NSEntityDescription.entityForName(tableName, inManagedObjectContext: managedObjectContext)
+        let request=NSFetchRequest()
         request.includesPropertyValues=false;
         request.entity=entity;
         
-        var items=self.executeFetchRequest(request);
+        let items=self.executeFetchRequest(request);
         if (items != nil&&items!.count>0) {
             for obj in items! {
-                var item = obj as! NSManagedObject;
+                let item = obj as! NSManagedObject;
                self.deleteEntity(item)
             }
             
@@ -205,7 +247,7 @@ class CoreDataManager: NSObject {
         
       //  println(urls[urls.endIndex-1] as NSURL)
         
-        return urls[urls.endIndex-1] as! NSURL
+        return urls[urls.endIndex-1] 
     }
     
     func databaseOptions() -> Dictionary <String,Bool> {

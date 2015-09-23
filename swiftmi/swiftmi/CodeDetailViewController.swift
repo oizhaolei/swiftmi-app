@@ -28,7 +28,7 @@ class CodeDetailViewController: UIViewController,UIWebViewDelegate {
         
         // Do any additional setup after loading the view.
     }
-    
+
     override func viewDidAppear(animated: Bool) {
         
         
@@ -38,7 +38,6 @@ class CodeDetailViewController: UIViewController,UIWebViewDelegate {
         self.userActivity?.becomeCurrent()
         
     }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -84,14 +83,16 @@ class CodeDetailViewController: UIViewController,UIWebViewDelegate {
    private func loadData(){
         
         Alamofire.request(Router.CodeDetail(codeId: shareCode!.valueForKey("codeId") as! Int)).responseJSON{
-            (_,_,json,error) in
+            closureResponse in
             
-            if(error != nil){
+            if(closureResponse.result.isFailure){
                 
                 self.notice("网络异常", type: NoticeType.error, autoClear: true)
             }
             else {
-                var result = JSON(json!)
+                let json = closureResponse.result.value
+                
+                let result = JSON(json!)
                 
                 if result["isSuc"].boolValue {
                     
@@ -102,10 +103,10 @@ class CodeDetailViewController: UIViewController,UIWebViewDelegate {
             }
             
             
-            var path=NSBundle.mainBundle().pathForResource("code", ofType: "html")
+            let path=NSBundle.mainBundle().pathForResource("code", ofType: "html")
             
-            var url=NSURL.fileURLWithPath(path!)
-            var request = NSURLRequest(URL:url!)
+            let url=NSURL.fileURLWithPath(path!)
+            let request = NSURLRequest(URL:url)
             dispatch_async(dispatch_get_main_queue()) {
                 
                 self.webView.loadRequest(request)
@@ -121,8 +122,8 @@ class CodeDetailViewController: UIViewController,UIWebViewDelegate {
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool
     {
        
-        var reqUrl=request.URL!.absoluteString
-        var params = reqUrl!.componentsSeparatedByString("://")
+        let reqUrl=request.URL!.absoluteString
+        var params = reqUrl.componentsSeparatedByString("://")
         
         dispatch_async(dispatch_get_main_queue(),{
             
@@ -132,7 +133,7 @@ class CodeDetailViewController: UIViewController,UIWebViewDelegate {
                 if(params[0].compare("html")==NSComparisonResult.OrderedSame && params[1].compare("docready") ==  NSComparisonResult.OrderedSame ){
                     
                     
-                    var data = self.GetLoadData()
+                    let data = self.GetLoadData()
                     
                     self.webView.stringByEvaluatingJavaScriptFromString("article.render("+data.rawString()!+");")
                     
@@ -145,7 +146,7 @@ class CodeDetailViewController: UIViewController,UIWebViewDelegate {
                 }
                 else if params[0].compare("http") == NSComparisonResult.OrderedSame || params[0].compare("https") == NSComparisonResult.OrderedSame  {
                 
-                    var webViewController:WebViewController = Utility.GetViewController("webViewController")
+                    let webViewController:WebViewController = Utility.GetViewController("webViewController")
                     webViewController.webUrl = reqUrl
                     self.presentViewController(webViewController, animated: true, completion: nil)
                     
@@ -169,7 +170,7 @@ class CodeDetailViewController: UIViewController,UIWebViewDelegate {
     {
         
     }
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError)
+    func webView(webView: UIWebView, didFailLoadWithError error: NSError?)
     {
         
     }
@@ -183,15 +184,15 @@ class CodeDetailViewController: UIViewController,UIWebViewDelegate {
     private func share() {
         
         var data = GetLoadData()
-        var title = data["code"]["title"].stringValue
-        var url = ServiceApi.getCodeShareDetail(data["code"]["codeId"].intValue)
-        var desc = data["code"]["desc"].stringValue
+        let title = data["code"]["title"].stringValue
+        let url = ServiceApi.getCodeShareDetail(data["code"]["codeId"].intValue)
+        let desc = data["code"]["desc"].stringValue
         
         var preview = data["code"]["preview"].stringValue
         
         if preview != "" {
             
-            if (preview.hasPrefix("http://swiftmi.")){
+            if (preview.hasPrefix("http://img.swiftmi.com")){
                 preview = "\(preview)-code"
             }
         }
@@ -204,9 +205,12 @@ class CodeDetailViewController: UIViewController,UIWebViewDelegate {
     override func viewDidDisappear(animated: Bool) {
         
         self.clearAllNotice()
+        
         self.userActivity?.invalidate()
+        
+        
         super.viewDidDisappear(animated)
-       
+        
     }
 
     

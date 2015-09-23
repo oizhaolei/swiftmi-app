@@ -44,14 +44,14 @@ class ProfileHeaderView: UIView,UIGestureRecognizerDelegate {
         initialFrame = profileBg.frame;
         initialHeight = initialFrame.size.height;
         
-        var tap = UITapGestureRecognizer(target:self,action:"tapLogin:")
+        let tap = UITapGestureRecognizer(target:self,action:"tapLogin:")
         
         self.avatar.userInteractionEnabled = true
         self.avatar.addGestureRecognizer(tap)
         
         
         
-        var tap2 = UITapGestureRecognizer(target:self,action:"tapLogin:")
+        let tap2 = UITapGestureRecognizer(target:self,action:"tapLogin:")
         
         self.userName.userInteractionEnabled = true
         self.userName.addGestureRecognizer(tap2)
@@ -101,7 +101,7 @@ class ProfileHeaderView: UIView,UIGestureRecognizerDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView!){
         
         if scrollView.contentOffset.y < 0 {
-            var OffsetY:CGFloat = scrollView.contentOffset.y + scrollView.contentInset.top
+            let OffsetY:CGFloat = scrollView.contentOffset.y + scrollView.contentInset.top
             initialFrame.origin.y = OffsetY;
             initialFrame.size.height = initialHeight + (OffsetY * -1)
             

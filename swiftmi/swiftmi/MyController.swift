@@ -35,11 +35,11 @@ class MyController: UITableViewController {
        
         if currentUser == nil {
             
-            var token = KeychainWrapper.stringForKey("token")
+            let token = KeychainWrapper.stringForKey("token")
             
             if token != nil {
                 
-                var dalUser = UsersDal()
+                let dalUser = UsersDal()
                 currentUser = dalUser.getCurrentUser()
             }
             
@@ -123,7 +123,7 @@ class MyController: UITableViewController {
         }
         else if indexPath.section == 1 && indexPath.row == 0 {
             
-            var url = NSURL(string: "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=993402332")
+            let url = NSURL(string: "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=993402332")
             UIApplication.sharedApplication().openURL(url!)
             //self.logout()
             /*

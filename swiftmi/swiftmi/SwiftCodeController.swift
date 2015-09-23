@@ -24,9 +24,9 @@ class SwiftCodeController: UICollectionViewController,UICollectionViewDelegateFl
     
     private func getDefaultData(){
         
-        var dalCode = CodeDal()
+        let dalCode = CodeDal()
         
-        var result = dalCode.getCodeList()
+        let result = dalCode.getCodeList()
         
         if result != nil {
             
@@ -53,7 +53,7 @@ class SwiftCodeController: UICollectionViewController,UICollectionViewDelegateFl
         self.collectionView?.addFooterWithCallback{
             
             if(self.data.count>0) {
-                var  maxId = self.data.last!.valueForKey("codeId") as! Int
+                let  maxId = self.data.last!.valueForKey("codeId") as! Int
                 self.loadData(maxId, isPullRefresh: false)
             }
         }
@@ -76,7 +76,7 @@ class SwiftCodeController: UICollectionViewController,UICollectionViewDelegateFl
         
         
         Alamofire.request(Router.CodeList(maxId: maxId, count: 12)).responseJSON{
-            (_,_,json,error) in
+            closureResponse in
             
             self.loading = false
             
@@ -87,18 +87,19 @@ class SwiftCodeController: UICollectionViewController,UICollectionViewDelegateFl
             else{
                 self.collectionView?.footerEndRefreshing()
             }
-            if error != nil {
+            if closureResponse.result.isFailure {
                 self.notice("网络异常", type: NoticeType.error, autoClear: true)
                 return
             }
             
             
+            let json = closureResponse.result.value;
             
-            var result = JSON(json!)
+            let result = JSON(json!)
             
             if result["isSuc"].boolValue {
                 
-                var items = result["result"]
+                let items = result["result"]
                 
                 if(items.count==0){
                     return
@@ -107,7 +108,7 @@ class SwiftCodeController: UICollectionViewController,UICollectionViewDelegateFl
                 if(isPullRefresh){
                     
                     
-                    var dalCode = CodeDal()
+                    let dalCode = CodeDal()
                     dalCode.deleteAll()
                     
                     dalCode.addList(items)
@@ -115,7 +116,7 @@ class SwiftCodeController: UICollectionViewController,UICollectionViewDelegateFl
                     self.data.removeAll(keepCapacity: false)
                 }
                 
-                var objItems = items.arrayObject
+                 
                 for  it in items {
                     
                     self.data.append(it.1.object);
@@ -153,12 +154,12 @@ class SwiftCodeController: UICollectionViewController,UICollectionViewDelegateFl
         
         if item?.count > 0 {
             
-            var indexPath = item![0] as! NSIndexPath
+            let indexPath = item![0] 
             
             if segue.destinationViewController is CodeDetailViewController {
-                var view = segue.destinationViewController as! CodeDetailViewController
+                let view = segue.destinationViewController as! CodeDetailViewController
                 
-                var code: AnyObject = self.data[indexPath.row]
+                let code: AnyObject = self.data[indexPath.row]
                 view.shareCode = code
                 
                 
@@ -185,19 +186,19 @@ class SwiftCodeController: UICollectionViewController,UICollectionViewDelegateFl
         let cell = self.collectionView!.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! CodeCell
      
     
-        var item: AnyObject = self.data[indexPath.row]
+        let item: AnyObject = self.data[indexPath.row]
         
         // Configure the cell
         var preview = item.valueForKey("preview") as? String
         if preview != nil {
-            if (preview!.hasPrefix("http://swiftmi.")){
+            if (preview!.hasPrefix("http://img.swiftmi.com")){
                 preview = "\(preview!)-code"
             }
             cell.preview.kf_setImageWithURL(NSURL(string: preview!)!, placeholderImage: nil)
         }
         
-        var pubTime = item.valueForKey("createTime") as! Double
-        var createDate = NSDate(timeIntervalSince1970: pubTime)
+        let pubTime = item.valueForKey("createTime") as! Double
+        let createDate = NSDate(timeIntervalSince1970: pubTime)
         
         cell.timeLabel.text = Utility.formatDate(createDate)
         
@@ -217,7 +218,7 @@ class SwiftCodeController: UICollectionViewController,UICollectionViewDelegateFl
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
     {
-        var frame  = self.view.frame;
+        let frame  = self.view.frame;
         var width = frame.width
 
         

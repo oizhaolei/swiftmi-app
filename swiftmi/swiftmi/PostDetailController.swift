@@ -31,7 +31,7 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var center: NSNotificationCenter = NSNotificationCenter.defaultCenter()
+        let center: NSNotificationCenter = NSNotificationCenter.defaultCenter()
         center.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         center.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
         //center.addObserver(self, selector:"keyboardWillChangeFrame:", name:UIKeyboardWillChangeFrameNotification,object:nil)
@@ -44,6 +44,9 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
         self.inputReply.layer.borderColor = UIColor(red: 0.85, green: 0.85, blue:0.85, alpha: 0.9).CGColor
         // Keyboard stuff.
 
+        //
+        
+        
         
         // Do any additional setup after loading the view.
     }
@@ -66,33 +69,27 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
     }
     
     func keyboardWillShow(notification: NSNotification) {
-        var info:NSDictionary = notification.userInfo!
+        let info:NSDictionary = notification.userInfo!
        
         
         let duration = (info[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        var beginKeyboardRect = (info[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
-        var endKeyboardRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        let endKeyboardRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
         
         
         
-        
-        var yOffset = endKeyboardRect.origin.y - beginKeyboardRect.origin.y
-
-       
+      
         
         var frame = self.view.frame
         frame.origin.y = -endKeyboardRect.height
-        
-        var inputW = self.inputWrapView.frame
-        var newFrame = CGRectMake(inputW.origin.x, inputW.origin.y-80, inputW.width, inputW.height+90)
+         
         
     UIView.animateWithDuration(duration, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
             self.webView.stringByEvaluatingJavaScriptFromString("$('body').css({'padding-top':'\(endKeyboardRect.height)px'});")
             
-        for constraint in self.inputWrapView.constraints() {
+        for constraint in self.inputWrapView.constraints {
             if constraint.firstAttribute == NSLayoutAttribute.Height {
-                var inputWrapContraint = constraint as? NSLayoutConstraint
-                inputWrapContraint?.constant = 80
+                let inputWrapContraint = constraint as NSLayoutConstraint
+                inputWrapContraint.constant = 80
                // self.inputWrapView.updateConstraintsIfNeeded()
                 break;
             }
@@ -104,10 +101,9 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
     }
     
     func keyboardWillHide(notification: NSNotification) {
-        var info:NSDictionary = notification.userInfo!
-        var keyboardSize = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        let info:NSDictionary = notification.userInfo!
         
-        var keyboardHeight:CGFloat = keyboardSize.height
+        
         
          let duration = (info[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
         
@@ -122,10 +118,10 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
             self.webView.stringByEvaluatingJavaScriptFromString("$('body').css({'padding-top':'0px'});")
                 self.view.frame = frame
             
-            for constraint in self.inputWrapView.constraints() {
+            for constraint in self.inputWrapView.constraints {
                 if constraint.firstAttribute == NSLayoutAttribute.Height {
-                    var inputWrapContraint = constraint as? NSLayoutConstraint
-                    inputWrapContraint?.constant = 50
+                    let inputWrapContraint = constraint as NSLayoutConstraint
+                    inputWrapContraint.constant = 50
                     // self.inputWrapView.updateConstraintsIfNeeded()
                     break;
                 }
@@ -152,16 +148,19 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
     func loadData(){
         
         Alamofire.request(Router.TopicDetail(topicId: (article!.valueForKey("postId") as! Int))).responseJSON{
-            (_,_,json,error) in
+            closureResponse in
             
-            if(error != nil){
+            if closureResponse.result.isFailure {
                 
-                var alert = UIAlertView(title: "网络异常", message: "请检查网络设置", delegate: nil, cancelButtonTitle: "确定")
+                let alert = UIAlertView(title: "网络异常", message: "请检查网络设置", delegate: nil, cancelButtonTitle: "确定")
                 alert.show()
                 
             }
             else {
-                var result = JSON(json!)
+                
+                let json = closureResponse.result.value
+                
+                let result = JSON(json!)
                 
                 if result["isSuc"].boolValue {
                     
@@ -172,10 +171,10 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
             }
            
             
-            var path=NSBundle.mainBundle().pathForResource("article", ofType: "html")
+            let path=NSBundle.mainBundle().pathForResource("article", ofType: "html")
             
-            var url=NSURL.fileURLWithPath(path!)
-            var request = NSURLRequest(URL:url!)
+            let url=NSURL.fileURLWithPath(path!)
+            let request = NSURLRequest(URL:url)
             dispatch_async(dispatch_get_main_queue()) {
                 self.inputWrapView.hidden = false
                 self.webView.loadRequest(request)
@@ -211,26 +210,26 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
     
     @IBAction func replyClick(sender: AnyObject) {
         
-        var msg = inputReply.text;
+        let msg = inputReply.text;
         inputReply.text = "";
         if msg != nil {
             
-            var postId  = article!.valueForKey("postId") as! Int
+            let postId  = article!.valueForKey("postId") as! Int
             let params:[String:AnyObject] = ["postId":postId,"content":msg]
             
             
             Alamofire.request(Router.TopicComment(parameters: params)).responseJSON{
-                (_,_,json,error) in
+                closureResponse in
                 
-                if error != nil {
+                if closureResponse.result.isFailure {
                     
                     self.notice("网络异常", type: NoticeType.error, autoClear: true)
                     return
                 }
                 
                 
-                
-                var result = JSON(json!)
+                let json = closureResponse.result.value
+                let result = JSON(json!)
                 
                 if result["isSuc"].boolValue {
                     
@@ -264,8 +263,8 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
 
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool
     {
-        var reqUrl=request.URL!.absoluteString
-        var params = reqUrl!.componentsSeparatedByString("://")
+        let reqUrl=request.URL!.absoluteString
+        let params = reqUrl.componentsSeparatedByString("://")
         
         dispatch_async(dispatch_get_main_queue(),{
             
@@ -275,7 +274,7 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
                 if(params[0].compare("html")==NSComparisonResult.OrderedSame && params[1].compare("docready") ==  NSComparisonResult.OrderedSame ){
                   
                     
-                    var data = self.GetLoadData()
+                    let data = self.GetLoadData()
                    
                     self.webView.stringByEvaluatingJavaScriptFromString("article.render("+data.rawString()!+");")
                     
@@ -288,7 +287,7 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
                 }
                 else if params[0].compare("http") == NSComparisonResult.OrderedSame || params[0].compare("https") == NSComparisonResult.OrderedSame  {
                     
-                    var webViewController:WebViewController = Utility.GetViewController("webViewController")
+                    let webViewController:WebViewController = Utility.GetViewController("webViewController")
                     webViewController.webUrl = reqUrl
                     self.presentViewController(webViewController, animated: true, completion: nil)
                     
@@ -312,7 +311,7 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
      {
         
     }
-     func webView(webView: UIWebView, didFailLoadWithError error: NSError)
+     func webView(webView: UIWebView, didFailLoadWithError error: NSError?)
      {
         
     }
@@ -332,12 +331,12 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
     
     private func share() {
         
-        var data = GetLoadData()
-        var title = data["topic"]["title"].stringValue
-        var url = ServiceApi.getTopicShareDetail(data["topic"]["postId"].intValue)
-        var desc = data["topic"]["desc"].stringValue
+        let data = GetLoadData()
+        let title = data["topic"]["title"].stringValue
+        let url = ServiceApi.getTopicShareDetail(data["topic"]["postId"].intValue)
+        let desc = data["topic"]["desc"].stringValue
         
-        var img = self.webView.stringByEvaluatingJavaScriptFromString("article.getShareImage()")
+        let img = self.webView.stringByEvaluatingJavaScriptFromString("article.getShareImage()")
         
         
         Utility.share(title, desc: desc, imgUrl: img, linkUrl: url)
