@@ -23,7 +23,7 @@ Swift开发QQ交流群：305170435
 
 - git clone https://github.com/feiin/swiftmi-app  swiftmi
 - cd swiftmi && git submodule update --init --recursive
-- build
+- 打开xcode编译运行即可
 
  
 ##更新
