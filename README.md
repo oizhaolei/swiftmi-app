@@ -29,11 +29,12 @@ Swift开发QQ交流群：305170435
 ##更新
 
 - 20150711  **增加handoff**：在内容(主题、源代码)详情界面阅读时增加handoff,支持mac 默认浏览器打开阅读详情
+- 2015092  升级Swift2.0,Xcode7.0编译下通过
 
 ##环境
 
-- Xcode 6.4 编译通过
-- Swift
+- Xcode 7.0 编译通过
+- Swift 2.0
 
 
 网友@sandyway实现的对应OC版本 https://github.com/sandyway/ocswiftmi
