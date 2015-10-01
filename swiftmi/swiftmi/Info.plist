@@ -41,6 +41,13 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>8</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>wechat</string>
+		<string>weixin</string>
+		<string>sinaweibo</string>
+		<string>sinaweibosso</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

@@ -19,19 +19,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Router.token = KeychainWrapper.stringForKey("token")
         
-        ShareSDK.registerApp("74dcfcc8d1d3")
-        //新浪微博
-        ShareSDK.connectSinaWeiboWithAppKey("3314374338", appSecret: "988b7cb3d34a994aa758b80e5097c3cb", redirectUri: "https://api.weibo.com/oauth2/default.html",weiboSDKCls:WeiboSDK.classForCoder())
+    
         
-        //链接微信
-        ShareSDK.connectWeChatWithAppId("wxaae8ddda9c357129",appSecret:"20dfc209d79def9c19bbc640a85ead2a", wechatCls: WXApi.classForCoder())
-        //微信好友
-        ShareSDK.connectWeChatSessionWithAppId("wxaae8ddda9c357129",appSecret:"20dfc209d79def9c19bbc640a85ead2a", wechatCls:WXApi.classForCoder())
-        //微信朋友圈
-        ShareSDK.connectWeChatTimelineWithAppId("wxaae8ddda9c357129",appSecret:"20dfc209d79def9c19bbc640a85ead2a", wechatCls: WXApi.classForCoder())
         
-        ShareSDK.connectSMS()
-        ShareSDK.connectCopy()
+        ShareSDK.registerApp("74dcfcc8d1d3", activePlatforms: [SSDKPlatformType.TypeCopy.rawValue, SSDKPlatformType.TypeSinaWeibo.rawValue,SSDKPlatformType.TypeWechat.rawValue,SSDKPlatformType.TypeSMS.rawValue], onImport: {
+            
+            (platformType:SSDKPlatformType) in
+            
+            switch(platformType) {
+            case SSDKPlatformType.TypeSinaWeibo:
+                ShareSDKConnector.connectWeibo(WeiboSDK.classForCoder())
+           case SSDKPlatformType.TypeWechat:
+                 ShareSDKConnector.connectWeChat(WXApi.classForCoder())
+            default:
+                break;
+                
+            }
+            
+            }, onConfiguration:{
+                
+                (platformType:SSDKPlatformType,appInfo:NSMutableDictionary!)  in
+                
+                switch(platformType) {
+                    
+                 case SSDKPlatformType.TypeSinaWeibo:
+                    appInfo.SSDKSetupSinaWeiboByAppKey("568898243", appSecret: "38a4f8204cc784f81f9f0daaf31e02e3", redirectUri: "http://www.sharesdk.cn", authType: SSDKAuthTypeBoth)
+                    
+                 case SSDKPlatformType.TypeWechat:
+                    appInfo.SSDKSetupWeChatByAppId("wx4868b35061f87885", appSecret: "64020361b8ec4c99936c0e3999a9f249")
+                    
+                default:
+                    break;
+                
+                
+                }
+        })
+        
+        
         
         
         return true
@@ -60,11 +84,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
-        return ShareSDK.handleOpenURL(url, wxDelegate: self)
+        
+    
+        return true;
+      //  return ShareSDK.handleOpenURL(url, wxDelegate: self)
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
-        return ShareSDK.handleOpenURL(url, sourceApplication: sourceApplication, annotation: annotation, wxDelegate: self)
+        return true;
+       // return ShareSDK.handleOpenURL(url, sourceApplication: sourceApplication, annotation: annotation, wxDelegate: self)
     }
 
 

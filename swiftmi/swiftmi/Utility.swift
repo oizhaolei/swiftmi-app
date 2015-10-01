@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class Utility: NSObject {
    
     class func GetViewController<T>(controllerName:String)->T {
@@ -41,38 +42,41 @@ class Utility: NSObject {
             img = "http://swiftmi.qiniudn.com/swiftmi180icon.png"
         }
         
-        let imgAttach = ShareSDK.imageWithUrl(img)
-        let content = "\(title) \(linkUrl)"
+        var text = desc;
+        if text == "" {
+            text = title;
+        }
         
+        let textWithUrl = "\(title) \(linkUrl)"
+    
+        let shareParams = NSMutableDictionary();
         
+        shareParams.SSDKSetupShareParamsByText(text, images: [img!], url: NSURL(string: linkUrl), title: title, type: SSDKContentType.Auto)
         
-        let publishContent:ISSContent = ShareSDK.content(content, defaultContent:"Swift迷分享",image:nil, title:title,url:linkUrl,description:nil,mediaType:SSPublishContentMediaTypeNews)
+        shareParams.SSDKSetupWeChatParamsByText(text, title: title, url: NSURL(string:linkUrl), thumbImage: img, image: img, musicFileURL: nil, extInfo: nil, fileData: nil, emoticonData: nil, type: SSDKContentType.Image, forPlatformSubType: SSDKPlatformType.TypeWechat)
         
-        publishContent.addSinaWeiboUnitWithContent(content, image: nil)
+        shareParams.SSDKSetupCopyParamsByText(textWithUrl, images: nil, url:  NSURL(string: linkUrl), type: SSDKContentType.Text)
         
-        publishContent.addWeixinFavUnitWithType(2, content: content, title: title, url: linkUrl, thumbImage: nil, image: imgAttach, musicFileUrl: nil, extInfo: nil, fileData: nil, emoticonData: nil)
+        shareParams.SSDKSetupSinaWeiboShareParamsByText(title, title: title, image: [img!], url: NSURL(string:linkUrl), latitude: 0.0, longitude: 0.0, objectID: "", type: SSDKContentType.Auto)
         
-        publishContent.addWeixinSessionUnitWithType(2, content: content, title: title, url: linkUrl, thumbImage: nil, image: imgAttach, musicFileUrl: nil, extInfo: nil, fileData: nil, emoticonData: nil)
+        shareParams.SSDKSetupSMSParamsByText(textWithUrl, title: textWithUrl, images: nil, attachments: nil, recipients: nil, type: SSDKContentType.Text)
         
-        publishContent.addWeixinTimelineUnitWithType(2, content: content, title: title, url: linkUrl, thumbImage: nil, image: imgAttach, musicFileUrl: nil, extInfo: nil, fileData: nil, emoticonData: nil)
-
+        let items = [SSDKPlatformType.TypeSinaWeibo.rawValue,SSDKPlatformType.TypeWechat.rawValue,SSDKPlatformType.TypeSMS.rawValue,SSDKPlatformType.TypeCopy.rawValue];
         
-        ShareSDK.showShareActionSheet(nil, shareList: nil, content: publishContent, statusBarTips: true, authOptions: nil, shareOptions: nil, result: {(type:ShareType,state:SSResponseState,statusInfo:ISSPlatformShareInfo!,error:ICMErrorInfo!,end:Bool) in
-            // println(state.value)
-            
-            if (state.rawValue == SSResponseStateSuccess.rawValue){
-                print("分享成功")
+        ShareSDK.showShareActionSheet(nil, items: items, shareParams: shareParams) { (state:SSDKResponseState, type:SSDKPlatformType, userData:[NSObject : AnyObject]!, contentEntity:SSDKContentEntity!, error:NSError!, end:Bool) -> Void in
+            switch(state) {
+            case SSDKResponseState.Success:
                 let alert = UIAlertView(title: "提示", message:"分享成功", delegate:self, cancelButtonTitle: "ok")
                 alert.show()
-            }
-            else {if (state.rawValue == 2) {
-                let alert = UIAlertView(title: "提示", message:"您没有安装客户端，无法使用分享功能！", delegate:self, cancelButtonTitle: "ok")
+            case SSDKResponseState.Fail:
+                let alert = UIAlertView(title: "提示", message:"分享失败：\(error)", delegate:self, cancelButtonTitle: "ok")
                 alert.show()
-                // println(error.errorCode())
-                  //println(error.errorDescription())
-                  //println()
-                }
+
+            default:
+                break;
             }
-        })
-    }
+            
+        }
+        
+     }
 }
