@@ -31,9 +31,9 @@
 		FD443B901BBBC5EF00DBA8A0 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD443B8F1BBBC5EF00DBA8A0 /* JavaScriptCore.framework */; };
 		FD443B921BBBC61D00DBA8A0 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD443B911BBBC61D00DBA8A0 /* AdSupport.framework */; };
 		FD443B941BBBC62900DBA8A0 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FD443B931BBBC62900DBA8A0 /* libsqlite3.tbd */; };
-		FD443BB61BBCDC5800DBA8A0 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD443BA71BBCDC5800DBA8A0 /* WeiboSDK.bundle */; settings = {ASSET_TAGS = (); }; };
-		FD443BB91BBCDC5800DBA8A0 /* ShareSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD443BAF1BBCDC5800DBA8A0 /* ShareSDK.bundle */; settings = {ASSET_TAGS = (); }; };
-		FD443BBD1BBCDC5800DBA8A0 /* ShareSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD443BB31BBCDC5800DBA8A0 /* ShareSDKUI.bundle */; settings = {ASSET_TAGS = (); }; };
+		FD443BB61BBCDC5800DBA8A0 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD443BA71BBCDC5800DBA8A0 /* WeiboSDK.bundle */; };
+		FD443BB91BBCDC5800DBA8A0 /* ShareSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD443BAF1BBCDC5800DBA8A0 /* ShareSDK.bundle */; };
+		FD443BBD1BBCDC5800DBA8A0 /* ShareSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FD443BB31BBCDC5800DBA8A0 /* ShareSDKUI.bundle */; };
 		FD443BC01BBCDD0900DBA8A0 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FD443BBF1BBCDD0900DBA8A0 /* libicucore.tbd */; };
 		FD443BC21BBCDD1E00DBA8A0 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FD443BC11BBCDD1E00DBA8A0 /* libz.tbd */; };
 		FD443BD51BBCE0FC00DBA8A0 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD443B9D1BBCDC5800DBA8A0 /* libWeiboSDK.a */; };
@@ -1142,7 +1142,7 @@
 				PRODUCT_NAME = swiftmi;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "swiftmi/ShareSdk-Bridging-Header.h";
-				VALID_ARCHS = "arm64 armv7s";
+				VALID_ARCHS = "arm64 armv7s armv7";
 			};
 			name = Debug;
 		};
@@ -1172,7 +1172,7 @@
 				PRODUCT_NAME = swiftmi;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "swiftmi/ShareSdk-Bridging-Header.h";
-				VALID_ARCHS = "arm64 armv7s";
+				VALID_ARCHS = "arm64 armv7s armv7";
 			};
 			name = Release;
 		};
