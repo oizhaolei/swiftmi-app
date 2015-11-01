@@ -57,7 +57,7 @@ class Utility: NSObject {
         
         shareParams.SSDKSetupCopyParamsByText(textWithUrl, images: nil, url:  NSURL(string: linkUrl), type: SSDKContentType.Text)
         
-        shareParams.SSDKSetupSinaWeiboShareParamsByText(title, title: title, image: [img!], url: NSURL(string:linkUrl), latitude: 0.0, longitude: 0.0, objectID: "", type: SSDKContentType.Auto)
+        shareParams.SSDKSetupSinaWeiboShareParamsByText(textWithUrl, title: textWithUrl, image: [img!], url: NSURL(string:linkUrl), latitude: 0.0, longitude: 0.0, objectID: "", type: SSDKContentType.Auto)
         
         shareParams.SSDKSetupSMSParamsByText(textWithUrl, title: textWithUrl, images: nil, attachments: nil, recipients: nil, type: SSDKContentType.Text)
         
