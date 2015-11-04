@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import CoreSpotlight
+import SwiftyJSON
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -56,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         
         
-        
+         SplotlightHelper.AddItemToCoreSpotlight("0", title:"swift迷,专业的Swift开发者社区", contentDescription: "swift迷，致力于打造国内swift交流的地方，提供社区，文章,swift教程,swift源码等")
         
         return true
     }
@@ -93,6 +96,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         return true;
        // return ShareSDK.handleOpenURL(url, sourceApplication: sourceApplication, annotation: annotation, wxDelegate: self)
+    }
+    
+    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: ([AnyObject]?) -> Void) -> Bool {
+        if #available(iOS 9.0, *) {
+            if userActivity.activityType == CSSearchableItemActionType {
+                if let uniqueIdentifier = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
+                    
+                  
+                   
+                    let rootViewController = self.window!.rootViewController as! HomeTabBarController
+                    
+                    let nav = rootViewController.viewControllers![0]  as? UINavigationController
+                    
+                    if uniqueIdentifier.hasPrefix("article-")
+                    {
+                        
+                        let postViewController:PostDetailController = Utility.GetViewController("PostDetailController")
+                        
+                         let startIndex = uniqueIdentifier.startIndex.advancedBy(8)
+                        
+                         postViewController.postId = Int(uniqueIdentifier.substringFromIndex(startIndex))
+                        nav?.pushViewController(postViewController, animated: true)
+                    }
+                    else if uniqueIdentifier.hasPrefix("code-") {
+                        
+                        let codeDetail:CodeDetailViewController = Utility.GetViewController("CodeDetailViewController")
+                        let startIndex = uniqueIdentifier.startIndex.advancedBy(5)
+                        
+                        codeDetail.codeId = Int(uniqueIdentifier.substringFromIndex(startIndex))
+                        nav?.pushViewController(codeDetail, animated: true)
+                    }
+                
+                }
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+        return true
     }
 
 

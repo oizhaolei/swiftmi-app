@@ -20,6 +20,7 @@
 		FD0CB00D1AC04C4400945EB7 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0CB00C1AC04C4400945EB7 /* PostCell.swift */; };
 		FD2E9A7B1AD813C700D53646 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2E9A7A1AD813C700D53646 /* AppDelegate.swift */; };
 		FD2E9A7D1AD8EC2D00D53646 /* bootstrap.min.css in Resources */ = {isa = PBXBuildFile; fileRef = FD2E9A7C1AD8EC2D00D53646 /* bootstrap.min.css */; };
+		FD2ED1731BE7A3C60055FAA4 /* SplotLightHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2ED1721BE7A3C60055FAA4 /* SplotLightHelper.swift */; };
 		FD3DC2AE1ACFF519008535A4 /* template-native.js in Resources */ = {isa = PBXBuildFile; fileRef = FD3DC2AD1ACFF519008535A4 /* template-native.js */; };
 		FD3DC2B61ACFF527008535A4 /* article.html in Resources */ = {isa = PBXBuildFile; fileRef = FD3DC2B51ACFF527008535A4 /* article.html */; };
 		FD3DC2B81ACFF58D008535A4 /* article.js in Resources */ = {isa = PBXBuildFile; fileRef = FD3DC2B71ACFF58D008535A4 /* article.js */; };
@@ -249,6 +250,7 @@
 		FD0CB00C1AC04C4400945EB7 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		FD2E9A7A1AD813C700D53646 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FD2E9A7C1AD8EC2D00D53646 /* bootstrap.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = bootstrap.min.css; sourceTree = "<group>"; };
+		FD2ED1721BE7A3C60055FAA4 /* SplotLightHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplotLightHelper.swift; sourceTree = "<group>"; };
 		FD3DC2AD1ACFF519008535A4 /* template-native.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "template-native.js"; sourceTree = "<group>"; };
 		FD3DC2B51ACFF527008535A4 /* article.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = article.html; sourceTree = "<group>"; };
 		FD3DC2B71ACFF58D008535A4 /* article.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = article.js; sourceTree = "<group>"; };
@@ -705,6 +707,7 @@
 				FDADF6B01AE26D1100B9FBDF /* KeychainWrapper.swift */,
 				FD8D23E31AEE7DFD00890B82 /* SwiftNotice.swift */,
 				FDADF6BE1AE644E500B9FBDF /* Utility.swift */,
+				FD2ED1721BE7A3C60055FAA4 /* SplotLightHelper.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -962,6 +965,7 @@
 				FDADF6C11AE8DAAF00B9FBDF /* AddTopicController.swift in Sources */,
 				FD8DE2EA1ACFADC5001A5A8C /* RefreshHeaderView.swift in Sources */,
 				FDADF6BD1AE2B3F600B9FBDF /* UsersDal.swift in Sources */,
+				FD2ED1731BE7A3C60055FAA4 /* SplotLightHelper.swift in Sources */,
 				FD8DE2E91ACFADC5001A5A8C /* RefreshFooterView.swift in Sources */,
 				FD8DE2E11ACF809E001A5A8C /* BreakOutToRefreshView.swift in Sources */,
 				FDFC61161AC6E3BC00BECD22 /* Post.swift in Sources */,

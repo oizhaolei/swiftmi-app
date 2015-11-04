@@ -19,6 +19,8 @@ class CodeDetailViewController: UIViewController,UIWebViewDelegate {
     
     var newShareCode:JSON?
     
+    var codeId:Int?
+    
     @IBOutlet weak var webView: UIWebView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +36,7 @@ class CodeDetailViewController: UIViewController,UIWebViewDelegate {
         
         self.userActivity = NSUserActivity(activityType: "com.swiftmi.handoff.view-web")
         self.userActivity?.title = "view source on mac"
-        self.userActivity?.webpageURL  =  NSURL(string: ServiceApi.getCodeShareDetail(shareCode!.valueForKey("codeId") as! Int))
+        self.userActivity?.webpageURL  =  NSURL(string: ServiceApi.getCodeShareDetail(self.codeId!))
         self.userActivity?.becomeCurrent()
         
     }
@@ -49,6 +51,11 @@ class CodeDetailViewController: UIViewController,UIWebViewDelegate {
         self.webView.backgroundColor=UIColor.clearColor()
         self.webView.delegate = self
         self.startLoading()
+        
+        
+        if let shareCode = self.shareCode {
+            self.codeId = shareCode.valueForKey("codeId") as? Int
+        }
         
         self.loadData()
          
@@ -82,7 +89,7 @@ class CodeDetailViewController: UIViewController,UIWebViewDelegate {
 
    private func loadData(){
         
-        Alamofire.request(Router.CodeDetail(codeId: shareCode!.valueForKey("codeId") as! Int)).responseJSON{
+        Alamofire.request(Router.CodeDetail(codeId: self.codeId!)).responseJSON{
             closureResponse in
             
             if(closureResponse.result.isFailure){
@@ -137,6 +144,9 @@ class CodeDetailViewController: UIViewController,UIWebViewDelegate {
                     
                     self.webView.stringByEvaluatingJavaScriptFromString("article.render("+data.rawString()!+");")
                     
+                    //add article to index
+                    SplotlightHelper.AddItemToCoreSpotlight("code-\(data["code"]["codeId"].intValue)", title: data["code"]["title"].stringValue, contentDescription: data["code"]["content"].stringValue)
+                    
                     
                 }
                 else if(params[0].compare("html")==NSComparisonResult.OrderedSame && params[1].compare("contentready")==NSComparisonResult.OrderedSame){
@@ -184,8 +194,10 @@ class CodeDetailViewController: UIViewController,UIWebViewDelegate {
     private func share() {
         
         var data = GetLoadData()
+        
+        
         let title = data["code"]["title"].stringValue
-        let url = ServiceApi.getCodeShareDetail(data["code"]["codeId"].intValue)
+        let url = ServiceApi.getCodeShareDetail(self.codeId!)
         let desc = data["code"]["desc"].stringValue
         
         var preview = data["code"]["preview"].stringValue

@@ -36,6 +36,9 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
         center.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
         //center.addObserver(self, selector:"keyboardWillChangeFrame:", name:UIKeyboardWillChangeFrameNotification,object:nil)
     
+      
+
+        
        
         self.setViews()
         
@@ -55,7 +58,7 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
         
         self.userActivity = NSUserActivity(activityType: "com.swiftmi.handoff.view-web")
         self.userActivity?.title = "view article on mac"
-        self.userActivity?.webpageURL  =  NSURL(string: ServiceApi.getTopicShareDetail(article!.valueForKey("postId") as! Int))
+        self.userActivity?.webpageURL  =  NSURL(string: ServiceApi.getTopicShareDetail(self.postId!))
         self.userActivity?.becomeCurrent()
         
     }
@@ -147,7 +150,8 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
 
     func loadData(){
         
-        Alamofire.request(Router.TopicDetail(topicId: (article!.valueForKey("postId") as! Int))).responseJSON{
+        
+        Alamofire.request(Router.TopicDetail(topicId: self.postId!)).responseJSON{
             closureResponse in
             
             if closureResponse.result.isFailure {
@@ -195,7 +199,9 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
         self.webView.scrollView.delegate=self
         
         
-      
+        if let article = self.article {
+            self.postId = article.valueForKey("postId") as? Int
+        }
                 
       //  self.inputView
         
@@ -214,7 +220,7 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
         inputReply.text = "";
         if msg != nil {
             
-            let postId  = article!.valueForKey("postId") as! Int
+            let postId  = self.postId!
             let params:[String:AnyObject] = ["postId":postId,"content":msg]
             
             
@@ -278,6 +284,9 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
                    
                     self.webView.stringByEvaluatingJavaScriptFromString("article.render("+data.rawString()!+");")
                     
+                    //add article to index
+                    SplotlightHelper.AddItemToCoreSpotlight("article-\(data["topic"]["postId"].intValue)", title: data["topic"]["title"].stringValue, contentDescription: data["topic"]["content"].stringValue)
+                    
                     
                 }
                 else if(params[0].compare("html")==NSComparisonResult.OrderedSame && params[1].compare("contentready")==NSComparisonResult.OrderedSame){
@@ -332,15 +341,18 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
     private func share() {
         
         let data = GetLoadData()
-        let title = data["topic"]["title"].stringValue
-        let url = ServiceApi.getTopicShareDetail(data["topic"]["postId"].intValue)
-        let desc = data["topic"]["desc"].stringValue
+        if let title = data["topic"]["title"].string {
+            
         
-        let img = self.webView.stringByEvaluatingJavaScriptFromString("article.getShareImage()")
+            // let title = data["topic"]["title"].stringValue
+            let url = ServiceApi.getTopicShareDetail(data["topic"]["postId"].intValue)
+            let desc = data["topic"]["desc"].stringValue
+        
+            let img = self.webView.stringByEvaluatingJavaScriptFromString("article.getShareImage()")
         
         
-        Utility.share(title, desc: desc, imgUrl: img, linkUrl: url)
-        
+            Utility.share(title, desc: desc, imgUrl: img, linkUrl: url)
+        }
     }
     
     // MARK: - Navigation
