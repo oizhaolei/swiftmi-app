@@ -102,8 +102,8 @@ class PostTableViewController: UITableViewController {
         cell.authorName.text = item.valueForKey("authorName") as? String
         cell.channelName.text = item.valueForKey("channelName") as? String
       
-        if let avatar = item.valueForKey("avatar") {
-             cell.avatar.kf_setImageWithURL(NSURL(string: avatar as! String+"-a80")!, placeholderImage: nil)
+        if let avatar = item.valueForKey("avatar") as? String {
+            cell.avatar.kf_setImageWithURL(NSURL(string: avatar+"-a80")!, placeholderImage: nil)
         }
        
         
