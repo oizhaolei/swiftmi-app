@@ -7,17 +7,61 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import Kingfisher
 
 class ArticleTableViewController: UITableViewController {
 
+    internal var data:[AnyObject] = [AnyObject]()
+    var loading:Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.tableView.estimatedRowHeight = 120;
+        self.tableView.rowHeight = UITableViewAutomaticDimension
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        loadData(0, isPullRefresh: true)
+    }
+    
+    
+    func loadData(maxId:Int,isPullRefresh:Bool) {
+        if self.loading {
+            return
+        }
+        self.loading = true
+        
+        Alamofire.request(Router.ArticleList(maxId: maxId, count: 16)).responseJSON {
+            res in
+            if res.result.isFailure {
+                let alert = UIAlertView(title: "网络异常", message: "请检查网络设置", delegate: nil, cancelButtonTitle: "确定")
+                alert.show()
+                return
+            }
+            
+            let json = res.result.value
+            let result = JSON(json!)
+            if result["isSuc"].boolValue {
+                
+                let items = result["result"].object as! [AnyObject]
+
+                for  it in items {
+                    
+                    self.data.append(it);
+                }
+                dispatch_async(dispatch_get_main_queue()) {
+                    
+                    
+                    self.tableView.reloadData()
+                }
+            }
+            
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,23 +73,36 @@ class ArticleTableViewController: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return self.data.count
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
+        
+        let item: AnyObject = self.data[indexPath.row]
+        
+        if let _ = item.valueForKey("imageUrl") as? String {
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("articleWithImageCell", forIndexPath: indexPath) as! ArticleWithImageCell
+            cell.loadData(item)
+            return cell
+            
+        } else {
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("articleCell", forIndexPath: indexPath) as! ArticleCell
+            cell.loadData(item)
+            return cell
+        }
+        
         // Configure the cell...
 
-        return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.

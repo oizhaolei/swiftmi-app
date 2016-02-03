@@ -26,5 +26,14 @@ class ArticleCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    func loadData(item:AnyObject) {
+        
+        self.titleLabel.text = item.valueForKey("title") as? String
+        self.sourceLabel.text = item.valueForKey("sourceName") as? String
+        let pubTime = item.valueForKey("createDate") as! Double
+        let createDate = NSDate(timeIntervalSince1970: pubTime)
+        self.dateLabel.text = Utility.formatDate(createDate)
+    }
 
 }

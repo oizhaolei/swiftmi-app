@@ -92,7 +92,9 @@ enum Router: URLRequestConvertible {
         if let token = Router.token {
             mutableURLRequest.setValue("\(token)", forHTTPHeaderField: "token")
         }
-         
+        
+        mutableURLRequest.setValue("com.swiftmi.app", forHTTPHeaderField: "clientid")
+        mutableURLRequest.setValue("1.0", forHTTPHeaderField: "appversion")
         
         switch self {
         case .TopicComment(let parameters):
