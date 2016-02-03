@@ -48,6 +48,11 @@ class ServiceApi: NSObject {
         return url
     }
     
+    class func getArticlesUrl(maxId:Int, count:Int) -> String {
+        let url="\(host)/api/articles?maxId=\(maxId)&count=\(count)"
+        return url
+    }
+    
     class func getLoginUrl()->String {
         let url = "\(host)/api/user/login"
         return url;

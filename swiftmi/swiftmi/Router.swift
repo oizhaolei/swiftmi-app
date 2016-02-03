@@ -25,6 +25,7 @@ enum Router: URLRequestConvertible {
     case BookList(type:Int,maxId:Int,count:Int)
     case UserRegister(parameters:[String: AnyObject])
     case UserLogin(parameters:[String: AnyObject])
+    case ArticleList(maxId:Int,count:Int)
     
     var method: Alamofire.Method {
         switch self {
@@ -34,7 +35,6 @@ enum Router: URLRequestConvertible {
             return .POST
         case .TopicDetail:
             return .GET
-            
         case .TopicList:
             return .GET
         case .CodeList:
@@ -47,6 +47,8 @@ enum Router: URLRequestConvertible {
             return .POST
         case .UserLogin:
             return .POST
+        default:
+            return .GET
         }
         
     }
@@ -76,6 +78,8 @@ enum Router: URLRequestConvertible {
             return ServiceApi.getRegistUrl()
         case .CodeDetail(let codeId):
             return ServiceApi.getCodeDetailUrl(codeId)
+        case .ArticleList(let maxId,let count):
+            return ServiceApi.getArticlesUrl(maxId, count: count)
         }
     }
     
