@@ -1015,7 +1015,7 @@
         <!--文章-->
         <scene sceneID="l6V-mJ-0wQ">
             <objects>
-                <tableViewController storyboardIdentifier="ArticleTableViewController" id="Pqm-OZ-BIt" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ArticleTableViewController" id="Pqm-OZ-BIt" customClass="ArticleTableViewController" customModule="swiftmi" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="68" sectionHeaderHeight="28" sectionFooterHeight="28" id="weB-IM-nH6">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

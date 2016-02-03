@@ -85,6 +85,7 @@
 		FDEAD3251ADC216500D85554 /* MyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDEAD3241ADC216500D85554 /* MyController.swift */; };
 		FDF9677B1C61F1E5009B8B5F /* ArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF9677A1C61F1E5009B8B5F /* ArticleCell.swift */; };
 		FDF9678D1C61F1F8009B8B5F /* ArticleWithImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF9678C1C61F1F8009B8B5F /* ArticleWithImageCell.swift */; };
+		FDF9678F1C61F304009B8B5F /* ArticleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF9678E1C61F304009B8B5F /* ArticleTableViewController.swift */; };
 		FDF988871ADEC49800889407 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF988861ADEC49800889407 /* ProfileHeaderView.swift */; };
 		FDF988891ADEC55300889407 /* ProfileHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDF988881ADEC55300889407 /* ProfileHeaderView.xib */; };
 		FDF9889B1ADF350B00889407 /* Kingfisher.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FDF988931ADF34F000889407 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -346,6 +347,7 @@
 		FDEAD3241ADC216500D85554 /* MyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyController.swift; sourceTree = "<group>"; };
 		FDF9677A1C61F1E5009B8B5F /* ArticleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleCell.swift; sourceTree = "<group>"; };
 		FDF9678C1C61F1F8009B8B5F /* ArticleWithImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleWithImageCell.swift; sourceTree = "<group>"; };
+		FDF9678E1C61F304009B8B5F /* ArticleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleTableViewController.swift; sourceTree = "<group>"; };
 		FDF988861ADEC49800889407 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		FDF988881ADEC55300889407 /* ProfileHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileHeaderView.xib; sourceTree = "<group>"; };
 		FDF9888A1ADF34F000889407 /* Kingfisher.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Kingfisher.xcodeproj; path = ../Kingfisher/Kingfisher.xcodeproj; sourceTree = "<group>"; };
@@ -474,6 +476,7 @@
 				FDADF6C01AE8DAAF00B9FBDF /* AddTopicController.swift */,
 				FD8D23EF1AEFD3CD00890B82 /* CodeDetailViewController.swift */,
 				FD0C68F91AF670CA00DFABF6 /* WebViewController.swift */,
+				FDF9678E1C61F304009B8B5F /* ArticleTableViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1002,6 +1005,7 @@
 				FD8DE2EA1ACFADC5001A5A8C /* RefreshHeaderView.swift in Sources */,
 				FDADF6BD1AE2B3F600B9FBDF /* UsersDal.swift in Sources */,
 				FD2ED1731BE7A3C60055FAA4 /* SplotLightHelper.swift in Sources */,
+				FDF9678F1C61F304009B8B5F /* ArticleTableViewController.swift in Sources */,
 				FD8DE2E91ACFADC5001A5A8C /* RefreshFooterView.swift in Sources */,
 				FD8DE2E11ACF809E001A5A8C /* BreakOutToRefreshView.swift in Sources */,
 				FDFC61161AC6E3BC00BECD22 /* Post.swift in Sources */,
