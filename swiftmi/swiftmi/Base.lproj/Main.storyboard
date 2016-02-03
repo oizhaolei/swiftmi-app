@@ -1028,14 +1028,14 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="67.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfW-Oj-WQ0">
-                                            <rect key="frame" x="8" y="8" width="584" height="20.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfW-Oj-WQ0">
+                                            <rect key="frame" x="8" y="10" width="584" height="18.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="栏目" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zwK-tG-vKZ">
-                                            <rect key="frame" x="8" y="42.5" width="24" height="14.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="栏目" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zwK-tG-vKZ">
+                                            <rect key="frame" x="8" y="42" width="24" height="14.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -1050,7 +1050,6 @@
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" secondItem="lfW-Oj-WQ0" secondAttribute="trailing" id="53q-ZO-yEM"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="lfW-Oj-WQ0" secondAttribute="leading" id="Hae-Vy-ZUD"/>
-                                        <constraint firstItem="AUH-pl-IDf" firstAttribute="height" secondItem="zwK-tG-vKZ" secondAttribute="height" id="bor-uS-nQe"/>
                                         <constraint firstAttribute="topMargin" secondItem="lfW-Oj-WQ0" secondAttribute="top" id="co7-ze-HLb"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="zwK-tG-vKZ" secondAttribute="bottom" constant="2" id="deW-Ld-LMq"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="zwK-tG-vKZ" secondAttribute="leading" id="mSP-4K-FhG"/>
@@ -1058,11 +1057,6 @@
                                         <constraint firstItem="zwK-tG-vKZ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="lfW-Oj-WQ0" secondAttribute="bottom" constant="14" id="wax-AS-yrz"/>
                                         <constraint firstItem="AUH-pl-IDf" firstAttribute="leading" secondItem="zwK-tG-vKZ" secondAttribute="trailing" constant="15" id="zGP-Oy-kyu"/>
                                     </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="bor-uS-nQe"/>
-                                        </mask>
-                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="dateLabel" destination="AUH-pl-IDf" id="Uzp-vX-LVe"/>
@@ -1110,34 +1104,12 @@
                                         <constraint firstAttribute="leadingMargin" secondItem="BEw-EV-rt1" secondAttribute="leading" id="Exs-Vz-D54"/>
                                         <constraint firstItem="Qfg-bl-bHa" firstAttribute="leading" secondItem="LKm-vr-fub" secondAttribute="trailing" constant="15" id="Fj3-gK-wbv"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="LKm-vr-fub" secondAttribute="bottom" constant="2" id="H1n-EL-wOJ"/>
-                                        <constraint firstItem="azo-kU-Glj" firstAttribute="centerY" secondItem="QvZ-Mt-15Y" secondAttribute="centerY" id="KpY-kR-qZM"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="azo-kU-Glj" secondAttribute="trailing" constant="5" id="Td8-E9-Hp8"/>
-                                        <constraint firstItem="azo-kU-Glj" firstAttribute="top" relation="greaterThanOrEqual" secondItem="QvZ-Mt-15Y" secondAttribute="topMargin" constant="5" id="Tef-Nf-8BU"/>
                                         <constraint firstItem="azo-kU-Glj" firstAttribute="leading" secondItem="BEw-EV-rt1" secondAttribute="trailing" constant="17" id="UYl-cN-Dz7"/>
-                                        <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="azo-kU-Glj" secondAttribute="bottom" priority="900" constant="6" id="WFz-vc-yie"/>
-                                        <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="azo-kU-Glj" secondAttribute="bottom" constant="5" id="ZcW-GP-vh9"/>
-                                        <constraint firstAttribute="height" secondItem="azo-kU-Glj" secondAttribute="height" id="ejU-df-n5Y"/>
                                         <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="azo-kU-Glj" secondAttribute="bottom" constant="6" id="fbe-fI-vDm"/>
                                         <constraint firstAttribute="topMargin" secondItem="BEw-EV-rt1" secondAttribute="top" id="frW-TB-Gl0"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="azo-kU-Glj" secondAttribute="trailing" constant="5" id="fyM-Rs-r52"/>
-                                        <constraint firstItem="azo-kU-Glj" firstAttribute="leading" secondItem="BEw-EV-rt1" secondAttribute="trailing" constant="17" id="j1j-p2-61d"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="LKm-vr-fub" secondAttribute="leading" id="pts-L4-eHf"/>
                                         <constraint firstItem="LKm-vr-fub" firstAttribute="top" relation="greaterThanOrEqual" secondItem="BEw-EV-rt1" secondAttribute="bottom" constant="14" id="tF2-la-ZUb"/>
-                                        <constraint firstItem="azo-kU-Glj" firstAttribute="leading" secondItem="QvZ-Mt-15Y" secondAttribute="leadingMargin" constant="519" id="tVr-xQ-AoK"/>
                                     </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="KpY-kR-qZM"/>
-                                            <exclude reference="Td8-E9-Hp8"/>
-                                            <exclude reference="Tef-Nf-8BU"/>
-                                            <exclude reference="WFz-vc-yie"/>
-                                            <exclude reference="ZcW-GP-vh9"/>
-                                            <exclude reference="ejU-df-n5Y"/>
-                                            <exclude reference="fyM-Rs-r52"/>
-                                            <exclude reference="j1j-p2-61d"/>
-                                            <exclude reference="tVr-xQ-AoK"/>
-                                        </mask>
-                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="articleImage" destination="azo-kU-Glj" id="pU3-o2-Kby"/>
@@ -1219,7 +1191,7 @@
         <scene sceneID="xWL-JT-E6V">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UGy-kU-zBG" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="文章" id="GGX-ZQ-9gW"/>
+                    <tabBarItem key="tabBarItem" title="文章" image="news" id="GGX-ZQ-9gW"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Soq-5N-2ws">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1242,5 +1214,6 @@
         <image name="comment" width="20" height="20"/>
         <image name="home" width="30" height="30"/>
         <image name="me" width="30" height="30"/>
+        <image name="news" width="30" height="30"/>
     </resources>
 </document>

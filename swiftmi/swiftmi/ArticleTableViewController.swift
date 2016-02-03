@@ -25,8 +25,34 @@ class ArticleTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        loadData(0, isPullRefresh: true)
+        getDefaultData();
+        
+        self.tableView.addHeaderWithCallback{
+            
+            self.loadData(0, isPullRefresh: true)
+        }
+        
+        self.tableView.addFooterWithCallback{
+            
+            if(self.data.count>0) {
+                let maxId = self.data.last!.valueForKey("articleId") as! Int
+                self.loadData(maxId, isPullRefresh: false)
+            }
+        }
+        
+        self.tableView.headerBeginRefreshing()
     }
+    
+    private func getDefaultData(){
+        
+        let dalArticle = ArticleDal()
+        let result = dalArticle.getList()
+        if result != nil {
+            self.data = result!
+            self.tableView.reloadData()
+        }
+    }
+
     
     
     func loadData(maxId:Int,isPullRefresh:Bool) {
@@ -35,13 +61,22 @@ class ArticleTableViewController: UITableViewController {
         }
         self.loading = true
         
-        Alamofire.request(Router.ArticleList(maxId: maxId, count: 16)).responseJSON {
+        Alamofire.request(Router.ArticleList(maxId: maxId, count: 12)).responseJSON {
             res in
+            self.loading = false
+            if(isPullRefresh){
+                self.tableView.headerEndRefreshing()
+            }
+            else{
+                self.tableView.footerEndRefreshing()
+            }
+            
             if res.result.isFailure {
                 let alert = UIAlertView(title: "网络异常", message: "请检查网络设置", delegate: nil, cancelButtonTitle: "确定")
                 alert.show()
                 return
             }
+            print("maxId \(maxId)")
             
             let json = res.result.value
             let result = JSON(json!)
@@ -49,6 +84,20 @@ class ArticleTableViewController: UITableViewController {
                 
                 let items = result["result"].object as! [AnyObject]
 
+                if(items.count==0){
+                    return
+                }
+                
+                if(isPullRefresh){
+                    
+                    let articleDal = ArticleDal()
+                    articleDal.deleteAll()
+                    
+                    articleDal.addList(items)
+                    
+                    self.data.removeAll(keepCapacity: false)
+                }
+                
                 for  it in items {
                     
                     self.data.append(it);

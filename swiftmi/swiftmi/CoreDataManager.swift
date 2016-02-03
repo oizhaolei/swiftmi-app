@@ -4,7 +4,7 @@ import CoreData
 
 class CoreDataManager: NSObject {
     
-    let storeName="dev-swiftmi04.sqlite"
+    let storeName="dev-swiftmi05.sqlite"
     let dataModelName="Model"
     
     var _managedObjectContext:NSManagedObjectContext?=nil
