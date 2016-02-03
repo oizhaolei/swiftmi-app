@@ -988,7 +988,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oKX-uE-Ljc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="597" y="2988"/>
+            <point key="canvasLocation" x="578" y="3100"/>
         </scene>
         <!--Home Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -1062,6 +1062,7 @@
                                     <outlet property="dateLabel" destination="AUH-pl-IDf" id="Uzp-vX-LVe"/>
                                     <outlet property="sourceLabel" destination="zwK-tG-vKZ" id="vb4-u6-cZI"/>
                                     <outlet property="titleLabel" destination="lfW-Oj-WQ0" id="Wvj-Av-UCc"/>
+                                    <segue destination="EiW-l8-MD9" kind="show" id="J51-Yv-6ad"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="articleWithImageCell" rowHeight="89" id="4xx-E0-eHx" customClass="ArticleWithImageCell" customModule="swiftmi" customModuleProvider="target">
@@ -1116,6 +1117,7 @@
                                     <outlet property="dateLabel" destination="Qfg-bl-bHa" id="Sfh-lh-2Vk"/>
                                     <outlet property="sourceLabel" destination="LKm-vr-fub" id="btM-sH-ZHz"/>
                                     <outlet property="titleLabel" destination="BEw-EV-rt1" id="Ne9-aN-wuI"/>
+                                    <segue destination="EiW-l8-MD9" kind="show" id="Afl-NZ-h1L"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1128,7 +1130,50 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wIs-b6-GTW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1432" y="1158"/>
+            <point key="canvasLocation" x="1412" y="1213"/>
+        </scene>
+        <!--Article Detail Controller-->
+        <scene sceneID="z8r-kb-cNt">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="EiW-l8-MD9" customClass="ArticleDetailController" customModule="swiftmi" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MtB-r7-K9y"/>
+                        <viewControllerLayoutGuide type="bottom" id="DvF-rR-PlD"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zK1-CO-jaf">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fol-jf-VEk">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Fol-jf-VEk" firstAttribute="top" secondItem="MtB-r7-K9y" secondAttribute="bottom" id="03o-QV-UkP"/>
+                            <constraint firstItem="Fol-jf-VEk" firstAttribute="leading" secondItem="zK1-CO-jaf" secondAttribute="leading" id="AZi-3R-vPg"/>
+                            <constraint firstItem="Fol-jf-VEk" firstAttribute="top" secondItem="MtB-r7-K9y" secondAttribute="bottom" constant="64" id="DWh-o8-kaW"/>
+                            <constraint firstItem="DvF-rR-PlD" firstAttribute="top" secondItem="Fol-jf-VEk" secondAttribute="bottom" id="Kca-zO-qzD"/>
+                            <constraint firstAttribute="bottom" secondItem="Fol-jf-VEk" secondAttribute="bottom" id="Uge-kv-d7S"/>
+                            <constraint firstItem="Fol-jf-VEk" firstAttribute="top" secondItem="zK1-CO-jaf" secondAttribute="topMargin" id="WOG-Oy-TFG"/>
+                            <constraint firstAttribute="trailing" secondItem="Fol-jf-VEk" secondAttribute="trailing" id="gXO-10-Bnp"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="03o-QV-UkP"/>
+                                <exclude reference="DWh-o8-kaW"/>
+                                <exclude reference="Kca-zO-qzD"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="Fol-jf-VEk" id="DPV-1g-e2A"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4nm-ZL-64x" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1858" y="1515"/>
         </scene>
         <!--社区-->
         <scene sceneID="pj4-2x-C5x">
@@ -1216,4 +1261,7 @@
         <image name="me" width="30" height="30"/>
         <image name="news" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="J51-Yv-6ad"/>
+    </inferredMetricsTieBreakers>
 </document>

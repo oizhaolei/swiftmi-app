@@ -79,6 +79,7 @@
 		FDB3B2C11AE0F2F30078241E /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB3B2C01AE0F2F30078241E /* RegisterController.swift */; };
 		FDD395581C62420300AB4AB6 /* Articles.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD395571C62420300AB4AB6 /* Articles.swift */; };
 		FDD395691C6242DA00AB4AB6 /* ArticleDal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD395681C6242DA00AB4AB6 /* ArticleDal.swift */; };
+		FDD395791C62585400AB4AB6 /* ArticleDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD395781C62585400AB4AB6 /* ArticleDetailController.swift */; };
 		FDE14F201AD0267F00F97659 /* tmpl.js in Resources */ = {isa = PBXBuildFile; fileRef = FDE14F1F1AD0267F00F97659 /* tmpl.js */; };
 		FDE14F2F1AD02CA100F97659 /* pagedown in Resources */ = {isa = PBXBuildFile; fileRef = FDE14F2E1AD02CA100F97659 /* pagedown */; };
 		FDE14F611AD0CC7B00F97659 /* highlight.pack.js in Resources */ = {isa = PBXBuildFile; fileRef = FDE14F601AD0CC7B00F97659 /* highlight.pack.js */; };
@@ -343,6 +344,7 @@
 		FDB3B2C01AE0F2F30078241E /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
 		FDD395571C62420300AB4AB6 /* Articles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Articles.swift; sourceTree = "<group>"; };
 		FDD395681C6242DA00AB4AB6 /* ArticleDal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleDal.swift; sourceTree = "<group>"; };
+		FDD395781C62585400AB4AB6 /* ArticleDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleDetailController.swift; sourceTree = "<group>"; };
 		FDE14F1F1AD0267F00F97659 /* tmpl.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = tmpl.js; sourceTree = "<group>"; };
 		FDE14F2E1AD02CA100F97659 /* pagedown */ = {isa = PBXFileReference; lastKnownFileType = folder; path = pagedown; sourceTree = "<group>"; };
 		FDE14F601AD0CC7B00F97659 /* highlight.pack.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = highlight.pack.js; sourceTree = "<group>"; };
@@ -481,6 +483,7 @@
 				FD8D23EF1AEFD3CD00890B82 /* CodeDetailViewController.swift */,
 				FD0C68F91AF670CA00DFABF6 /* WebViewController.swift */,
 				FDF9678E1C61F304009B8B5F /* ArticleTableViewController.swift */,
+				FDD395781C62585400AB4AB6 /* ArticleDetailController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -998,6 +1001,7 @@
 				FD0CB00A1AC04A9100945EB7 /* PostTableViewController.swift in Sources */,
 				FDFC610F1AC4691700BECD22 /* Model.xcdatamodeld in Sources */,
 				FD0CB0061ABF206100945EB7 /* HomeTabBarController.swift in Sources */,
+				FDD395791C62585400AB4AB6 /* ArticleDetailController.swift in Sources */,
 				FD44213A1ACC2FD3006BCE41 /* CodeCell.swift in Sources */,
 				FDFC611D1AC6F8BA00BECD22 /* PostDal.swift in Sources */,
 				FDADF6C41AE94A3D00B9FBDF /* Router.swift in Sources */,
