@@ -1132,7 +1132,7 @@
             </objects>
             <point key="canvasLocation" x="1412" y="1213"/>
         </scene>
-        <!--Article Detail Controller-->
+        <!--文章详情-->
         <scene sceneID="z8r-kb-cNt">
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="EiW-l8-MD9" customClass="ArticleDetailController" customModule="swiftmi" customModuleProvider="target" sceneMemberID="viewController">
@@ -1167,6 +1167,13 @@
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" title="文章详情" id="IrI-FS-bKE">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="9jv-sa-Cbf">
+                            <connections>
+                                <action selector="shareArticle:" destination="EiW-l8-MD9" id="1FB-Ov-joa"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="webView" destination="Fol-jf-VEk" id="DPV-1g-e2A"/>
                     </connections>

@@ -26,7 +26,8 @@ enum Router: URLRequestConvertible {
     case UserRegister(parameters:[String: AnyObject])
     case UserLogin(parameters:[String: AnyObject])
     case ArticleList(maxId:Int,count:Int)
-    
+    case ArticleDetail(articleId:Int)
+
     var method: Alamofire.Method {
         switch self {
         case .TopicComment:
@@ -80,6 +81,8 @@ enum Router: URLRequestConvertible {
             return ServiceApi.getCodeDetailUrl(codeId)
         case .ArticleList(let maxId,let count):
             return ServiceApi.getArticlesUrl(maxId, count: count)
+        case .ArticleDetail(let articleId):
+            return ServiceApi.getArticlesDetail(articleId)
         }
     }
     

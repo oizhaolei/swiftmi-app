@@ -1,21 +1,20 @@
 /// <reference path="jquery-1.8.3.min.js" />
 /// <reference path="tmpl.js" />
-;
-(function () {
+;(function () {
 
  moment.lang("zh-cn");
  template.helper('Date', Date);
  template.helper('moment', moment);
-
+  
     var article = {
         isNight: 0,
         render: function (art) {
 
-            if (!art.article.createDate) {
-                art.article.createDate = parseInt((new Date()).getTime() / 1000);
+            if (!art.createDate) {
+                art.createDate = parseInt((new Date()).getTime() / 1000);
             }
 
-            var con = template("content-tmpl", art);
+            var con = template("content-tmpl", {article:art});
             $("#content").html(con);
 
             if($(".highlight").length == 0) {

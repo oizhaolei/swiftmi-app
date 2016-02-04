@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title></title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
         <link href="xcode.css" rel="stylesheet">
             <link href="bootstrap.min.css" rel="stylesheet">
-                
         <style type="text/css">
             body{    
                 -webkit-overflow-scrolling: touch;
@@ -166,6 +166,188 @@
             height: 48px;
         }
             </style>
+        <style>
+            figure.highlight {
+                background: #e8e8e8;
+                border: 1px solid #ddd;
+                margin: 0;
+                margin-bottom: 20px;
+                padding: 25px;
+                -webkit-border-radius: 4px;
+                border-radius: 4px;
+                text-shadow: 0 0 1px #fff;
+                line-height: 2;
+                overflow: auto;
+                position: relative;
+                font-family: Courier, Monaco, monospace;
+                font-size: 1em;
+            }
+        figure.highlight figcaption {
+            color: #999;
+            margin-bottom: 5px;
+            text-shadow: 0 0 1px #fff;
+        }
+        figure.highlight figcaption a {
+            position: absolute;
+            right: 15px;
+        }
+        figure.highlight pre {
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+        figure.highlight table {
+            margin-top: 0;
+            border-spacing: 0;
+        }
+        figure.highlight th {
+            font-weight: normal;
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+        figure.highlight td {
+            border-bottom: 0;
+            padding: 0;
+        }
+        figure.highlight .gutter {
+            color: #999;
+            padding-right: 20px;
+            text-align: left;
+            display: none;
+        }
+        figure.highlight .code {
+            font-family: Courier, Monaco, monospace;
+            border-left: 0px solid #fff;
+            color: #666;
+        }
+        
+        
+        div.highlight {
+            background: #e8e8e8;
+            border: 1px solid #ddd;
+            margin: 0;
+            margin-bottom: 20px;
+            padding: 25px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            text-shadow: 0 0 1px #fff;
+            line-height: 2;
+            overflow: auto;
+            position: relative;
+            font-family: Courier, Monaco, monospace;
+            font-size: 1em;
+        }
+        div.highlight figcaption {
+            color: #999;
+            margin-bottom: 5px;
+            text-shadow: 0 0 1px #fff;
+        }
+        div.highlight figcaption a {
+            position: absolute;
+            right: 15px;
+        }
+        div.highlight pre {
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+        div.highlight table {
+            margin-top: 0;
+            border-spacing: 0;
+        }
+        div.highlight th {
+            font-weight: normal;
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+        div.highlight td {
+            border-bottom: 0;
+            padding: 0;
+        }
+        div.highlight .gutter {
+            color: #999;
+            padding-right: 20px;
+            text-align: left;
+            display: none;
+        }
+        div.highlight .code {
+            font-family: Courier, Monaco, monospace;
+            border-left: 0px solid #fff;
+            color: #666;
+        }
+        
+        
+        pre .comment,
+        pre .template_comment,
+        pre .diff .header,
+        pre .doctype,
+        pre .pi,
+        pre .lisp .string,
+        pre .javadoc {
+            color: #93a1a1;
+            font-style: italic;
+        }
+        pre .keyword,
+        pre .winutils,
+        pre .method,
+        pre .addition,
+        pre .css .tag,
+        pre .request,
+        pre .status,
+        pre .nginx .title {
+            color: #859900;
+        }
+        pre .number,
+        pre .command,
+        pre .string,
+        pre .tag .value,
+        pre .phpdoc,
+        pre .tex .formula,
+        pre .regexp,
+        pre .hexcolor {
+            color: #2aa198;
+        }
+        pre .title,
+        pre .localvars,
+        pre .chunk,
+        pre .decorator,
+        pre .built_in,
+        pre .identifier,
+        pre .vhdl,
+        pre .literal,
+        pre .id {
+            color: #268bd2;
+        }
+        pre .attribute,
+        pre .variable,
+        pre .lisp .body,
+        pre .smalltalk .number,
+        pre .constant,
+        pre .class .title,
+        pre .parent,
+        pre .haskell .type {
+            color: #b58900;
+        }
+        pre .preprocessor,
+        pre .preprocessor .keyword,
+        pre .shebang,
+        pre .symbol,
+        pre .symbol .string,
+        pre .diff .change,
+        pre .special,
+        pre .attr_selector,
+        pre .important,
+        pre .subst,
+        pre .cdata,
+        pre .clojure .title {
+            color: #cb4b16;
+        }
+        pre .deletion {
+            color: #dc322f;
+        }
+            </style>
     </head>
     <body class="body fnormal">
         <div id="content"></div>
@@ -173,23 +355,23 @@
         <script src="template-native.js"></script>
         <script src="moment.min.js"></script>
         <script src="zh-cn.js"></script>  
+        <script src="highlight.pack.js"></script>
         <script src="next.js"></script>
         <script type="text/html" id="content-tmpl">
             <div class="content">
             <article class="post-detail">
             <section  class="post-header">
             <div class="page-header">
-            <h1><%=code.title %></h1>
+            <h1><%=article.title %></h1>
              <div class="clearfix">
-            来源: <a href="<%=article.sourceUrl%>"><%=article.sourceName %></a> 于：<%=moment(article.createDate*1000).fromNow() %> 发布 
+            来源: <a href="<%=article.sourceUrl%>"><%=article.sourceName %></a> 于：<%=moment(article.createDate*1000).fromNow() %> 发布
             <%=article.viewCount %> 次点击
             </div>
-            <hr class="clearfix" style="margin-top: 10px;">
             <div class="clearfix"></div>
             </div>
             </section>
             <section class="post-con">
-                <%- article.content %>
+            <%=# article.content %>
             </section>
             </article>
             </div>

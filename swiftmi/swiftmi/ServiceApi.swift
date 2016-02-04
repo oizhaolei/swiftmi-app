@@ -49,7 +49,12 @@ class ServiceApi: NSObject {
     }
     
     class func getArticlesUrl(maxId:Int, count:Int) -> String {
-        let url="\(host)/api/articles?maxId=\(maxId)&count=\(count)"
+        let url="\(host)/api/articles?maxId=\(maxId)&count=\(count)&withContent=1"
+        return url
+    }
+    
+    class func getArticlesDetail(articleId:Int) -> String {
+        let url="\(host)/api/articles/\(articleId)"
         return url
     }
     

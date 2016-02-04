@@ -188,14 +188,24 @@ class ArticleTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.destinationViewController is ArticleDetailController {
+            let view = segue.destinationViewController as! ArticleDetailController
+            let indexPath = self.tableView.indexPathForSelectedRow
+            
+            let article: AnyObject = self.data[indexPath!.row]
+            view.article = article
+            view.articleId = article.valueForKey("articleId") as? Int
+            
+            
+        }
     }
-    */
+    
 
 }
