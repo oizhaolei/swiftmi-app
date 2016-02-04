@@ -349,6 +349,8 @@
 		FDD395781C62585400AB4AB6 /* ArticleDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleDetailController.swift; sourceTree = "<group>"; };
 		FDD3957D1C62FB9900AB4AB6 /* next.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = next.html; sourceTree = "<group>"; };
 		FDD3957E1C62FB9900AB4AB6 /* next.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = next.js; sourceTree = "<group>"; };
+		FDD396621C6349D500AB4AB6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		FDD396631C6349D500AB4AB6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		FDE14F1F1AD0267F00F97659 /* tmpl.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = tmpl.js; sourceTree = "<group>"; };
 		FDE14F2E1AD02CA100F97659 /* pagedown */ = {isa = PBXFileReference; lastKnownFileType = folder; path = pagedown; sourceTree = "<group>"; };
 		FDE14F601AD0CC7B00F97659 /* highlight.pack.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = highlight.pack.js; sourceTree = "<group>"; };
@@ -821,7 +823,6 @@
 			knownRegions = (
 				en,
 				Base,
-				"zh-Hans",
 			);
 			mainGroup = FD0CAFD41ABF1D1D00945EB7;
 			productRefGroup = FD0CAFDE1ABF1D1D00945EB7 /* Products */;
@@ -1089,6 +1090,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				FD0CAFE91ABF1D1D00945EB7 /* Base */,
+				FDD396621C6349D500AB4AB6 /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1097,6 +1099,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				FD0CAFEE1ABF1D1D00945EB7 /* Base */,
+				FDD396631C6349D500AB4AB6 /* zh-Hans */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
