@@ -59,7 +59,7 @@ class ServiceApi: NSObject {
     }
     
     class func getArticlesShareDetail(articleId:Int) -> String {
-        let url="\(host)/api/articles/\(articleId).html"
+        let url="\(host)/articles/\(articleId).html"
         return url
     }
     
