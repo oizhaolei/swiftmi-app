@@ -80,6 +80,8 @@
 		FDD395581C62420300AB4AB6 /* Articles.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD395571C62420300AB4AB6 /* Articles.swift */; };
 		FDD395691C6242DA00AB4AB6 /* ArticleDal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD395681C6242DA00AB4AB6 /* ArticleDal.swift */; };
 		FDD395791C62585400AB4AB6 /* ArticleDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD395781C62585400AB4AB6 /* ArticleDetailController.swift */; };
+		FDD3957F1C62FB9900AB4AB6 /* next.html in Resources */ = {isa = PBXBuildFile; fileRef = FDD3957D1C62FB9900AB4AB6 /* next.html */; };
+		FDD395801C62FB9900AB4AB6 /* next.js in Resources */ = {isa = PBXBuildFile; fileRef = FDD3957E1C62FB9900AB4AB6 /* next.js */; };
 		FDE14F201AD0267F00F97659 /* tmpl.js in Resources */ = {isa = PBXBuildFile; fileRef = FDE14F1F1AD0267F00F97659 /* tmpl.js */; };
 		FDE14F2F1AD02CA100F97659 /* pagedown in Resources */ = {isa = PBXBuildFile; fileRef = FDE14F2E1AD02CA100F97659 /* pagedown */; };
 		FDE14F611AD0CC7B00F97659 /* highlight.pack.js in Resources */ = {isa = PBXBuildFile; fileRef = FDE14F601AD0CC7B00F97659 /* highlight.pack.js */; };
@@ -345,6 +347,8 @@
 		FDD395571C62420300AB4AB6 /* Articles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Articles.swift; sourceTree = "<group>"; };
 		FDD395681C6242DA00AB4AB6 /* ArticleDal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleDal.swift; sourceTree = "<group>"; };
 		FDD395781C62585400AB4AB6 /* ArticleDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleDetailController.swift; sourceTree = "<group>"; };
+		FDD3957D1C62FB9900AB4AB6 /* next.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = next.html; sourceTree = "<group>"; };
+		FDD3957E1C62FB9900AB4AB6 /* next.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = next.js; sourceTree = "<group>"; };
 		FDE14F1F1AD0267F00F97659 /* tmpl.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = tmpl.js; sourceTree = "<group>"; };
 		FDE14F2E1AD02CA100F97659 /* pagedown */ = {isa = PBXFileReference; lastKnownFileType = folder; path = pagedown; sourceTree = "<group>"; };
 		FDE14F601AD0CC7B00F97659 /* highlight.pack.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = highlight.pack.js; sourceTree = "<group>"; };
@@ -506,6 +510,8 @@
 		FD3DC2AC1ACFF519008535A4 /* HtmlPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				FDD3957D1C62FB9900AB4AB6 /* next.html */,
+				FDD3957E1C62FB9900AB4AB6 /* next.js */,
 				FD2E9A7C1AD8EC2D00D53646 /* bootstrap.min.css */,
 				FDE14F621AD0CC8A00F97659 /* xcode.css */,
 				FDE14F601AD0CC7B00F97659 /* highlight.pack.js */,
@@ -972,7 +978,9 @@
 				FD3DC2B81ACFF58D008535A4 /* article.js in Resources */,
 				FD3DC2B61ACFF527008535A4 /* article.html in Resources */,
 				FD443BB91BBCDC5800DBA8A0 /* ShareSDK.bundle in Resources */,
+				FDD395801C62FB9900AB4AB6 /* next.js in Resources */,
 				FD3DC2AE1ACFF519008535A4 /* template-native.js in Resources */,
+				FDD3957F1C62FB9900AB4AB6 /* next.html in Resources */,
 				FDADF6C81AEA520600B9FBDF /* zh-cn.js in Resources */,
 				FDE14F631AD0CC8A00F97659 /* xcode.css in Resources */,
 				FD8DE2D31ACF7F54001A5A8C /* arrow_up.png in Resources */,

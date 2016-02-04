@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title></title>
+        <link href="xcode.css" rel="stylesheet">
+            <link href="bootstrap.min.css" rel="stylesheet">
+                
+        <style type="text/css">
+            body{    
+                -webkit-overflow-scrolling: touch;
+            }
+            a{
+                text-decoration:none;
+                underline:none;
+            }
+            .body
+            {
+                background-color:#fff;
+                font-size:20px;
+                margin:0px;
+                padding:10px 10px;
+                padding-bottom:10px;
+                padding-top:0px;
+                font-family: Arial, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
+                color: #747f8c;
+            }
+            .night
+            {
+                background-color:#000;
+                color:#f1efef;
+            }
+            .fnormal
+            {
+                font-size:20 px;
+                line-height:22px;
+            }
+            .fmiddle
+            {
+                font-size:24px;
+                line-height:28px;
+            }
+            .flarge
+            {
+                font-size:28px;
+                line-height:34px;
+            }
+            p{
+               
+                margin:0px;
+                padding:0px;
+                text-align:justify;
+                word-break:break-all;
+            }
+            .content
+            {
+                padding:0px;
+                margin:0px 0px;
+                font-size:0.8em;
+                
+            }
+        .post-header{
+            margin: 20px auto;
+        }
+        .post-header .post-meta{
+            font-size: 14px;
+            
+            color: #747f8c;
+            margin-bottom: 20px;
+        }
+        .post-header h1{
+            font-size: 24px;
+            
+            font-weight: bold;
+            line-height: 1.4;
+            color: #38485a
+        }
+        h2 {
+            font-size:20px;
+            width:100%;
+            display: inline-block;
+            text-indent:10px;
+            border-left:solid 4px rgb(249, 110, 87);
+  
+        }
+        h3 {
+            font-size:18px;
+        }
+        h4 {
+            font-size:16px;
+        }
+        .post-header .post-meta{
+            margin-top: 16px;
+        }
+        .post-con{
+            font-size: 16px;
+            color: #333332;
+            line-height: 1.6;
+            word-break:break-all;
+            word-wrap:word-break;
+        }
+        .reply-content{
+            word-break:break-all;
+            word-wrap:word-break;
+        }
+        .post-con  p{
+            margin-bottom: 20px;
+            text-align: justify;
+            word-wrap:break-word;word-break: break-all;
+            
+            
+        }
+        .post-con img{
+            max-width:100%;
+            display: inline-block;
+            margin: 0 auto;
+        }
+        .content img{
+            max-width:100%;
+            display: inline-block;
+            margin: 0 auto;
+        }
+        .post-con >div {
+            margin-bottom: 10px;
+            text-align: justify;
+            
+        }
+        .post-con a{
+            color: #51aded;
+            border-bottom: 2px solid #eaeaea;
+        }
+        .post-con a:hover{
+            border-bottom: 2px solid #51aded;
+        }
+        .post-source{
+            margin:20px auto;
+            font-size: 14px;
+        }
+        pre {
+            display: block;
+            padding: 9.5px;
+            margin: 0 0 10px;
+            margin-top:10px;
+            font-size: 13px;
+            line-height: 1.42857143;
+            color: #333;
+            word-break:break-word;
+            word-wrap: break-word;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        dl.topics dd, dl.replies dd, dl#nodes dd {
+            margin-left: 0;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #CCC;
+        }
+        
+        .topic, .reply {
+            border-bottom: 1px dashed #CCC;
+            padding: 12px 0;
+        }
+        .savatar {
+            width: 48px;
+            height: 48px;
+        }
+            </style>
+    </head>
+    <body class="body fnormal">
+        <div id="content"></div>
+        <script src="jquery-2.1.3.min.js"></script>
+        <script src="template-native.js"></script>
+        <script src="moment.min.js"></script>
+        <script src="zh-cn.js"></script>  
+        <script src="next.js"></script>
+        <script type="text/html" id="content-tmpl">
+            <div class="content">
+            <article class="post-detail">
+            <section  class="post-header">
+            <div class="page-header">
+            <h1><%=code.title %></h1>
+             <div class="clearfix">
+            来源: <a href="<%=article.sourceUrl%>"><%=article.sourceName %></a> 于：<%=moment(article.createDate*1000).fromNow() %> 发布 
+            <%=article.viewCount %> 次点击
+            </div>
+            <hr class="clearfix" style="margin-top: 10px;">
+            <div class="clearfix"></div>
+            </div>
+            </section>
+            <section class="post-con">
+                <%- article.content %>
+            </section>
+            </article>
+            </div>
+            <div>
+             
+            </script>
+
+         
+    </body>
+    
+</html>
