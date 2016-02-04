@@ -58,6 +58,11 @@ class ServiceApi: NSObject {
         return url
     }
     
+    class func getArticlesShareDetail(articleId:Int) -> String {
+        let url="\(host)/api/articles/\(articleId).html"
+        return url
+    }
+    
     class func getLoginUrl()->String {
         let url = "\(host)/api/user/login"
         return url;
