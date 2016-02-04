@@ -76,8 +76,7 @@ class ArticleTableViewController: UITableViewController {
                 alert.show()
                 return
             }
-            print("maxId \(maxId)")
-            
+             
             let json = res.result.value
             let result = JSON(json!)
             if result["isSuc"].boolValue {

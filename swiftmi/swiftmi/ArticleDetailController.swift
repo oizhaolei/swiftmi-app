@@ -52,6 +52,21 @@ class ArticleDetailController: UIViewController,UIWebViewDelegate {
         return JSON(self.article!)
     }
     
+    override func viewDidAppear(animated: Bool) {
+        
+        self.userActivity = NSUserActivity(activityType: "com.swiftmi.handoff.view-web")
+        self.userActivity?.title = "view article on mac"
+        self.userActivity?.webpageURL  =  NSURL(string: ServiceApi.getArticlesDetail(self.articleId!))
+        self.userActivity?.becomeCurrent()
+        
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.userActivity?.invalidate()
+        self.clearAllNotice()
+
+    }
+    
     private func loadData(){
         
         Alamofire.request(Router.ArticleDetail(articleId: self.articleId!)).responseJSON{
@@ -154,15 +169,10 @@ class ArticleDetailController: UIViewController,UIWebViewDelegate {
     private func share() {
         
         var data = GetLoadData()
-        
-        
         let title = data["title"].stringValue
         let url = ServiceApi.getArticlesDetail(self.articleId!)
         let desc = data["desc"].stringValue
-        
         let preview = data["imageUrl"].stringValue
-        
-        
         Utility.share(title, desc: desc, imgUrl: preview, linkUrl: url)
         
     }
