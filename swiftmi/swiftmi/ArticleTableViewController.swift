@@ -53,7 +53,12 @@ class ArticleTableViewController: UITableViewController {
         }
     }
 
-    
+    override func viewWillAppear(animated: Bool) {
+        if let indexPath = tableView.indexPathForSelectedRow {
+            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+
+        }
+    }
     
     func loadData(maxId:Int,isPullRefresh:Bool) {
         if self.loading {
@@ -150,11 +155,7 @@ class ArticleTableViewController: UITableViewController {
         // Configure the cell...
 
     }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    }
+   
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
