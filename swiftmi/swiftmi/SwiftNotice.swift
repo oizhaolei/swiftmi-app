@@ -91,7 +91,7 @@ class SwiftNotice: NSObject {
         windows.append(window)
         
         if autoClear {
-            let selector = Selector("hideNotice:")
+            let selector = #selector(SwiftNotice.hideNotice(_:))
             self.performSelector(selector, withObject: window, afterDelay: NSTimeInterval(autoClearTime))
         }
     }
@@ -184,7 +184,7 @@ class SwiftNotice: NSObject {
         windows.append(window)
 
         if autoClear {
-            let selector = Selector("hideNotice:")
+            let selector = #selector(SwiftNotice.hideNotice(_:))
             self.performSelector(selector, withObject: window, afterDelay: NSTimeInterval(autoClearTime))
         }
     }

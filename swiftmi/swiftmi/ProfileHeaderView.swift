@@ -44,14 +44,14 @@ class ProfileHeaderView: UIView,UIGestureRecognizerDelegate {
         initialFrame = profileBg.frame;
         initialHeight = initialFrame.size.height;
         
-        let tap = UITapGestureRecognizer(target:self,action:"tapLogin:")
+        let tap = UITapGestureRecognizer(target:self,action:#selector(ProfileHeaderView.tapLogin(_:)))
         
         self.avatar.userInteractionEnabled = true
         self.avatar.addGestureRecognizer(tap)
         
         
         
-        let tap2 = UITapGestureRecognizer(target:self,action:"tapLogin:")
+        let tap2 = UITapGestureRecognizer(target:self,action:#selector(ProfileHeaderView.tapLogin(_:)))
         
         self.userName.userInteractionEnabled = true
         self.userName.addGestureRecognizer(tap2)

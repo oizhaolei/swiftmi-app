@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -24,7 +24,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zo8-WE-PaK">
-                                            <rect key="frame" x="0.0" y="8" width="600" height="101"/>
+                                            <rect key="frame" x="8" y="8" width="584" height="101"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sQZ-Uf-NAL">
                                                     <rect key="frame" x="5" y="5" width="42" height="42"/>
@@ -46,14 +46,14 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X4e-zc-1S8">
-                                                    <rect key="frame" x="10" y="60" width="580" height="21"/>
+                                                    <rect key="frame" x="10" y="60" width="564" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.19215686274509805" green="0.19607843137254902" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <size key="shadowOffset" width="0.0" height="0.0"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comment" translatesAutoresizingMaskIntoConstraints="NO" id="Ken-f3-K8C">
-                                                    <rect key="frame" x="540" y="6" width="20" height="20"/>
+                                                    <rect key="frame" x="524" y="6" width="20" height="20"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="栏目" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRL-Fh-YJy">
                                                     <rect key="frame" x="10" y="83" width="24" height="15"/>
@@ -93,8 +93,8 @@
                                     <constraints>
                                         <constraint firstAttribute="bottomMargin" secondItem="zo8-WE-PaK" secondAttribute="bottom" priority="750" id="Bjz-OT-CzT"/>
                                         <constraint firstItem="zo8-WE-PaK" firstAttribute="top" secondItem="IYZ-aK-edl" secondAttribute="topMargin" id="c0G-qG-uw0"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="zo8-WE-PaK" secondAttribute="trailing" constant="-8" id="gms-Pk-L8l"/>
-                                        <constraint firstItem="zo8-WE-PaK" firstAttribute="leading" secondItem="IYZ-aK-edl" secondAttribute="leadingMargin" constant="-8" id="kda-8Y-t3B"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="zo8-WE-PaK" secondAttribute="trailing" id="gms-Pk-L8l"/>
+                                        <constraint firstItem="zo8-WE-PaK" firstAttribute="leading" secondItem="IYZ-aK-edl" secondAttribute="leadingMargin" id="kda-8Y-t3B"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.92156862745098034" green="0.92941176470588238" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

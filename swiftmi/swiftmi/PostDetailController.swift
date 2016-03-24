@@ -32,8 +32,8 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
         super.viewDidLoad()
         
         let center: NSNotificationCenter = NSNotificationCenter.defaultCenter()
-        center.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        center.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        center.addObserver(self, selector: #selector(PostDetailController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        center.addObserver(self, selector: #selector(PostDetailController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         //center.addObserver(self, selector:"keyboardWillChangeFrame:", name:UIKeyboardWillChangeFrameNotification,object:nil)
     
       

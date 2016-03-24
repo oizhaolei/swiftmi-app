@@ -95,8 +95,8 @@ class AddTopicController: UIViewController {
         
         
         let center: NSNotificationCenter = NSNotificationCenter.defaultCenter()
-        center.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        center.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        center.addObserver(self, selector: #selector(AddTopicController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        center.addObserver(self, selector: #selector(AddTopicController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
         
     }
