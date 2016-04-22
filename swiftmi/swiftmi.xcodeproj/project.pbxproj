@@ -110,6 +110,69 @@
 			remoteGlobalIDString = FD0CAFDC1ABF1D1D00945EB7;
 			remoteInfo = swiftmi;
 		};
+		FD3DA05B1CC3D9F000DE58F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FDF9888A1ADF34F000889407 /* Kingfisher.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D13F49D61BEDA67C00CE335D;
+			remoteInfo = "Kingfisher-tvOS";
+		};
+		FD3DA05D1CC3D9F000DE58F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FDF9888A1ADF34F000889407 /* Kingfisher.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4B2944481C3D01B20088C3E7;
+			remoteInfo = "Kingfisher-OSX";
+		};
+		FD3DA05F1CC3D9F000DE58F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FDF9888A1ADF34F000889407 /* Kingfisher.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D16799EB1C4E74460020FD12;
+			remoteInfo = "Kingfisher-watchOS";
+		};
+		FD3DA0611CC3D9F000DE58F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FDF9888A1ADF34F000889407 /* Kingfisher.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D13F49C21BEDA53F00CE335D;
+			remoteInfo = "Kingfisher-tvOS-Demo";
+		};
+		FD3DA0631CC3D9F000DE58F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FDF9888A1ADF34F000889407 /* Kingfisher.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4B2944551C3D03880088C3E7;
+			remoteInfo = "Kingfisher-OSX-Demo";
+		};
+		FD3DA0651CC3D9F000DE58F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FDF9888A1ADF34F000889407 /* Kingfisher.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1679A391C4E78B20020FD12;
+			remoteInfo = "Kingfisher-watchOS-Demo";
+		};
+		FD3DA0671CC3D9F000DE58F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FDF9888A1ADF34F000889407 /* Kingfisher.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D1679A451C4E78B20020FD12;
+			remoteInfo = "Kingfisher-watchOS-Demo Extension";
+		};
+		FD3DA0691CC3D9F000DE58F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FDF9888A1ADF34F000889407 /* Kingfisher.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4B37667F1C478F940001443F;
+			remoteInfo = "KingfisherTests-tvOS";
+		};
+		FD3DA06B1CC3D9F000DE58F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FDF9888A1ADF34F000889407 /* Kingfisher.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D10EC2311C3D632300A4211C;
+			remoteInfo = "KingfisherTests-OSX";
+		};
 		FD876BDA1BB25458008FDDEE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FDFC60E31AC2E99F00BECD22 /* Alamofire.xcodeproj */;
@@ -666,9 +729,18 @@
 		FDF9888B1ADF34F000889407 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FDF988911ADF34F000889407 /* Kingfisher-Demo.app */,
 				FDF988931ADF34F000889407 /* Kingfisher.framework */,
+				FD3DA05C1CC3D9F000DE58F9 /* Kingfisher.framework */,
+				FD3DA05E1CC3D9F000DE58F9 /* Kingfisher.framework */,
+				FD3DA0601CC3D9F000DE58F9 /* Kingfisher.framework */,
+				FDF988911ADF34F000889407 /* Kingfisher-Demo.app */,
+				FD3DA0621CC3D9F000DE58F9 /* Kingfisher-tvOS-Demo.app */,
+				FD3DA0641CC3D9F000DE58F9 /* Kingfisher-OSX-Demo.app */,
+				FD3DA0661CC3D9F000DE58F9 /* Kingfisher-watchOS-Demo.app */,
+				FD3DA0681CC3D9F000DE58F9 /* Kingfisher-watchOS-Demo Extension.appex */,
 				FDF988951ADF34F000889407 /* KingfisherTests.xctest */,
+				FD3DA06A1CC3D9F000DE58F9 /* KingfisherTests-tvOS.xctest */,
+				FD3DA06C1CC3D9F000DE58F9 /* KingfisherTests-OSX.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -809,6 +881,12 @@
 				TargetAttributes = {
 					FD0CAFDC1ABF1D1D00945EB7 = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 367KWF5YZX;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					FD0CAFF31ABF1D1D00945EB7 = {
 						CreatedOnToolsVersion = 6.2;
@@ -850,6 +928,69 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		FD3DA05C1CC3D9F000DE58F9 /* Kingfisher.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Kingfisher.framework;
+			remoteRef = FD3DA05B1CC3D9F000DE58F9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FD3DA05E1CC3D9F000DE58F9 /* Kingfisher.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Kingfisher.framework;
+			remoteRef = FD3DA05D1CC3D9F000DE58F9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FD3DA0601CC3D9F000DE58F9 /* Kingfisher.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Kingfisher.framework;
+			remoteRef = FD3DA05F1CC3D9F000DE58F9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FD3DA0621CC3D9F000DE58F9 /* Kingfisher-tvOS-Demo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "Kingfisher-tvOS-Demo.app";
+			remoteRef = FD3DA0611CC3D9F000DE58F9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FD3DA0641CC3D9F000DE58F9 /* Kingfisher-OSX-Demo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "Kingfisher-OSX-Demo.app";
+			remoteRef = FD3DA0631CC3D9F000DE58F9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FD3DA0661CC3D9F000DE58F9 /* Kingfisher-watchOS-Demo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "Kingfisher-watchOS-Demo.app";
+			remoteRef = FD3DA0651CC3D9F000DE58F9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FD3DA0681CC3D9F000DE58F9 /* Kingfisher-watchOS-Demo Extension.appex */ = {
+			isa = PBXReferenceProxy;
+			fileType = "wrapper.app-extension";
+			path = "Kingfisher-watchOS-Demo Extension.appex";
+			remoteRef = FD3DA0671CC3D9F000DE58F9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FD3DA06A1CC3D9F000DE58F9 /* KingfisherTests-tvOS.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "KingfisherTests-tvOS.xctest";
+			remoteRef = FD3DA0691CC3D9F000DE58F9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FD3DA06C1CC3D9F000DE58F9 /* KingfisherTests-OSX.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "KingfisherTests-OSX.xctest";
+			remoteRef = FD3DA06B1CC3D9F000DE58F9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		FD876BDB1BB25458008FDDEE /* Alamofire.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -1124,7 +1265,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yin yang (P46MBKY6PM)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yin yang (P46MBKY6PM)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1145,6 +1287,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "9106414e-31e1-4a04-a03d-8f73d213ba5d";
+				"PROVISIONING_PROFILE[sdk=*]" = "9106414e-31e1-4a04-a03d-8f73d213ba5d";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1180,6 +1324,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1190,8 +1335,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yin yang (P46MBKY6PM)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yin yang (P46MBKY6PM)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1207,9 +1352,10 @@
 					"$(PROJECT_DIR)/ShareSDK/extends/WeChatSDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.swiftmi.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swiftmi.swiftmi;
 				PRODUCT_NAME = swiftmi;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "9106414e-31e1-4a04-a03d-8f73d213ba5d";
+				"PROVISIONING_PROFILE[sdk=*]" = "9106414e-31e1-4a04-a03d-8f73d213ba5d";
 				SWIFT_OBJC_BRIDGING_HEADER = "swiftmi/ShareSdk-Bridging-Header.h";
 				VALID_ARCHS = "arm64 armv7s armv7";
 			};
@@ -1237,7 +1383,7 @@
 					"$(PROJECT_DIR)/ShareSDK/extends/WeChatSDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.swiftmi.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swiftmi.swiftmi;
 				PRODUCT_NAME = swiftmi;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "swiftmi/ShareSdk-Bridging-Header.h";
