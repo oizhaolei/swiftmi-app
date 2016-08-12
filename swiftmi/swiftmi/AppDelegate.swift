@@ -21,9 +21,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         Router.token = KeychainWrapper.stringForKey("token")
-        
-    
-        
+        UITabBar.appearance().tintColor = UIColor.themeBackgroundColor()
+        UINavigationBar.appearance().barTintColor = UITabBar.appearance().tintColor
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().translucent = true
+        UINavigationBar.appearance().barStyle = UIBarStyle.Black
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+         
         
         ShareSDK.registerApp("74dcfcc8d1d3", activePlatforms: [SSDKPlatformType.TypeCopy.rawValue, SSDKPlatformType.TypeSinaWeibo.rawValue,SSDKPlatformType.TypeWechat.rawValue,SSDKPlatformType.TypeSMS.rawValue], onImport: {
             

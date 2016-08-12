@@ -21,6 +21,7 @@
 		FD2E9A7B1AD813C700D53646 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2E9A7A1AD813C700D53646 /* AppDelegate.swift */; };
 		FD2E9A7D1AD8EC2D00D53646 /* bootstrap.min.css in Resources */ = {isa = PBXBuildFile; fileRef = FD2E9A7C1AD8EC2D00D53646 /* bootstrap.min.css */; };
 		FD2ED1731BE7A3C60055FAA4 /* SplotLightHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2ED1721BE7A3C60055FAA4 /* SplotLightHelper.swift */; };
+		FD3624C21D5E2E160064B749 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3624C11D5E2E160064B749 /* UIColorExtension.swift */; };
 		FD3DC2AE1ACFF519008535A4 /* template-native.js in Resources */ = {isa = PBXBuildFile; fileRef = FD3DC2AD1ACFF519008535A4 /* template-native.js */; };
 		FD3DC2B61ACFF527008535A4 /* article.html in Resources */ = {isa = PBXBuildFile; fileRef = FD3DC2B51ACFF527008535A4 /* article.html */; };
 		FD3DC2B81ACFF58D008535A4 /* article.js in Resources */ = {isa = PBXBuildFile; fileRef = FD3DC2B71ACFF58D008535A4 /* article.js */; };
@@ -336,6 +337,7 @@
 		FD2E9A7A1AD813C700D53646 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FD2E9A7C1AD8EC2D00D53646 /* bootstrap.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = bootstrap.min.css; sourceTree = "<group>"; };
 		FD2ED1721BE7A3C60055FAA4 /* SplotLightHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplotLightHelper.swift; sourceTree = "<group>"; };
+		FD3624C11D5E2E160064B749 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		FD3DC2AD1ACFF519008535A4 /* template-native.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "template-native.js"; sourceTree = "<group>"; };
 		FD3DC2B51ACFF527008535A4 /* article.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = article.html; sourceTree = "<group>"; };
 		FD3DC2B71ACFF58D008535A4 /* article.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = article.js; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 		FD0CAFDF1ABF1D1D00945EB7 /* swiftmi */ = {
 			isa = PBXGroup;
 			children = (
+				FD3624AB1D5E2DFF0064B749 /* Extensions */,
 				FDADF6C21AE94A0D00B9FBDF /* services */,
 				FDEAD3231ADC20AE00D85554 /* images */,
 				FDFC612B1AC7E52300BECD22 /* Utility */,
@@ -570,6 +573,14 @@
 				FDF9678C1C61F1F8009B8B5F /* ArticleWithImageCell.swift */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		FD3624AB1D5E2DFF0064B749 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FD3624C11D5E2E160064B749 /* UIColorExtension.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		FD3DC2AC1ACFF519008535A4 /* HtmlPlayer */ = {
@@ -1167,6 +1178,7 @@
 				FD2ED1731BE7A3C60055FAA4 /* SplotLightHelper.swift in Sources */,
 				FDD395691C6242DA00AB4AB6 /* ArticleDal.swift in Sources */,
 				FDD395581C62420300AB4AB6 /* Articles.swift in Sources */,
+				FD3624C21D5E2E160064B749 /* UIColorExtension.swift in Sources */,
 				FDF9678F1C61F304009B8B5F /* ArticleTableViewController.swift in Sources */,
 				FD8DE2E91ACFADC5001A5A8C /* RefreshFooterView.swift in Sources */,
 				FD8DE2E11ACF809E001A5A8C /* BreakOutToRefreshView.swift in Sources */,

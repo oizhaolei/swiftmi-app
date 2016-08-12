@@ -532,7 +532,7 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="avA-jz-Gbr">
                                 <rect key="frame" x="36" y="140" width="254" height="40"/>
-                                <color key="backgroundColor" red="0.35410979279999999" green="0.67008974460000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.99607843137254903" green="0.46274509803921571" blue="0.30196078431372547" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="cST-ox-K8c"/>
                                     <constraint firstAttribute="width" constant="180" id="sVX-Ww-zDv"/>
@@ -556,8 +556,9 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="180" id="yrY-V7-eee"/>
                                 </constraints>
+                                <color key="tintColor" red="1" green="0.41568627450000001" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="注册">
-                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="1" green="0.37254901959999998" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="default">
@@ -709,7 +710,7 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iJj-aF-kfd">
                                 <rect key="frame" x="36" y="166" width="528" height="40"/>
-                                <color key="backgroundColor" red="0.35410979279999999" green="0.67008974460000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.99607843139999996" green="0.46274509800000002" blue="0.30196078430000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="h4D-um-wto"/>
                                 </constraints>
@@ -936,6 +937,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BGE-8h-j8Z">
                                         <rect key="frame" x="548" y="2" width="30" height="46"/>
                                         <state key="normal" title="回复">
+                                            <color key="titleColor" red="1" green="0.41568627450000001" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1226,9 +1228,10 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DD7-hV-9aT" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="我" image="user" id="oIf-S7-V1M"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="iC1-zn-g2U">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="iC1-zn-g2U">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1260,7 +1263,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="add" width="20" height="20"/>
+        <image name="add" width="25" height="25"/>
         <image name="book" width="25" height="25"/>
         <image name="code" width="25" height="25"/>
         <image name="comment" width="20" height="20"/>
@@ -1269,6 +1272,6 @@
         <image name="user" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="J51-Yv-6ad"/>
+        <segue reference="Afl-NZ-h1L"/>
     </inferredMetricsTieBreakers>
 </document>
