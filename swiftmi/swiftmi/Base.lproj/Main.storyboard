@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -1224,7 +1224,7 @@
         <scene sceneID="M0Q-eB-6zX">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DD7-hV-9aT" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="我" image="me" id="oIf-S7-V1M"/>
+                    <tabBarItem key="tabBarItem" title="我" image="user" id="oIf-S7-V1M"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="iC1-zn-g2U">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1243,7 +1243,7 @@
         <scene sceneID="xWL-JT-E6V">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UGy-kU-zBG" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="文章" image="news" id="GGX-ZQ-9gW"/>
+                    <tabBarItem key="tabBarItem" title="文章" image="list" id="GGX-ZQ-9gW"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Soq-5N-2ws">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1261,12 +1261,12 @@
     </scenes>
     <resources>
         <image name="add" width="20" height="20"/>
-        <image name="book" width="30" height="30"/>
-        <image name="code" width="30" height="30"/>
+        <image name="book" width="25" height="25"/>
+        <image name="code" width="25" height="25"/>
         <image name="comment" width="20" height="20"/>
-        <image name="home" width="30" height="30"/>
-        <image name="me" width="30" height="30"/>
-        <image name="news" width="30" height="30"/>
+        <image name="home" width="25" height="25"/>
+        <image name="list" width="25" height="25"/>
+        <image name="user" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="J51-Yv-6ad"/>
