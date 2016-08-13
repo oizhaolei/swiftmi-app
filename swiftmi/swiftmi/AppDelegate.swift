@@ -64,6 +64,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
          SplotlightHelper.AddItemToCoreSpotlight("0", title:"swift迷,专业的Swift开发者社区", contentDescription: "swift迷，致力于打造国内swift交流的地方，提供社区，文章,swift教程,swift源码等")
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0;
+
         NSThread.sleepForTimeInterval(1)
         return true
     }
