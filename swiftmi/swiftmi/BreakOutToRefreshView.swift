@@ -29,21 +29,21 @@ import UIKit
 import SpriteKit
 
 protocol BreakOutToRefreshDelegate: class {
-  func refreshViewDidRefresh(refreshView: BreakOutToRefreshView)
+  func refreshViewDidRefresh(_ refreshView: BreakOutToRefreshView)
 }
 
 class BreakOutToRefreshView: SKView {
 
-  private let sceneHeight = CGFloat(100)
+  fileprivate let sceneHeight = CGFloat(100)
   
-  private let breakOutScene: BreakOutScene
-  private unowned let scrollView: UIScrollView
-  weak var delegate: BreakOutToRefreshDelegate?
+  fileprivate let breakOutScene: BreakOutScene
+  fileprivate unowned let scrollView: UIScrollView
+  weak var refreshDelegate: BreakOutToRefreshDelegate?
   var forceEnd = false
   
-  private var isRefreshing = false
-  private var isDragging = false
-  private var isVisible = false
+  fileprivate var isRefreshing = false
+  fileprivate var isDragging = false
+  fileprivate var isVisible = false
   
   var scenebackgroundColor: UIColor {
     didSet {
@@ -73,10 +73,10 @@ class BreakOutToRefreshView: SKView {
     breakOutScene = BreakOutScene(size: frame.size)
     scrollView = UIScrollView()
     
-    scenebackgroundColor = UIColor.whiteColor()
-    paddleColor = UIColor.whiteColor()
-    ballColor = UIColor.whiteColor()
-    blockColors = [UIColor.whiteColor()]
+    scenebackgroundColor = UIColor.white
+    paddleColor = UIColor.white
+    ballColor = UIColor.white
+    blockColors = [UIColor.white]
     
     super.init(frame: frame)
 
@@ -90,9 +90,9 @@ class BreakOutToRefreshView: SKView {
     breakOutScene = BreakOutScene(size: frame.size)
     self.scrollView = inScrollView
     
-    scenebackgroundColor = UIColor.whiteColor()
-    paddleColor = UIColor.grayColor()
-    ballColor = UIColor.blackColor()
+    scenebackgroundColor = UIColor.white
+    paddleColor = UIColor.gray
+    ballColor = UIColor.black
     blockColors = [UIColor(white: 0.2, alpha: 1.0), UIColor(white: 0.4, alpha: 1.0), UIColor(white: 0.6, alpha: 1.0)]
     
     breakOutScene.scenebackgroundColor = scenebackgroundColor
@@ -102,7 +102,7 @@ class BreakOutToRefreshView: SKView {
 
     super.init(frame: frame)
     
-    layer.borderColor = UIColor.grayColor().CGColor
+    layer.borderColor = UIColor.gray.cgColor
     layer.borderWidth = 1.0
     
     presentScene(StartScene(size: frame.size))
@@ -116,11 +116,11 @@ class BreakOutToRefreshView: SKView {
   func beginRefreshing() {
     isRefreshing = true
     
-    let doors = SKTransition.doorsOpenVerticalWithDuration(0.5)
+    let doors = SKTransition.doorsOpenVertical(withDuration: 0.5)
     presentScene(breakOutScene, transition: doors)
     breakOutScene.updateLabel("Loading...")
 
-    UIView.animateWithDuration(0.4, delay: 0, options: .CurveEaseInOut, animations: { () -> Void in
+    UIView.animate(withDuration: 0.4, delay: 0, options: UIViewAnimationOptions(), animations: { () -> Void in
       self.scrollView.contentInset.top += self.sceneHeight
     }) { (_) -> Void in
       if self.scrollView.contentOffset.y < -60 && !self.breakOutScene.isStarted {
@@ -132,7 +132,7 @@ class BreakOutToRefreshView: SKView {
   
   func endRefreshing() {
     if (!isDragging || forceEnd) && isVisible {
-      UIView.animateWithDuration(0.4, delay: 0, options: .CurveEaseInOut, animations: { () -> Void in
+      UIView.animate(withDuration: 0.4, delay: 0, options: UIViewAnimationOptions(), animations: { () -> Void in
         self.scrollView.contentInset.top -= self.sceneHeight
         }) { (_) -> Void in
           self.isRefreshing = false
@@ -149,18 +149,18 @@ class BreakOutToRefreshView: SKView {
 
 extension BreakOutToRefreshView: UIScrollViewDelegate {
   
-  func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+  func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
     isDragging = true
   }
   
-  func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+  func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     isDragging = false
     
     if !isRefreshing && scrollView.contentOffset.y + scrollView.contentInset.top < -sceneHeight {
 //    if scrollView.contentOffset.y + scrollView.contentInset.top < -sceneHeight {
       beginRefreshing()
-      targetContentOffset.memory.y = -scrollView.contentInset.top
-      delegate?.refreshViewDidRefresh(self)
+      targetContentOffset.pointee.y = -scrollView.contentInset.top
+      refreshDelegate?.refreshViewDidRefresh(self)
     }
     
     if !isRefreshing {
@@ -169,7 +169,7 @@ extension BreakOutToRefreshView: UIScrollViewDelegate {
     
   }
   
-  func scrollViewDidScroll(scrollView: UIScrollView) {
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
 //    println("\(scrollView.contentOffset)")
 
     //let frameHeight = frame.size.height
@@ -203,43 +203,43 @@ class BreakOutScene: SKScene, SKPhysicsContactDelegate {
   var ballColor: UIColor!
   var blockColors: [UIColor]!
   
-  override func didMoveToView(view: SKView) {
-    super.didMoveToView(view)
+  override func didMove(to view: SKView) {
+    super.didMove(to: view)
     if !contentCreated {
       createSceneContents()
       contentCreated = true
     }
   }
   
-  override func update(currentTime: NSTimeInterval) {
-    let ball = self.childNodeWithName(ballName) as! SKSpriteNode!
+  override func update(_ currentTime: TimeInterval) {
+    let ball = self.childNode(withName: ballName) as! SKSpriteNode!
     
     let maxSpeed: CGFloat = 600.0
-    let speed = sqrt(ball.physicsBody!.velocity.dx * ball.physicsBody!.velocity.dx + ball.physicsBody!.velocity.dy * ball.physicsBody!.velocity.dy)
+    let speed = sqrt((ball?.physicsBody!.velocity.dx)! * (ball?.physicsBody!.velocity.dx)! + (ball?.physicsBody!.velocity.dy)! * (ball?.physicsBody!.velocity.dy)!)
     
     if speed > maxSpeed {
-      ball.physicsBody!.linearDamping = 0.4
+      ball?.physicsBody!.linearDamping = 0.4
     }
     else {
-      ball.physicsBody!.linearDamping = 0.0
+      ball?.physicsBody!.linearDamping = 0.0
     }
   }
   
   func createSceneContents() {
-    physicsWorld.gravity = CGVectorMake(0.0, 0.0)
+    physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
     physicsWorld.contactDelegate = self
     
     backgroundColor = scenebackgroundColor
-    scaleMode = .AspectFit
+    scaleMode = .aspectFit
     
-    physicsBody = SKPhysicsBody(edgeLoopFromRect: frame)
+    physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
     physicsBody?.restitution = 1.0
     physicsBody?.friction = 0.0
     
     createLoadingLabelNode()
     
     let paddle = createPaddle()
-    paddle.position = CGPoint(x: frame.size.width-30.0, y: CGRectGetMidY(frame))
+    paddle.position = CGPoint(x: frame.size.width-30.0, y: frame.midY)
     addChild(paddle)
     
     createBall()
@@ -250,9 +250,9 @@ class BreakOutScene: SKScene, SKPhysicsContactDelegate {
   func createPaddle() -> SKSpriteNode {
     let paddle = SKSpriteNode(color: paddleColor, size: CGSize(width: 5, height: 30))
     
-    paddle.physicsBody = SKPhysicsBody(rectangleOfSize: paddle.size)
+    paddle.physicsBody = SKPhysicsBody(rectangleOf: paddle.size)
     paddle.physicsBody?.categoryBitMask = paddleCategory
-    paddle.physicsBody?.dynamic = false
+    paddle.physicsBody?.isDynamic = false
     paddle.physicsBody?.restitution = 1.0
     paddle.physicsBody?.friction = 0.0
     
@@ -274,14 +274,14 @@ class BreakOutScene: SKScene, SKPhysicsContactDelegate {
         let block = SKSpriteNode(color: color, size: CGSize(width: 5, height: 19))
         block.position = CGPoint(x: 20+CGFloat(i)*6, y: CGFloat(j)*20 + 10)
         block.name = blockName
-        block.physicsBody = SKPhysicsBody(rectangleOfSize: block.size)
+        block.physicsBody = SKPhysicsBody(rectangleOf: block.size)
         
         block.physicsBody?.categoryBitMask = blockCategory
         block.physicsBody?.allowsRotation = false
         block.physicsBody?.restitution = 1.0
         block.physicsBody?.friction = 0.0
 //        block.physicsBody?.mass = 1000.0
-        block.physicsBody?.dynamic = false
+        block.physicsBody?.isDynamic = false
         
         addChild(block)
       }
@@ -292,7 +292,7 @@ class BreakOutScene: SKScene, SKPhysicsContactDelegate {
     let ball = SKSpriteNode(color: ballColor, size: CGSize(width: 8, height: 8))
     
     
-    ball.position = CGPoint(x: frame.size.width - 30.0 - ball.size.width, y: CGRectGetHeight(frame)*CGFloat(arc4random())/CGFloat(UINT32_MAX))
+    ball.position = CGPoint(x: frame.size.width - 30.0 - ball.size.width, y: frame.height*CGFloat(arc4random())/CGFloat(UINT32_MAX))
     ball.name = ballName
     
     ball.physicsBody = SKPhysicsBody(circleOfRadius: ceil(ball.size.width/2.0))
@@ -309,15 +309,15 @@ class BreakOutScene: SKScene, SKPhysicsContactDelegate {
   }
   
   func removeBall() {
-    let ball = childNodeWithName(ballName)
+    let ball = childNode(withName: ballName)
     ball?.removeFromParent()
   }
   
   func createLoadingLabelNode() {
     let loadingLabelNode = SKLabelNode(text: "Loading...")
-    loadingLabelNode.fontColor = UIColor.lightGrayColor()
+    loadingLabelNode.fontColor = UIColor.lightGray
     loadingLabelNode.fontSize = 20
-    loadingLabelNode.position = CGPoint(x: CGRectGetMidX(frame), y: CGRectGetMidY(frame))
+    loadingLabelNode.position = CGPoint(x: frame.midX, y: frame.midY)
     loadingLabelNode.name = backgroundLabelName
     
     addChild(loadingLabelNode)
@@ -332,24 +332,24 @@ class BreakOutScene: SKScene, SKPhysicsContactDelegate {
   func start() {
     isStarted = true
     
-    let ball = childNodeWithName(ballName)
+    let ball = childNode(withName: ballName)
     ball?.physicsBody?.applyImpulse(CGVector(dx: -0.5, dy: 0.2))
   }
   
-  func updateLabel(text: String) {
-    let label : SKLabelNode! = childNodeWithName(backgroundLabelName) as? SKLabelNode;
+  func updateLabel(_ text: String) {
+    let label : SKLabelNode! = childNode(withName: backgroundLabelName) as? SKLabelNode;
     label?.text = text
   }
   
-  func moveHandle(value: CGFloat) {
+  func moveHandle(_ value: CGFloat) {
 //    println("\(value)")
     
-    let paddle = childNodeWithName(paddleName)
+    let paddle = childNode(withName: paddleName)
     
     paddle?.position.y = value
   }
   
-  func didEndContact(contact: SKPhysicsContact) {
+  func didEnd(_ contact: SKPhysicsContact) {
     var ballBody: SKPhysicsBody?
     var otherBody: SKPhysicsBody?
     
@@ -399,7 +399,7 @@ class BreakOutScene: SKScene, SKPhysicsContactDelegate {
   
   func isGameWon() -> Bool {
     var numberOfBricks = 0
-    self.enumerateChildNodesWithName(blockName) { node, stop in
+    self.enumerateChildNodes(withName: blockName) { node, stop in
       numberOfBricks = numberOfBricks + 1
     }
     return numberOfBricks == 0
@@ -411,8 +411,8 @@ class StartScene: SKScene {
   
   var contentCreated = false
 
-  override func didMoveToView(view: SKView) {
-    super.didMoveToView(view)
+  override func didMove(to view: SKView) {
+    super.didMove(to: view)
     if !contentCreated {
       createSceneContents()
       contentCreated = true
@@ -420,17 +420,17 @@ class StartScene: SKScene {
   }
   
   func createSceneContents() {
-    backgroundColor = SKColor.whiteColor()
-    scaleMode = .AspectFit
+    backgroundColor = SKColor.white
+    scaleMode = .aspectFit
     addChild(startLabelNode())
     addChild(descriptionLabelNode())
   }
   
   func startLabelNode() -> SKLabelNode {
     let startNode = SKLabelNode(text: "Pull to Break Out!")
-    startNode.fontColor = UIColor.blackColor()
+    startNode.fontColor = UIColor.black
     startNode.fontSize = 20
-    startNode.position = CGPoint(x: CGRectGetMidX(frame), y: CGRectGetMidY(frame))
+    startNode.position = CGPoint(x: frame.midX, y: frame.midY)
     startNode.name = "start"
     
     return startNode
@@ -438,9 +438,9 @@ class StartScene: SKScene {
   
   func descriptionLabelNode() -> SKLabelNode {
     let descriptionNode = SKLabelNode(text: "Scroll to move handle")
-    descriptionNode.fontColor = UIColor.blackColor()
+    descriptionNode.fontColor = UIColor.black
     descriptionNode.fontSize = 17
-    descriptionNode.position = CGPoint(x: CGRectGetMidX(frame), y: CGRectGetMidY(frame)-20)
+    descriptionNode.position = CGPoint(x: frame.midX, y: frame.midY-20)
     descriptionNode.name = "description"
     
     return descriptionNode

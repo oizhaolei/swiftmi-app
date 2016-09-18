@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 @objc(Post)
-public class Post:NSManagedObject {
+class Post:NSManagedObject {
     
     @NSManaged var postId:Int64
     @NSManaged var title:String?

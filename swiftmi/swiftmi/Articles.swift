@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 @objc(Article)
-public class Article:NSManagedObject {
+class Article:NSManagedObject {
     
     @NSManaged var articleId:Int64
     @NSManaged var title:String?

@@ -35,7 +35,7 @@ class ArticleTableViewController: UITableViewController {
         self.tableView.addFooterWithCallback{
             
             if(self.data.count>0) {
-                let maxId = self.data.last!.valueForKey("articleId") as! Int
+                let maxId = self.data.last!.value(forKey: "articleId") as! Int
                 self.loadData(maxId, isPullRefresh: false)
             }
         }
@@ -43,7 +43,7 @@ class ArticleTableViewController: UITableViewController {
         self.tableView.headerBeginRefreshing()
     }
     
-    private func getDefaultData(){
+    fileprivate func getDefaultData(){
         
         let dalArticle = ArticleDal()
         let result = dalArticle.getList()
@@ -53,20 +53,20 @@ class ArticleTableViewController: UITableViewController {
         }
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         if let indexPath = tableView.indexPathForSelectedRow {
-            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            self.tableView.deselectRow(at: indexPath, animated: true)
 
         }
     }
     
-    func loadData(maxId:Int,isPullRefresh:Bool) {
+    func loadData(_ maxId:Int,isPullRefresh:Bool) {
         if self.loading {
             return
         }
         self.loading = true
         
-        Alamofire.request(Router.ArticleList(maxId: maxId, count: 12)).responseJSON {
+        Alamofire.request(Router.articleList(maxId: maxId, count: 12)).responseJSON {
             res in
             self.loading = false
             if(isPullRefresh){
@@ -99,14 +99,14 @@ class ArticleTableViewController: UITableViewController {
                     
                     articleDal.addList(items)
                     
-                    self.data.removeAll(keepCapacity: false)
+                    self.data.removeAll(keepingCapacity: false)
                 }
                 
                 for  it in items {
                     
                     self.data.append(it);
                 }
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     
                     
                     self.tableView.reloadData()
@@ -124,30 +124,30 @@ class ArticleTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return self.data.count
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let item: AnyObject = self.data[indexPath.row]
+        let item: AnyObject = self.data[(indexPath as NSIndexPath).row]
         
-        if let _ = item.valueForKey("imageUrl") as? String {
+        if let _ = item.value(forKey: "imageUrl") as? String {
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("articleWithImageCell", forIndexPath: indexPath) as! ArticleWithImageCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "articleWithImageCell", for: indexPath) as! ArticleWithImageCell
             cell.loadData(item)
             return cell
             
         } else {
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("articleCell", forIndexPath: indexPath) as! ArticleCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "articleCell", for: indexPath) as! ArticleCell
             cell.loadData(item)
             return cell
         }
@@ -195,16 +195,16 @@ class ArticleTableViewController: UITableViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.destinationViewController is ArticleDetailController {
-            let view = segue.destinationViewController as! ArticleDetailController
+        if segue.destination is ArticleDetailController {
+            let view = segue.destination as! ArticleDetailController
             let indexPath = self.tableView.indexPathForSelectedRow
             
-            let article: AnyObject = self.data[indexPath!.row]
+            let article: AnyObject = self.data[(indexPath! as NSIndexPath).row]
             view.article = article
-            view.articleId = article.valueForKey("articleId") as? Int
+            view.articleId = article.value(forKey: "articleId") as? Int
             
             
         }

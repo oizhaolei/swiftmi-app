@@ -10,6 +10,26 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import Kingfisher
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 let reuseIdentifier = "CodeCell"
 
@@ -22,7 +42,7 @@ class SwiftCodeController: UICollectionViewController,UICollectionViewDelegateFl
     var loading:Bool = false
  
     
-    private func getDefaultData(){
+    fileprivate func getDefaultData(){
         
         let dalCode = CodeDal()
         
@@ -41,7 +61,7 @@ class SwiftCodeController: UICollectionViewController,UICollectionViewDelegateFl
         super.viewDidLoad()
         
         
-        self.collectionViewLayout.collectionView?.backgroundColor = UIColor.whiteColor()
+        self.collectionViewLayout.collectionView?.backgroundColor = UIColor.white
         
         self.collectionView?.addHeaderWithCallback{
             self.loadData(0, isPullRefresh: true)
@@ -53,7 +73,7 @@ class SwiftCodeController: UICollectionViewController,UICollectionViewDelegateFl
         self.collectionView?.addFooterWithCallback{
             
             if(self.data.count>0) {
-                let  maxId = self.data.last!.valueForKey("codeId") as! Int
+                let  maxId = self.data.last!.value(forKey: "codeId") as! Int
                 self.loadData(maxId, isPullRefresh: false)
             }
         }
@@ -68,14 +88,14 @@ class SwiftCodeController: UICollectionViewController,UICollectionViewDelegateFl
 
 
 
-    func loadData(maxId:Int,isPullRefresh:Bool){
+    func loadData(_ maxId:Int,isPullRefresh:Bool){
         if self.loading {
             return
         }
         self.loading = true
         
         
-        Alamofire.request(Router.CodeList(maxId: maxId, count: 12)).responseJSON{
+        Alamofire.request(Router.codeList(maxId: maxId, count: 12)).responseJSON{
             closureResponse in
             
             self.loading = false
@@ -113,18 +133,18 @@ class SwiftCodeController: UICollectionViewController,UICollectionViewDelegateFl
                     
                     dalCode.addList(items)
                     
-                    self.data.removeAll(keepCapacity: false)
+                    self.data.removeAll(keepingCapacity: false)
                 }
                 
                  
                 for  it in items {
                     
-                    self.data.append(it.1.object);
+                    self.data.append(it.1.object as AnyObject);
                     
                    // println("data length \(self.data.count)")
                 }
                 
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async{
                     
                     self.collectionView!.reloadData()
                     
@@ -146,20 +166,20 @@ class SwiftCodeController: UICollectionViewController,UICollectionViewDelegateFl
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
         
-        var item = self.collectionView?.indexPathsForSelectedItems()
+        var item = self.collectionView?.indexPathsForSelectedItems
         
         if item?.count > 0 {
             
             let indexPath = item![0] 
             
-            if segue.destinationViewController is CodeDetailViewController {
-                let view = segue.destinationViewController as! CodeDetailViewController
+            if segue.destination is CodeDetailViewController {
+                let view = segue.destination as! CodeDetailViewController
                 
-                let code: AnyObject = self.data[indexPath.row]
+                let code: AnyObject = self.data[(indexPath as NSIndexPath).row]
                 view.shareCode = code
                 
                 
@@ -171,38 +191,38 @@ class SwiftCodeController: UICollectionViewController,UICollectionViewDelegateFl
 
     // MARK: UICollectionViewDataSource
 
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
         //#warning Incomplete method implementation -- Return the number of sections
         return 1
     }
 
 
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
         return self.data.count
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = self.collectionView!.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! CodeCell
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = self.collectionView!.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CodeCell
      
     
-        let item: AnyObject = self.data[indexPath.row]
+        let item: AnyObject = self.data[(indexPath as NSIndexPath).row]
         
         // Configure the cell
-        var preview = item.valueForKey("preview") as? String
+        var preview = item.value(forKey: "preview") as? String
         if preview != nil {
             if (preview!.hasPrefix("http://img.swiftmi.com")){
                 preview = "\(preview!)-code"
             }
-            cell.preview.kf_setImageWithURL(NSURL(string: preview!)!, placeholderImage: nil)
+            cell.preview.kf.setImage(with: URL(string: preview!)!, placeholder: nil)
         }
         
-        let pubTime = item.valueForKey("createTime") as! Double
-        let createDate = NSDate(timeIntervalSince1970: pubTime)
+        let pubTime = item.value(forKey: "createTime") as! Double
+        let createDate = Date(timeIntervalSince1970: pubTime)
         
         cell.timeLabel.text = Utility.formatDate(createDate)
         
-        cell.title.text = item.valueForKey("title") as? String
+        cell.title.text = item.value(forKey: "title") as? String
        
        
        //cell.addShadow()
@@ -216,7 +236,7 @@ class SwiftCodeController: UICollectionViewController,UICollectionViewDelegateFl
     
     
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
     {
         let frame  = self.view.frame;
         var width = frame.width
@@ -234,15 +254,15 @@ class SwiftCodeController: UICollectionViewController,UICollectionViewDelegateFl
 
     
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat{
         return 6
     }
     
-     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat
+     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
      {
          return 6
     }
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets{
         return sectionInsets
     }
  
@@ -257,7 +277,7 @@ class SwiftCodeController: UICollectionViewController,UICollectionViewDelegateFl
 
     
     // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         collectionView.layer.shadowOpacity = 0.8 
         return true
     }

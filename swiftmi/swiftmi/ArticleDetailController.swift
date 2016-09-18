@@ -27,23 +27,23 @@ class ArticleDetailController: UIViewController,UIWebViewDelegate {
         // Do any additional setup after loading the view.
     }
     
-    private func setViews(){
+    fileprivate func setViews(){
         
-        self.view.backgroundColor=UIColor.whiteColor()
-        self.webView.backgroundColor=UIColor.clearColor()
+        self.view.backgroundColor=UIColor.white
+        self.webView.backgroundColor=UIColor.clear
         self.webView.delegate = self
         self.startLoading()
         
         
         if let art = self.article {
-            self.articleId = art.valueForKey("articleId") as? Int
+            self.articleId = art.value(forKey: "articleId") as? Int
         }
         
         self.loadData()
         
     }
     
-    private func GetLoadData() -> JSON {
+    fileprivate func GetLoadData() -> JSON {
         
         if self.newArticle != nil {
             return self.newArticle!
@@ -52,24 +52,24 @@ class ArticleDetailController: UIViewController,UIWebViewDelegate {
         return JSON(self.article!)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         self.userActivity = NSUserActivity(activityType: "com.swiftmi.handoff.view-web")
         self.userActivity?.title = "view article on mac"
-        self.userActivity?.webpageURL  =  NSURL(string: ServiceApi.getArticlesDetail(self.articleId!))
+        self.userActivity?.webpageURL  =  URL(string: ServiceApi.getArticlesDetail(self.articleId!))
         self.userActivity?.becomeCurrent()
         
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         self.userActivity?.invalidate()
         self.clearAllNotice()
 
     }
     
-    private func loadData(){
+    fileprivate func loadData(){
         
-        Alamofire.request(Router.ArticleDetail(articleId: self.articleId!)).responseJSON{
+        Alamofire.request(Router.articleDetail(articleId: self.articleId!)).responseJSON{
             closureResponse in
             
             if(closureResponse.result.isFailure){
@@ -88,52 +88,51 @@ class ArticleDetailController: UIViewController,UIWebViewDelegate {
             }
             
             
-            let path=NSBundle.mainBundle().pathForResource("next", ofType: "html")
+            let path=Bundle.main.path(forResource: "next", ofType: "html")
             
-            let url=NSURL.fileURLWithPath(path!)
-            let request = NSURLRequest(URL:url)
-            dispatch_async(dispatch_get_main_queue()) {
-                
-                self.webView.loadRequest(request)
+            let url=NSURL.fileURL(withPath: path!)
+            let request = NSURLRequest(url:url)
+            DispatchQueue.main.async {
+                self.webView.loadRequest(request as URLRequest)
             }
             
         }
         
     }
 
-    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool
     {
         
-        let reqUrl=request.URL!.absoluteString
-        var params = reqUrl.componentsSeparatedByString("://")
+        let reqUrl=request.url!.absoluteString
+        var params = reqUrl.components(separatedBy: "://")
         
-        dispatch_async(dispatch_get_main_queue(),{
+        DispatchQueue.main.async(execute: {
             
             
             
             if(params.count>=2){
-                if(params[0].compare("html")==NSComparisonResult.OrderedSame && params[1].compare("docready") ==  NSComparisonResult.OrderedSame ){
+                if(params[0].compare("html")==ComparisonResult.orderedSame && params[1].compare("docready") ==  ComparisonResult.orderedSame ){
                     
                     
                     let data = self.GetLoadData()
                     
-                    self.webView.stringByEvaluatingJavaScriptFromString("article.render("+data.rawString()!+");")
+                    self.webView.stringByEvaluatingJavaScript(from: "article.render("+data.rawString()!+");")
                     
                     //add article to index
                     SplotlightHelper.AddItemToCoreSpotlight("next-\(data["articleId"].intValue)", title: data["title"].stringValue, contentDescription: data["content"].stringValue)
                     
                     
                 }
-                else if(params[0].compare("html")==NSComparisonResult.OrderedSame && params[1].compare("contentready")==NSComparisonResult.OrderedSame){
+                else if(params[0].compare("html")==ComparisonResult.orderedSame && params[1].compare("contentready")==ComparisonResult.orderedSame){
                     
                     //doc content ok
                     self.stopLoading()
                 }
-                else if params[0].compare("http") == NSComparisonResult.OrderedSame || params[0].compare("https") == NSComparisonResult.OrderedSame  {
+                else if params[0].compare("http") == ComparisonResult.orderedSame || params[0].compare("https") == ComparisonResult.orderedSame  {
                     
                     let webViewController:WebViewController = Utility.GetViewController("webViewController")
                     webViewController.webUrl = reqUrl
-                    self.presentViewController(webViewController, animated: true, completion: nil)
+                    self.present(webViewController, animated: true, completion: nil)
                     
                 }
                 
@@ -142,21 +141,21 @@ class ArticleDetailController: UIViewController,UIWebViewDelegate {
             
             
         })
-        if params[0].compare("http") == NSComparisonResult.OrderedSame || params[0].compare("https") == NSComparisonResult.OrderedSame {
+        if params[0].compare("http") == ComparisonResult.orderedSame || params[0].compare("https") == ComparisonResult.orderedSame {
             return false
         }
         return true;
     }
     
-    private func startLoading(){
+    fileprivate func startLoading(){
         self.pleaseWait()
-        self.webView.hidden=true
+        self.webView.isHidden=true
         
         
     }
     
-    private func stopLoading(){
-        self.webView.hidden=false
+    fileprivate func stopLoading(){
+        self.webView.isHidden=false
         self.clearAllNotice()
     }
     
@@ -166,7 +165,7 @@ class ArticleDetailController: UIViewController,UIWebViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    private func share() {
+    fileprivate func share() {
         
         var data = GetLoadData()
         let title = data["title"].stringValue
@@ -177,7 +176,7 @@ class ArticleDetailController: UIViewController,UIWebViewDelegate {
         
     }
     
-    @IBAction func shareArticle(sender: AnyObject) {
+    @IBAction func shareArticle(_ sender: AnyObject) {
         share()
     }
 

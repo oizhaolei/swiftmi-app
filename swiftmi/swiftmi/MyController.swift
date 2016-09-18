@@ -23,13 +23,13 @@ class MyController: UITableViewController {
    
     @IBOutlet weak var signatureLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         loadCurrentUser()
         self.clearAllNotice()
     }
     
-    private func loadCurrentUser() {
+    fileprivate func loadCurrentUser() {
         
         
        
@@ -50,10 +50,10 @@ class MyController: UITableViewController {
                 self.emailLabel.text = self.currentUser?.email
                 self.signatureLabel.text = self.currentUser?.signature
                 
-                 self.logoutCell.hidden = false
+                 self.logoutCell.isHidden = false
                 
             }else {
-                 self.logoutCell.hidden = true
+                 self.logoutCell.isHidden = true
             }
         }
         
@@ -74,7 +74,7 @@ class MyController: UITableViewController {
     func setView() {
         
         self.profileHeaderView = ProfileHeaderView.viewFromNib()!
-        self.profileHeaderView?.frame = CGRectMake(0,0,self.view.frame.width,280);
+        self.profileHeaderView?.frame = CGRect(x: 0,y: 0,width: self.view.frame.width,height: 280);
         self.tableView.tableHeaderView = self.profileHeaderView!
         self.profileHeaderView?.tapLoginCallBack = {
             
@@ -86,10 +86,10 @@ class MyController: UITableViewController {
         
     }
     
-    private func logout() {
+    fileprivate func logout() {
         
         if KeychainWrapper.hasValueForKey("token") {
-            KeychainWrapper.removeObjectForKey("token")
+            _ = KeychainWrapper.removeObjectForKey("token")
             self.currentUser = nil
             Router.token = ""
             
@@ -108,23 +108,23 @@ class MyController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.profileHeaderView?.scrollViewDidScroll(scrollView)
    
     }
 
    
   
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if indexPath.section == 2 && indexPath.row == 0 {
+        if (indexPath as NSIndexPath).section == 2 && (indexPath as NSIndexPath).row == 0 {
         
             self.logout()
         }
-        else if indexPath.section == 1 && indexPath.row == 0 {
+        else if (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 0 {
             
-            let url = NSURL(string: "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=993402332")
-            UIApplication.sharedApplication().openURL(url!)
+            let url = URL(string: "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=993402332")
+            UIApplication.shared.openURL(url!)
             //self.logout()
             /*
             var webViewController:WebViewController = Utility.GetViewController("webViewController")

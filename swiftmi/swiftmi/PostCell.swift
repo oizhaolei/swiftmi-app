@@ -27,13 +27,13 @@ class PostCell: UITableViewCell {
         // Initialization code
         containerView.layer.cornerRadius = 4
         containerView.layer.borderWidth = 1
-        containerView.layer.borderColor = UIColor(red: 0.85, green: 0.85, blue:0.85, alpha: 0.9).CGColor
+        containerView.layer.borderColor = UIColor(red: 0.85, green: 0.85, blue:0.85, alpha: 0.9).cgColor
         containerView.layer.masksToBounds = true
         //self.backgroundColor = UIColor.greenColor()
     
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         /*
         if selected {

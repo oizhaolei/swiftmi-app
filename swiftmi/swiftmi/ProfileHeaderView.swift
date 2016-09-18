@@ -33,7 +33,7 @@ class ProfileHeaderView: UIView,UIGestureRecognizerDelegate {
         
         avatar.layer.cornerRadius = 50
         avatar.layer.borderWidth = 1
-        avatar.layer.borderColor = UIColor.whiteColor().CGColor
+        avatar.layer.borderColor = UIColor.white.cgColor
         avatar.layer.masksToBounds = true;
         
         self.follower.text = "0"
@@ -46,26 +46,26 @@ class ProfileHeaderView: UIView,UIGestureRecognizerDelegate {
         
         let tap = UITapGestureRecognizer(target:self,action:#selector(ProfileHeaderView.tapLogin(_:)))
         
-        self.avatar.userInteractionEnabled = true
+        self.avatar.isUserInteractionEnabled = true
         self.avatar.addGestureRecognizer(tap)
         
         
         
         let tap2 = UITapGestureRecognizer(target:self,action:#selector(ProfileHeaderView.tapLogin(_:)))
         
-        self.userName.userInteractionEnabled = true
+        self.userName.isUserInteractionEnabled = true
         self.userName.addGestureRecognizer(tap2)
 
     }
     
-    func tapLogin(recognizer:UITapGestureRecognizer) {
+    func tapLogin(_ recognizer:UITapGestureRecognizer) {
         
         if self.tapLoginCallBack != nil && hasLogin == false {
             self.tapLoginCallBack!()
         }
     }
     
-    override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         
         return true
     }
@@ -74,10 +74,10 @@ class ProfileHeaderView: UIView,UIGestureRecognizerDelegate {
     var initialFrame:CGRect!;
     var initialHeight:CGFloat!;
 
-    func setData(user:Users){
+    func setData(_ user:Users){
 
       
-        avatar.kf_setImageWithURL(NSURL(string: user.avatar!)!, placeholderImage: nil)
+        avatar.kf_setImage(with: URL(string: user.avatar!)!, placeholder: nil)
        
         self.follower.text = "\(user.follower_count)"
         self.following.text = "\(user.following_count)"
@@ -98,7 +98,7 @@ class ProfileHeaderView: UIView,UIGestureRecognizerDelegate {
     }
 
     
-    func scrollViewDidScroll(scrollView: UIScrollView!){
+    func scrollViewDidScroll(_ scrollView: UIScrollView!){
         
         if scrollView.contentOffset.y < 0 {
             let OffsetY:CGFloat = scrollView.contentOffset.y + scrollView.contentInset.top
@@ -117,9 +117,9 @@ class ProfileHeaderView: UIView,UIGestureRecognizerDelegate {
 
 extension ProfileHeaderView {
     class func viewFromNib() -> ProfileHeaderView? {
-        let views = UINib(nibName: "ProfileHeaderView", bundle: nil).instantiateWithOwner(nil, options: nil)
+        let views = UINib(nibName: "ProfileHeaderView", bundle: nil).instantiate(withOwner: nil, options: nil)
         for view in views {
-            if view.isKindOfClass(self) {
+            if (view as AnyObject).isKind(of: self) {
                 return view as? ProfileHeaderView
             }
         }

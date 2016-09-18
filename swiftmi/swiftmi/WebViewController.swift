@@ -24,8 +24,8 @@ class WebViewController: UIViewController,UIWebViewDelegate {
             
             self.pleaseWait()
             
-            let url = NSURL(string: webUrl!)
-            let request = NSURLRequest(URL: url!)
+            let url = URL(string: webUrl!)
+            let request = URLRequest(url: url!)
             webView.loadRequest(request)
         }
         if self.title == nil {
@@ -38,13 +38,13 @@ class WebViewController: UIViewController,UIWebViewDelegate {
     }
 
    
-    private func setWebViewTop(){
+    fileprivate func setWebViewTop(){
         
         if self.isPop {
             for constraint in self.view.constraints {
-                if constraint.firstAttribute == NSLayoutAttribute.Top {
+                if constraint.firstAttribute == NSLayoutAttribute.top {
                     let inputWrapContraint = constraint as NSLayoutConstraint
-                    inputWrapContraint.constant =  UIApplication.sharedApplication().statusBarFrame.height+self.navigationController!.navigationBar.frame.height
+                    inputWrapContraint.constant =  UIApplication.shared.statusBarFrame.height+self.navigationController!.navigationBar.frame.height
                      
                     break;
                 }
@@ -54,7 +54,7 @@ class WebViewController: UIViewController,UIWebViewDelegate {
         }
     }
     
-    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
         
         setWebViewTop()
 
@@ -64,73 +64,73 @@ class WebViewController: UIViewController,UIWebViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func stopAndClose(sender: AnyObject) {
+    @IBAction func stopAndClose(_ sender: AnyObject) {
         
         webView.stopLoading()
 
          self.clearAllNotice()
         if self.isPop {
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewController(animated: true)
             
         }else {
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         }
        
     
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         
         self.clearAllNotice()
     }
     
-    @IBAction func refreshWebView(sender: AnyObject) {
+    @IBAction func refreshWebView(_ sender: AnyObject) {
          webView.reload()
         
     }
     
     
-    @IBAction func rewindWebView(sender: AnyObject) {
+    @IBAction func rewindWebView(_ sender: AnyObject) {
         
  
          webView.goBack()
     }
 
-    @IBAction func forwardWebView(sender: AnyObject) {
+    @IBAction func forwardWebView(_ sender: AnyObject) {
         
          webView.goForward()
     }
     
     
-    @IBAction func shareClick(sender: AnyObject) {
+    @IBAction func shareClick(_ sender: AnyObject) {
         
-        let url = NSURL(fileURLWithPath:self.webView.request!.URL!.absoluteString)
-        let title = self.webView.stringByEvaluatingJavaScriptFromString("document.title")
+        let url = URL(fileURLWithPath:self.webView.request!.url!.absoluteString)
+        let title = self.webView.stringByEvaluatingJavaScript(from: "document.title")
         
         let activityViewController = UIActivityViewController(activityItems: [title!,url], applicationActivities: nil)
-        self.presentViewController(activityViewController, animated: true,completion:nil)
+        self.present(activityViewController, animated: true,completion:nil)
        
     }
     
-    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool
     {
        self.clearAllNotice()
         self.pleaseWait()
         return true 
     }
-    func webViewDidStartLoad(webView: UIWebView)
+    func webViewDidStartLoad(_ webView: UIWebView)
     {
         
     }
-    func webViewDidFinishLoad(webView: UIWebView)
+    func webViewDidFinishLoad(_ webView: UIWebView)
     {
         self.clearAllNotice()
         
-        self.title =  self.webView.stringByEvaluatingJavaScriptFromString("document.title")
+        self.title =  self.webView.stringByEvaluatingJavaScript(from: "document.title")
         
         
     }
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError?)
+    func webView(_ webView: UIWebView, didFailLoadWithError error: Error)
     {
     
     
@@ -139,7 +139,7 @@ class WebViewController: UIViewController,UIWebViewDelegate {
         
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         
         super.viewDidDisappear(animated)
         self.clearAllNotice()

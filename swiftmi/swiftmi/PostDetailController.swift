@@ -31,9 +31,9 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let center: NSNotificationCenter = NSNotificationCenter.defaultCenter()
-        center.addObserver(self, selector: #selector(PostDetailController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        center.addObserver(self, selector: #selector(PostDetailController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        let center: NotificationCenter = NotificationCenter.default
+        center.addObserver(self, selector: #selector(PostDetailController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        center.addObserver(self, selector: #selector(PostDetailController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         //center.addObserver(self, selector:"keyboardWillChangeFrame:", name:UIKeyboardWillChangeFrameNotification,object:nil)
     
       
@@ -44,7 +44,7 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
         
         
         self.inputReply.layer.borderWidth = 1
-        self.inputReply.layer.borderColor = UIColor(red: 0.85, green: 0.85, blue:0.85, alpha: 0.9).CGColor
+        self.inputReply.layer.borderColor = UIColor(red: 0.85, green: 0.85, blue:0.85, alpha: 0.9).cgColor
         // Keyboard stuff.
 
         //
@@ -54,29 +54,29 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
         // Do any additional setup after loading the view.
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         self.userActivity = NSUserActivity(activityType: "com.swiftmi.handoff.view-web")
         self.userActivity?.title = "view article on mac"
-        self.userActivity?.webpageURL  =  NSURL(string: ServiceApi.getTopicShareDetail(self.postId!))
+        self.userActivity?.webpageURL  =  URL(string: ServiceApi.getTopicShareDetail(self.postId!))
         self.userActivity?.becomeCurrent()
         
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-       NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+       NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     
         self.userActivity?.invalidate()
     }
     
-    func keyboardWillShow(notification: NSNotification) {
-        let info:NSDictionary = notification.userInfo!
+    func keyboardWillShow(_ notification: Notification) {
+        let info:NSDictionary = (notification as NSNotification).userInfo! as NSDictionary
        
         
         let duration = (info[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        let endKeyboardRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        let endKeyboardRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         
         
         
@@ -86,11 +86,11 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
         frame.origin.y = -endKeyboardRect.height
          
         
-    UIView.animateWithDuration(duration, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
-            self.webView.stringByEvaluatingJavaScriptFromString("$('body').css({'padding-top':'\(endKeyboardRect.height)px'});")
+    UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions(), animations: {
+            self.webView.stringByEvaluatingJavaScript(from: "$('body').css({'padding-top':'\(endKeyboardRect.height)px'});")
             
         for constraint in self.inputWrapView.constraints {
-            if constraint.firstAttribute == NSLayoutAttribute.Height {
+            if constraint.firstAttribute == NSLayoutAttribute.height {
                 let inputWrapContraint = constraint as NSLayoutConstraint
                 inputWrapContraint.constant = 80
                // self.inputWrapView.updateConstraintsIfNeeded()
@@ -103,8 +103,8 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
             }, completion: nil)
     }
     
-    func keyboardWillHide(notification: NSNotification) {
-        let info:NSDictionary = notification.userInfo!
+    func keyboardWillHide(_ notification: Notification) {
+        let info:NSDictionary = (notification as NSNotification).userInfo! as NSDictionary
         
         
         
@@ -117,12 +117,12 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
         
         
         
-        UIView.animateWithDuration(duration, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
-            self.webView.stringByEvaluatingJavaScriptFromString("$('body').css({'padding-top':'0px'});")
+        UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions(), animations: {
+            self.webView.stringByEvaluatingJavaScript(from: "$('body').css({'padding-top':'0px'});")
                 self.view.frame = frame
             
             for constraint in self.inputWrapView.constraints {
-                if constraint.firstAttribute == NSLayoutAttribute.Height {
+                if constraint.firstAttribute == NSLayoutAttribute.height {
                     let inputWrapContraint = constraint as NSLayoutConstraint
                     inputWrapContraint.constant = 50
                     // self.inputWrapView.updateConstraintsIfNeeded()
@@ -135,7 +135,7 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
     }
     
     
-    private func GetLoadData() -> JSON {
+    fileprivate func GetLoadData() -> JSON {
         
         if postDetail != nil {
             return self.postDetail
@@ -151,7 +151,7 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
     func loadData(){
         
         
-        Alamofire.request(Router.TopicDetail(topicId: self.postId!)).responseJSON{
+        Alamofire.request(Router.topicDetail(topicId: self.postId!)).responseJSON{
             closureResponse in
             
             if closureResponse.result.isFailure {
@@ -175,13 +175,14 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
             }
            
             
-            let path=NSBundle.mainBundle().pathForResource("article", ofType: "html")
+            let path = Bundle.main.path(forResource:"article", ofType: "html")
             
-            let url=NSURL.fileURLWithPath(path!)
-            let request = NSURLRequest(URL:url)
-            dispatch_async(dispatch_get_main_queue()) {
-                self.inputWrapView.hidden = false
+            let url=NSURL.fileURL(withPath: path!)
+            let request = URLRequest(url:url)
+            DispatchQueue.main.async {
+                self.inputWrapView.isHidden = false
                 self.webView.loadRequest(request)
+
             }
 
         }
@@ -190,9 +191,9 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
     
      func setViews(){
         
-        self.view.backgroundColor=UIColor.whiteColor()
+        self.view.backgroundColor=UIColor.white
      
-        self.webView.backgroundColor=UIColor.clearColor()
+        self.webView.backgroundColor=UIColor.clear
         
         self.inputReply.resignFirstResponder()
         self.webView.delegate=self
@@ -200,13 +201,13 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
         
         
         if let article = self.article {
-            self.postId = article.valueForKey("postId") as? Int
+            self.postId = article.value(forKey: "postId") as? Int
         }
                 
       //  self.inputView
         
         self.startLoading()
-        self.inputWrapView.hidden = true
+        self.inputWrapView.isHidden = true
         self.title="主题贴"
         self.loadData()
         
@@ -214,17 +215,17 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
        
     }
     
-    @IBAction func replyClick(sender: AnyObject) {
+    @IBAction func replyClick(_ sender: AnyObject) {
         
         let msg = inputReply.text;
         inputReply.text = "";
         if msg != nil {
             
             let postId  = self.postId!
-            let params:[String:AnyObject] = ["postId":postId,"content":msg]
+            let params:[String:AnyObject] = ["postId":postId as AnyObject,"content":msg as AnyObject]
             
             
-            Alamofire.request(Router.TopicComment(parameters: params)).responseJSON{
+            Alamofire.request(Router.topicComment(parameters: params)).responseJSON{
                 closureResponse in
                 
                 if closureResponse.result.isFailure {
@@ -241,7 +242,7 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
                     
                     self.notice("评论成功!", type: NoticeType.success, autoClear: true)
                     
-                    self.webView.stringByEvaluatingJavaScriptFromString("article.addComment("+result["result"].rawString()!+");")
+                    self.webView.stringByEvaluatingJavaScript(from: "article.addComment("+result["result"].rawString()!+");")
                     
                     
                     
@@ -256,49 +257,49 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
     
     func startLoading(){
         self.pleaseWait()
-        self.webView.hidden=true
+        self.webView.isHidden=true
         
         
     }
     
     func stopLoading(){
-        self.webView.hidden=false
+        self.webView.isHidden=false
         self.clearAllNotice()
     }
 
 
-    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool
     {
-        let reqUrl=request.URL!.absoluteString
-        let params = reqUrl.componentsSeparatedByString("://")
+        let reqUrl=request.url!.absoluteString
+        let params = reqUrl.components(separatedBy: "://")
         
-        dispatch_async(dispatch_get_main_queue(),{
+        DispatchQueue.main.async(execute: {
             
             
            
             if(params.count>=2){
-                if(params[0].compare("html")==NSComparisonResult.OrderedSame && params[1].compare("docready") ==  NSComparisonResult.OrderedSame ){
+                if(params[0].compare("html")==ComparisonResult.orderedSame && params[1].compare("docready") ==  ComparisonResult.orderedSame ){
                   
                     
                     let data = self.GetLoadData()
                    
-                    self.webView.stringByEvaluatingJavaScriptFromString("article.render("+data.rawString()!+");")
+                    self.webView.stringByEvaluatingJavaScript(from: "article.render("+data.rawString()!+");")
                     
                     //add article to index
                     SplotlightHelper.AddItemToCoreSpotlight("article-\(data["topic"]["postId"].intValue)", title: data["topic"]["title"].stringValue, contentDescription: data["topic"]["content"].stringValue)
                     
                     
                 }
-                else if(params[0].compare("html")==NSComparisonResult.OrderedSame && params[1].compare("contentready")==NSComparisonResult.OrderedSame){
+                else if(params[0].compare("html")==ComparisonResult.orderedSame && params[1].compare("contentready")==ComparisonResult.orderedSame){
                    
                     //doc content ok
                     self.stopLoading()
                 }
-                else if params[0].compare("http") == NSComparisonResult.OrderedSame || params[0].compare("https") == NSComparisonResult.OrderedSame  {
+                else if params[0].compare("http") == ComparisonResult.orderedSame || params[0].compare("https") == ComparisonResult.orderedSame  {
                     
                     let webViewController:WebViewController = Utility.GetViewController("webViewController")
                     webViewController.webUrl = reqUrl
-                    self.presentViewController(webViewController, animated: true, completion: nil)
+                    self.present(webViewController, animated: true, completion: nil)
                     
                 }
                 
@@ -307,20 +308,20 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
             
             })
         
-        if params[0].compare("http") == NSComparisonResult.OrderedSame || params[0].compare("https") == NSComparisonResult.OrderedSame {
+        if params[0].compare("http") == ComparisonResult.orderedSame || params[0].compare("https") == ComparisonResult.orderedSame {
             return false
         }
         return true;
     }
-     func webViewDidStartLoad(webView: UIWebView)
+     func webViewDidStartLoad(_ webView: UIWebView)
     {
         
     }
-     func webViewDidFinishLoad(webView: UIWebView)
+     func webViewDidFinishLoad(_ webView: UIWebView)
      {
         
     }
-     func webView(webView: UIWebView, didFailLoadWithError error: NSError?)
+     func webView(_ webView: UIWebView, didFailLoadWithError error: Error)
      {
         
     }
@@ -333,12 +334,12 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func shareClick(sender: AnyObject) {
+    @IBAction func shareClick(_ sender: AnyObject) {
         
         share()
     }
     
-    private func share() {
+    fileprivate func share() {
         
         let data = GetLoadData()
         if let title = data["topic"]["title"].string {
@@ -348,7 +349,7 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
             let url = ServiceApi.getTopicShareDetail(data["topic"]["postId"].intValue)
             let desc = data["topic"]["desc"].stringValue
         
-            let img = self.webView.stringByEvaluatingJavaScriptFromString("article.getShareImage()")
+            let img = self.webView.stringByEvaluatingJavaScript(from: "article.getShareImage()")
         
         
             Utility.share(title, desc: desc, imgUrl: img, linkUrl: url)
@@ -358,12 +359,12 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         
         super.viewDidDisappear(animated)
         self.clearAllNotice()

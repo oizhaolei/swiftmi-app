@@ -11,31 +11,31 @@ import UIKit
 
 class Utility: NSObject {
    
-    class func GetViewController<T>(controllerName:String)->T {
+    class func GetViewController<T>(_ controllerName:String)->T {
         
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        let toViewController = mainStoryboard.instantiateViewControllerWithIdentifier(controllerName) as! T
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let toViewController = mainStoryboard.instantiateViewController(withIdentifier: controllerName) as! T
         return toViewController
         
     }
     
-    class func formatDate(date:NSDate)->String {
+    class func formatDate(_ date:Date)->String {
     
-        let fmt = NSDateFormatter()
+        let fmt = DateFormatter()
          
         fmt.dateFormat = "yyyy-MM-dd"
-        let dateString = fmt.stringFromDate(date)
+        let dateString = fmt.string(from: date)
         return dateString
     }
     
-    class func showMessage(msg:String) {
+    class func showMessage(_ msg:String) {
         
         let alert = UIAlertView(title: "提醒", message: msg, delegate: nil, cancelButtonTitle: "确定")
         alert.show()
     }
     
     //SDKShare Show
-    final class func share(title:String,desc:String,imgUrl:String?,linkUrl:String) {
+    final class func share(_ title:String,desc:String,imgUrl:String?,linkUrl:String) {
         
         var img = imgUrl
         if img == nil {
@@ -51,24 +51,25 @@ class Utility: NSObject {
     
         let shareParams = NSMutableDictionary();
         
-        shareParams.SSDKSetupShareParamsByText(text, images: [img!], url: NSURL(string: linkUrl), title: title, type: SSDKContentType.Auto)
+        shareParams.ssdkSetupShareParams(byText: text, images: [img!], url: URL(string: linkUrl), title: title, type: SSDKContentType.auto)
         
-        shareParams.SSDKSetupWeChatParamsByText(text, title: title, url: NSURL(string:linkUrl), thumbImage: img, image: img, musicFileURL: nil, extInfo: nil, fileData: nil, emoticonData: nil, type: SSDKContentType.Image, forPlatformSubType: SSDKPlatformType.TypeWechat)
+        shareParams.ssdkSetupWeChatParams(byText: text, title: title, url: URL(string:linkUrl), thumbImage: img, image: img, musicFileURL: nil, extInfo: nil, fileData: nil, emoticonData: nil, type: SSDKContentType.image, forPlatformSubType: SSDKPlatformType.typeWechat)
         
-        shareParams.SSDKSetupCopyParamsByText(textWithUrl, images: nil, url:  NSURL(string: linkUrl), type: SSDKContentType.Text)
+        shareParams.ssdkSetupCopyParams(byText: textWithUrl, images: nil, url:  URL(string: linkUrl), type: SSDKContentType.text)
         
-        shareParams.SSDKSetupSinaWeiboShareParamsByText(textWithUrl, title: textWithUrl, image: [img!], url: NSURL(string:linkUrl), latitude: 0.0, longitude: 0.0, objectID: "", type: SSDKContentType.Auto)
+        shareParams.ssdkSetupSinaWeiboShareParams(byText: textWithUrl, title: textWithUrl, image: [img!], url: URL(string:linkUrl), latitude: 0.0, longitude: 0.0, objectID: "", type: SSDKContentType.auto)
         
-        shareParams.SSDKSetupSMSParamsByText(textWithUrl, title: textWithUrl, images: nil, attachments: nil, recipients: nil, type: SSDKContentType.Text)
+        shareParams.ssdkSetupSMSParams(byText: textWithUrl, title: textWithUrl, images: nil, attachments: nil, recipients: nil, type: SSDKContentType.text)
         
-        let items = [SSDKPlatformType.TypeSinaWeibo.rawValue,SSDKPlatformType.TypeWechat.rawValue,SSDKPlatformType.TypeSMS.rawValue,SSDKPlatformType.TypeCopy.rawValue];
+        let items = [SSDKPlatformType.typeSinaWeibo.rawValue,SSDKPlatformType.typeWechat.rawValue,SSDKPlatformType.typeSMS.rawValue,SSDKPlatformType.typeCopy.rawValue];
         
-        ShareSDK.showShareActionSheet(nil, items: items, shareParams: shareParams) { (state:SSDKResponseState, type:SSDKPlatformType, userData:[NSObject : AnyObject]!, contentEntity:SSDKContentEntity!, error:NSError!, end:Bool) -> Void in
+        
+        ShareSDK.showShareActionSheet(nil, items: items, shareParams: shareParams) { (state, type, userData, contentEntity, error, end:Bool) -> Void in
             switch(state) {
-            case SSDKResponseState.Success:
+            case SSDKResponseState.success:
                 let alert = UIAlertView(title: "提示", message:"分享成功", delegate:self, cancelButtonTitle: "ok")
                 alert.show()
-            case SSDKResponseState.Fail:
+            case SSDKResponseState.fail:
                 let alert = UIAlertView(title: "提示", message:"分享失败：\(error)", delegate:self, cancelButtonTitle: "ok")
                 alert.show()
 

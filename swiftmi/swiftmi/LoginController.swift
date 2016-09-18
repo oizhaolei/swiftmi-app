@@ -27,18 +27,18 @@ class LoginController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    private func setView(){
+    fileprivate func setView(){
     
-        self.password.secureTextEntry = true 
+        self.password.isSecureTextEntry = true 
         
     }
 
-    private func showMsg(msg:String) {
+    fileprivate func showMsg(_ msg:String) {
         let alert = UIAlertView(title: "提醒", message: msg, delegate: nil, cancelButtonTitle: "确定")
         alert.show()
     }
     
-    private func login() {
+    fileprivate func login() {
         
         if username.text!.isEmpty {
             showMsg("用户名不能为空")
@@ -51,19 +51,19 @@ class LoginController: UIViewController {
         let loginname = username.text
         let loginpass = password.text
         
-        let params:[String:AnyObject] = ["username":loginname!,"password":loginpass!]
+        let params:[String:AnyObject] = ["username":loginname! as AnyObject,"password":loginpass! as AnyObject]
         
         self.pleaseWait()
         
-        self.loginBtn.enabled  = false
-        self.loginBtn.setTitle("登录ing...", forState: UIControlState())
-        Alamofire.request(Router.UserLogin(parameters: params)).responseJSON{
+        self.loginBtn.isEnabled  = false
+        self.loginBtn.setTitle("登录ing...", for: UIControlState())
+        Alamofire.request(Router.userLogin(parameters: params)).responseJSON{
             closureResponse in
             
             self.clearAllNotice()
             
-            self.loginBtn.enabled  = true
-            self.loginBtn.setTitle("登录", forState: UIControlState.Normal)
+            self.loginBtn.isEnabled  = true
+            self.loginBtn.setTitle("登录", for: UIControlState.normal)
             if closureResponse.result.isFailure {
                 
                 let alert = UIAlertView(title: "网络异常", message: "请检查网络设置", delegate: nil, cancelButtonTitle: "确定")
@@ -101,22 +101,22 @@ class LoginController: UIViewController {
         }
         
     }
-    @IBAction func userLogin(sender: UIButton) {
+    @IBAction func userLogin(_ sender: UIButton) {
         login()
         
     }
     
     
-    @IBAction func regAction(sender: AnyObject) {
+    @IBAction func regAction(_ sender: AnyObject) {
         
         let toViewController:RegisterController = Utility.GetViewController("registerController")
         
         self.navigationController?.pushViewController(toViewController, animated: true)
     }
     
-    private func goToBackView(user:Users) {
+    fileprivate func goToBackView(_ user:Users) {
         
-         self.navigationController?.popViewControllerAnimated(true)
+         _ = self.navigationController?.popViewController(animated: true)
         
         
     }

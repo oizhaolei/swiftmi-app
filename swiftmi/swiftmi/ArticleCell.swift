@@ -21,18 +21,18 @@ class ArticleCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    func loadData(item:AnyObject) {
+    func loadData(_ item:AnyObject) {
         
-        self.titleLabel.text = item.valueForKey("title") as? String
-        self.sourceLabel.text = item.valueForKey("sourceName") as? String
-        let pubTime = item.valueForKey("createDate") as! Double
-        let createDate = NSDate(timeIntervalSince1970: pubTime)
+        self.titleLabel.text = item.value(forKey: "title") as? String
+        self.sourceLabel.text = item.value(forKey: "sourceName") as? String
+        let pubTime = item.value(forKey: "createDate") as! Double
+        let createDate = Date(timeIntervalSince1970: pubTime)
         self.dateLabel.text = Utility.formatDate(createDate)
     }
 

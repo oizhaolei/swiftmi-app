@@ -12,44 +12,53 @@ import Alamofire
 
 
 enum Router: URLRequestConvertible {
+    /// Returns a URL request or throws if an `Error` was encountered.
+    ///
+    /// - throws: An `Error` if the underlying `URLRequest` is `nil`.
+    ///
+    /// - returns: A URL request.
+    public func asURLRequest() throws -> URLRequest {
+        return self.urlRequest
+    }
+
    
     static var token: String?
     
     //Restfull api
-    case TopicComment(parameters:[String: AnyObject])
-    case TopicCreate(parameters:[String: AnyObject])
-    case TopicList(maxId:Int,count:Int)
-    case TopicDetail(topicId:Int)
-    case CodeList(maxId:Int,count:Int)
-    case CodeDetail(codeId:Int)
-    case BookList(type:Int,maxId:Int,count:Int)
-    case UserRegister(parameters:[String: AnyObject])
-    case UserLogin(parameters:[String: AnyObject])
-    case ArticleList(maxId:Int,count:Int)
-    case ArticleDetail(articleId:Int)
+    case topicComment(parameters:[String: AnyObject])
+    case topicCreate(parameters:[String: AnyObject])
+    case topicList(maxId:Int,count:Int)
+    case topicDetail(topicId:Int)
+    case codeList(maxId:Int,count:Int)
+    case codeDetail(codeId:Int)
+    case bookList(type:Int,maxId:Int,count:Int)
+    case userRegister(parameters:[String: AnyObject])
+    case userLogin(parameters:[String: AnyObject])
+    case articleList(maxId:Int,count:Int)
+    case articleDetail(articleId:Int)
 
-    var method: Alamofire.Method {
+    var method: Alamofire.HTTPMethod {
         switch self {
-        case .TopicComment:
-            return .POST
-        case .TopicCreate:
-            return .POST
-        case .TopicDetail:
-            return .GET
-        case .TopicList:
-            return .GET
-        case .CodeList:
-            return .GET
-        case .CodeDetail:
-            return .GET
-        case .BookList:
-            return .GET
-        case .UserRegister:
-            return .POST
-        case .UserLogin:
-            return .POST
+        case .topicComment:
+            return .post
+        case .topicCreate:
+            return .post
+        case .topicDetail:
+            return .get
+        case .topicList:
+            return .get
+        case .codeList:
+            return .get
+        case .codeDetail:
+            return .get
+        case .bookList:
+            return .get
+        case .userRegister:
+            return .post
+        case .userLogin:
+            return .post
         default:
-            return .GET
+            return .get
         }
         
     }
@@ -57,40 +66,40 @@ enum Router: URLRequestConvertible {
     
     var path: String {
         switch self {
-        case .TopicComment:
+        case .topicComment:
             return ServiceApi.getTopicCommentUrl()
         
-        case .TopicCreate:
+        case .topicCreate:
             return ServiceApi.getCreateTopicUrl()
             
-        case .TopicDetail(let topicId):
+        case .topicDetail(let topicId):
             
             return ServiceApi.getTopicDetail(topicId)
             
-        case .TopicList(let maxId,let count):
+        case .topicList(let maxId,let count):
             return ServiceApi.getTopicUrl(maxId,count:count)
-        case .CodeList(let maxId,let count):
+        case .codeList(let maxId,let count):
             return ServiceApi.getCodeUrl(maxId,count:count)
-        case .BookList(let type,let maxId,let count):
+        case .bookList(let type,let maxId,let count):
             return ServiceApi.getBookUrl(type, maxId: maxId, count: count)
-        case .UserLogin(_):
+        case .userLogin(_):
             return ServiceApi.getLoginUrl()
-        case .UserRegister(_):
+        case .userRegister(_):
             return ServiceApi.getRegistUrl()
-        case .CodeDetail(let codeId):
+        case .codeDetail(let codeId):
             return ServiceApi.getCodeDetailUrl(codeId)
-        case .ArticleList(let maxId,let count):
+        case .articleList(let maxId,let count):
             return ServiceApi.getArticlesUrl(maxId, count: count)
-        case .ArticleDetail(let articleId):
+        case .articleDetail(let articleId):
             return ServiceApi.getArticlesDetail(articleId)
         }
     }
     
     
-    var URLRequest: NSMutableURLRequest {
-        let URL = NSURL(string: path)!
-        let mutableURLRequest = NSMutableURLRequest(URL: URL)
-        mutableURLRequest.HTTPMethod = method.rawValue
+    var urlRequest: URLRequest {
+        let url =  URL(string: path)!
+        var mutableURLRequest = URLRequest(url: url)
+        mutableURLRequest.httpMethod = method.rawValue
         
         if let token = Router.token {
             mutableURLRequest.setValue("\(token)", forHTTPHeaderField: "token")
@@ -100,19 +109,33 @@ enum Router: URLRequestConvertible {
         mutableURLRequest.setValue("1.0", forHTTPHeaderField: "appversion")
         
         switch self {
-        case .TopicComment(let parameters):
-            
-            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
-        case .TopicCreate(let parameters):
-            
-            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
-        case .UserRegister(let parameters):
-            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
-        case .UserLogin(let parameters):
-            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: parameters).0
-            
+        case .topicComment(let parameters):
+            do {
+                return try Alamofire.JSONEncoding().encode(mutableURLRequest, with: parameters)
+
+            }catch {
+            }
+        case .topicCreate(let parameters):
+            do {
+                return try Alamofire.JSONEncoding().encode(mutableURLRequest, with: parameters)
+                
+            }catch {
+            }
+         case .userRegister(let parameters):
+            do {
+                return try Alamofire.JSONEncoding().encode(mutableURLRequest, with: parameters)
+                
+            }catch {
+            }
+         case .userLogin(let parameters):
+            do {
+                return try Alamofire.JSONEncoding().encode(mutableURLRequest, with: parameters)
+                
+            }catch {
+            }
         default:
             return mutableURLRequest
         }
+        return mutableURLRequest
     }
 }

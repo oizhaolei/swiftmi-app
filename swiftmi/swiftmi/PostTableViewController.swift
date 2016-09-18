@@ -19,7 +19,7 @@ class PostTableViewController: UITableViewController {
     var loading:Bool = false
     
     
-    private func getDefaultData(){
+    fileprivate func getDefaultData(){
     
         let dalPost = PostDal()
         
@@ -50,7 +50,7 @@ class PostTableViewController: UITableViewController {
         self.tableView.addFooterWithCallback{
             
             if(self.data.count>0) {
-                let  maxId = self.data.last!.valueForKey("postId") as! Int
+                let  maxId = self.data.last!.value(forKey: "postId") as! Int
                 self.loadData(maxId, isPullRefresh: false)
             }
         }
@@ -67,43 +67,43 @@ class PostTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         return self.data.count
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
        //let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as! PostCell
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PostCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PostCell
         
-        let item: AnyObject = self.data[indexPath.row]
+        let item: AnyObject = self.data[(indexPath as NSIndexPath).row]
         
-        let commentCount = item.valueForKey("viewCount") as? Int
+        let commentCount = item.value(forKey: "viewCount") as? Int
         
         cell.commentCount.text = "\(commentCount!)"
         
-        let pubTime = item.valueForKey("createTime") as! Double
-        let createDate = NSDate(timeIntervalSince1970: pubTime)
+        let pubTime = item.value(forKey: "createTime") as! Double
+        let createDate = Date(timeIntervalSince1970: pubTime)
         
         cell.timeLabel.text = Utility.formatDate(createDate)
         
         //println(item.valueForKey("commentCount") as? Int)
         
-        cell.title.text = item.valueForKey("title") as? String
-        cell.authorName.text = item.valueForKey("authorName") as? String
-        cell.channelName.text = item.valueForKey("channelName") as? String
+        cell.title.text = item.value(forKey: "title") as? String
+        cell.authorName.text = item.value(forKey: "authorName") as? String
+        cell.channelName.text = item.value(forKey: "channelName") as? String
       
-        if let avatar = item.valueForKey("avatar") as? String {
-            cell.avatar.kf_setImageWithURL(NSURL(string: avatar+"-a80")!, placeholderImage: nil)
+        if let avatar = item.value(forKey: "avatar") as? String {
+            cell.avatar.kf.setImage(with: URL(string: avatar+"-a80")!, placeholder: nil)
         }
        
         
@@ -112,7 +112,7 @@ class PostTableViewController: UITableViewController {
         cell.avatar.layer.masksToBounds = true
        // cell.avatar.set
         // Configure the cell...
-        cell.selectionStyle = .None;
+        cell.selectionStyle = .none;
         cell.updateConstraintsIfNeeded()
         // cell.contentView.backgroundColor = UIColor.grayColor()
 
@@ -122,8 +122,8 @@ class PostTableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PostCell
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PostCell
         cell.containerView.backgroundColor = UIColor(red: 0.85, green: 0.85, blue:0.85, alpha: 0.9)
     }
     
@@ -131,19 +131,19 @@ class PostTableViewController: UITableViewController {
     
     var prototypeCell:PostCell?
     
-    private func configureCell(cell:PostCell,indexPath: NSIndexPath,isForOffscreenUse:Bool){
+    fileprivate func configureCell(_ cell:PostCell,indexPath: IndexPath,isForOffscreenUse:Bool){
         
-        let item: AnyObject = self.data[indexPath.row]
-        cell.title.text = item.valueForKey("title") as? String
-        cell.channelName.text = item.valueForKey("channelName") as? String
-        cell.selectionStyle = .None;
+        let item: AnyObject = self.data[(indexPath as NSIndexPath).row]
+        cell.title.text = item.value(forKey: "title") as? String
+        cell.channelName.text = item.value(forKey: "channelName") as? String
+        cell.selectionStyle = .none;
     }
     
-    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         
         if prototypeCell == nil
         {
-            self.prototypeCell = self.tableView.dequeueReusableCellWithIdentifier("Cell") as? PostCell
+            self.prototypeCell = self.tableView.dequeueReusableCell(withIdentifier: "Cell") as? PostCell
         }
         
         self.configureCell(prototypeCell!, indexPath: indexPath, isForOffscreenUse: false)
@@ -154,14 +154,14 @@ class PostTableViewController: UITableViewController {
         self.prototypeCell?.layoutIfNeeded()
         
         
-        let size = self.prototypeCell!.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+        let size = self.prototypeCell!.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
        
         return size.height;
         
     }
      
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row == self.data.count-1 {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if (indexPath as NSIndexPath).row == self.data.count-1 {
           
            // self.tableView.footerBeginRefreshing()
           //  loadData(self.data[indexPath.row].valueForKey("postId") as! Int,isPullRefresh:false)
@@ -169,14 +169,14 @@ class PostTableViewController: UITableViewController {
         }
     }
     
-    func loadData(maxId:Int,isPullRefresh:Bool){
+    func loadData(_ maxId:Int,isPullRefresh:Bool){
         if self.loading {
             return
         }
         self.loading = true
         
       
-       Alamofire.request(Router.TopicList(maxId: maxId, count: 16)).responseJSON{
+       Alamofire.request(Router.topicList(maxId: maxId, count: 16)).responseJSON{
             closureResponse in
             
             self.loading = false
@@ -215,7 +215,7 @@ class PostTableViewController: UITableViewController {
                     
                     dalPost.addPostList(items)
                     
-                    self.data.removeAll(keepCapacity: false)
+                    self.data.removeAll(keepingCapacity: false)
                 }
                 
                 
@@ -223,9 +223,7 @@ class PostTableViewController: UITableViewController {
                     
                     self.data.append(it);
                 }
-                dispatch_async(dispatch_get_main_queue()) {
-                  
-                    
+                DispatchQueue.main.async {
                    self.tableView.reloadData()
                 }
                
@@ -270,7 +268,7 @@ class PostTableViewController: UITableViewController {
     }
     */
 
-    @IBAction func addTopic(sender: UIButton) {
+    @IBAction func addTopic(_ sender: UIButton) {
     
         if KeychainWrapper.stringForKey("token") == nil {
            
@@ -283,7 +281,7 @@ class PostTableViewController: UITableViewController {
         }
     }
    
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
  
         if identifier == "toAddTopic" {
         
@@ -300,17 +298,17 @@ class PostTableViewController: UITableViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
         
         if segue.identifier == "PostDetail" {
             
-            if segue.destinationViewController is PostDetailController {
-                let view = segue.destinationViewController as! PostDetailController
+            if segue.destination is PostDetailController {
+                let view = segue.destination as! PostDetailController
                 let indexPath = self.tableView.indexPathForSelectedRow
                 
-                let article: AnyObject = self.data[indexPath!.row]
+                let article: AnyObject = self.data[(indexPath! as NSIndexPath).row]
                 view.article = article
                 
                 

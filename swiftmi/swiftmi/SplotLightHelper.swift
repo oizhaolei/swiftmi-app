@@ -10,11 +10,11 @@ import CoreSpotlight
 import MobileCoreServices
 
 
-public class SplotlightHelper:NSObject
+open class SplotlightHelper:NSObject
 {
-    static var domainIdentifier:String = NSBundle.mainBundle().bundleIdentifier!;
+    static var domainIdentifier:String = Bundle.main.bundleIdentifier!;
     
-    class func AddItemToCoreSpotlight(id:String,title:String,contentDescription:String)
+    class func AddItemToCoreSpotlight(_ id:String,title:String,contentDescription:String)
     {
         
         if #available(iOS 9.0, *) {
@@ -26,8 +26,8 @@ public class SplotlightHelper:NSObject
             let item = CSSearchableItem(uniqueIdentifier: id, domainIdentifier: domainIdentifier, attributeSet: attributeSet)
             
             // expire after a month
-            item.expirationDate = NSDate(timeInterval: 30*24*60*60, sinceDate:NSDate())
-            CSSearchableIndex.defaultSearchableIndex().indexSearchableItems([item], completionHandler: { (error:NSError?) -> Void in
+            item.expirationDate = Date(timeInterval: 30*24*60*60, since:Date())
+            CSSearchableIndex.default().indexSearchableItems([item], completionHandler: { error -> Void in
                 
                 if let err = error
                 {
@@ -46,10 +46,10 @@ public class SplotlightHelper:NSObject
         
     }
     
-    class func RemoveItemFromCoreSplotlight(id:String)
+    class func RemoveItemFromCoreSplotlight(_ id:String)
     {
         if #available(iOS 9.0, *) {
-            CSSearchableIndex.defaultSearchableIndex().deleteSearchableItemsWithIdentifiers([id]) { (error:NSError?) -> Void in
+            CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: [id]) { error -> Void in
                 if let err = error {
                     print("remove index error: \(err.localizedDescription)")
                 } else {

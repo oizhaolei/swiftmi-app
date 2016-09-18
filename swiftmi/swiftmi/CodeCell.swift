@@ -19,7 +19,7 @@ class CodeCell: UICollectionViewCell {
          super.awakeFromNib()
         //self.layer.cornerRadius = 4
         self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor(red: 0.85, green: 0.85, blue:0.85, alpha: 0.9).CGColor
+        self.layer.borderColor = UIColor(red: 0.85, green: 0.85, blue:0.85, alpha: 0.9).cgColor
         self.layer.masksToBounds = false
         
        // addShadow()
@@ -28,12 +28,12 @@ class CodeCell: UICollectionViewCell {
     }
     
     func addShadow(){
-        self.layer.shadowColor = UIColor(red: 0, green: 0, blue:0, alpha: 0.3).CGColor
+        self.layer.shadowColor = UIColor(red: 0, green: 0, blue:0, alpha: 0.3).cgColor
         self.layer.shadowOpacity = 0.5
         self.layer.shadowRadius = 2
         
         self.layer.shadowOffset = CGSize(width: 0, height: 0)
-        self.layer.shadowPath =  UIBezierPath(rect: self.bounds).CGPath
+        self.layer.shadowPath =  UIBezierPath(rect: self.bounds).cgPath
          print(" ...add... shadow.....")
     }
     

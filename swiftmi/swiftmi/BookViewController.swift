@@ -39,7 +39,7 @@ class BookViewController: UITableViewController {
         self.tableView.addFooterWithCallback{
             
             if(self.data.count>0) {
-                let  maxId = self.data.last!.valueForKey("bookId") as! Int
+                let  maxId = self.data.last!.value(forKey: "bookId") as! Int
                 self.loadData(self.GetBookType(),maxId:maxId, isPullRefresh: false)
             }
         }
@@ -51,7 +51,7 @@ class BookViewController: UITableViewController {
     }
     
     
-    private func getBookData(row:Int) ->AnyObject {
+    fileprivate func getBookData(_ row:Int) ->AnyObject {
         if(bookType.selectedSegmentIndex==0){
             
             return self.data[row]
@@ -63,7 +63,7 @@ class BookViewController: UITableViewController {
         }
     }
     
-    private func GetBookDataSource() -> [AnyObject] {
+    fileprivate func GetBookDataSource() -> [AnyObject] {
         
         if(bookType.selectedSegmentIndex==0){
             
@@ -77,7 +77,7 @@ class BookViewController: UITableViewController {
 
     }
 
-    private func GetBookType() -> Int{
+    fileprivate func GetBookType() -> Int{
         
         if(bookType.selectedSegmentIndex==0){
             
@@ -90,14 +90,14 @@ class BookViewController: UITableViewController {
         }
     }
     
-    private func setBookData(items:[AnyObject],type:Int,isPullRefresh:Bool){
+    fileprivate func setBookData(_ items:[AnyObject],type:Int,isPullRefresh:Bool){
          
          if(isPullRefresh){
             if(type==1) {
-                self.data.removeAll(keepCapacity: false)
+                self.data.removeAll(keepingCapacity: false)
             }
             else{
-                self.data2.removeAll(keepCapacity: false)
+                self.data2.removeAll(keepingCapacity: false)
             }
             
         }
@@ -122,7 +122,7 @@ class BookViewController: UITableViewController {
         
     }
     
-    @IBAction func segmentClick(segment: UISegmentedControl) {
+    @IBAction func segmentClick(_ segment: UISegmentedControl) {
         
         let index = segment.selectedSegmentIndex
         
@@ -155,9 +155,9 @@ class BookViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func loadData(type:Int,maxId:Int,isPullRefresh:Bool){
+    func loadData(_ type:Int,maxId:Int,isPullRefresh:Bool){
         
-        Alamofire.request(Router.BookList(type: type, maxId: maxId, count: 16)).responseJSON{
+        Alamofire.request(Router.bookList(type: type, maxId: maxId, count: 16)).responseJSON{
             closureResponse in
             
             
@@ -187,7 +187,7 @@ class BookViewController: UITableViewController {
                 
                 self.setBookData(items,type:type,isPullRefresh:isPullRefresh)
                 
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
                 
@@ -198,48 +198,48 @@ class BookViewController: UITableViewController {
     }
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         return self.GetBookDataSource().count
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("BookCell", forIndexPath: indexPath) as! BookCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BookCell", for: indexPath) as! BookCell
         
-        let item: AnyObject = self.getBookData(indexPath.row)
+        let item: AnyObject = self.getBookData((indexPath as NSIndexPath).row)
         
         // Configure the cell
-        var cover = item.valueForKey("cover") as? String
+        var cover = item.value(forKey: "cover") as? String
         if cover != nil {
             if (cover!.hasPrefix("http://img.swiftmi.com")){
                 cover = "\(cover!)-book"
             }
-            cell.cover.kf_setImageWithURL(NSURL(string: cover!)!, placeholderImage: nil)
+            cell.cover.kf.setImage(with: URL(string: cover!)!, placeholder: nil)
         }
-        cell.author.text = item.valueForKey("author") as? String
+        cell.author.text = item.value(forKey: "author") as? String
         
-        let pubTime = item.valueForKey("publishTime") as! Double
-        let createDate = NSDate(timeIntervalSince1970: pubTime)
+        let pubTime = item.value(forKey: "publishTime") as! Double
+        let createDate = Date(timeIntervalSince1970: pubTime)
         cell.year.text = Utility.formatDate(createDate)
-        cell.title.text = item.valueForKey("title") as? String
+        cell.title.text = item.value(forKey: "title") as? String
         
-        cell.desc.text = item.valueForKey("intro") as? String
+        cell.desc.text = item.value(forKey: "intro") as? String
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let item: AnyObject = self.getBookData(indexPath.row)
+        let item: AnyObject = self.getBookData((indexPath as NSIndexPath).row)
         
-        let bookUrl = item.valueForKey("link") as? String
+        let bookUrl = item.value(forKey: "link") as? String
         if bookUrl != nil {
             
             let webViewController:WebViewController = Utility.GetViewController("webViewController")

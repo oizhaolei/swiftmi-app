@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class CodeDal: NSObject {
    
-    func addList(items:JSON) {
+    func addList(_ items:JSON) {
         
         for po in items {
             
@@ -22,15 +22,15 @@ class CodeDal: NSObject {
         CoreDataManager.shared.save()
     }
     
-    func addCode(obj:JSON,save:Bool){
+    func addCode(_ obj:JSON,save:Bool){
         
         
         let context=CoreDataManager.shared.managedObjectContext;
         
         
-        let model = NSEntityDescription.entityForName("Codedown", inManagedObjectContext: context)
+        let model = NSEntityDescription.entity(forEntityName: "Codedown", in: context)
         
-        let codeDown = ShareCode(entity: model!, insertIntoManagedObjectContext: context)
+        let codeDown = ShareCode(entity: model!, insertInto: context)
         
         if model != nil {
             
@@ -46,7 +46,7 @@ class CodeDal: NSObject {
     
     func deleteAll(){
         
-        CoreDataManager.shared.deleteTable("Codedown")
+        CoreDataManager.shared.deleteTable(request: NSFetchRequest<ShareCode>(),tableName: "Codedown")
     }
     
     func save(){
@@ -60,20 +60,20 @@ class CodeDal: NSObject {
     
     func getCodeList()->[AnyObject]? {
         
-        let request = NSFetchRequest(entityName: "Codedown")
+        let request:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Codedown")
         let sort1=NSSortDescriptor(key: "createTime", ascending: false)
         
         // var sort2=NSSortDescriptor(key: "postId", ascending: false)
         request.fetchLimit = 30
         request.sortDescriptors = [sort1]
-        request.resultType = NSFetchRequestResultType.DictionaryResultType
+        request.resultType = NSFetchRequestResultType.dictionaryResultType
         let result = CoreDataManager.shared.executeFetchRequest(request)
         return result
         
     }
     
     
-    func obj2ManagedObject(obj:JSON,codeDown:ShareCode) -> ShareCode{
+    func obj2ManagedObject(_ obj:JSON,codeDown:ShareCode){
         
         var data = obj
         
@@ -109,10 +109,5 @@ class CodeDal: NSObject {
         codeDown.userId = data["userId"].int64Value
         codeDown.username = data["username"].stringValue
         codeDown.viewCount = data["viewCount"].int32Value
-        
-        return codeDown
-        
-        
-    
      }
 }

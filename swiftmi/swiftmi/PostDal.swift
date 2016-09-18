@@ -11,11 +11,11 @@ import CoreData
 import SwiftyJSON
 
 extension Optional {
-    func valueOrDefault(defaultValue: Wrapped) -> Wrapped {
+    func valueOrDefault(_ defaultValue: Wrapped) -> Wrapped {
         switch(self) {
-        case .None:
+        case .none:
             return defaultValue
-        case .Some(let value):
+        case .some(let value):
             return value
         }
     }
@@ -24,7 +24,7 @@ extension Optional {
 
 class PostDal:NSObject {
     
-    func addPostList(items:[AnyObject]) {
+    func addPostList(_ items:[AnyObject]) {
         
         for po in items {
             
@@ -34,20 +34,18 @@ class PostDal:NSObject {
         CoreDataManager.shared.save()
     }
     
-    func addPost(obj:AnyObject,save:Bool){
+    func addPost(_ obj:AnyObject,save:Bool){
         
         
         let context=CoreDataManager.shared.managedObjectContext;
         
         
-        let model = NSEntityDescription.entityForName("Post", inManagedObjectContext: context)
+        let model = NSEntityDescription.entity(forEntityName: "Post", in: context)
         
-        let post = Post(entity: model!, insertIntoManagedObjectContext: context)
+        let post = Post(entity: model!, insertInto: context)
         
         if model != nil {
-            //var article = model as Article;
-            self.obj2ManagedObject(obj, post: post)
-            
+            self.obj2ManagedObject(obj, post: post)            
             if(save)
             {
                 CoreDataManager.shared.save()
@@ -58,7 +56,7 @@ class PostDal:NSObject {
     
     func deleteAll(){
        
-        CoreDataManager.shared.deleteTable("Post")
+        CoreDataManager.shared.deleteTable(request: NSFetchRequest<Post>(),tableName: "Post")
     }
     
     func save(){
@@ -71,19 +69,20 @@ class PostDal:NSObject {
     
     func getPostList()->[AnyObject]? {
         
-        let request = NSFetchRequest(entityName: "Post")
+        
+        let request:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Post")
         let sort1=NSSortDescriptor(key: "lastCommentTime", ascending: false)
        
        // var sort2=NSSortDescriptor(key: "postId", ascending: false)
         request.fetchLimit = 30
         request.sortDescriptors = [sort1]
-        request.resultType = NSFetchRequestResultType.DictionaryResultType
+        request.resultType = NSFetchRequestResultType.dictionaryResultType
         let result = CoreDataManager.shared.executeFetchRequest(request)
         return result
     
     }
     
-    func obj2ManagedObject(obj:AnyObject,post:Post) -> Post{
+    func obj2ManagedObject(_ obj:AnyObject,post:Post) {
         
          var data = JSON(obj)
     
@@ -127,13 +126,5 @@ class PostDal:NSObject {
         post.desc = desc
         post.isHtml = isHtml
         
-        //var tickes:Double = (obj.valueForKey("posttime") as Double);
-        //var date=NSDate(timeIntervalSince1970: tickes);
-        //article.posttime=date;
-        //article.content = content
-        //article.thumbnail=thumbnail
-        
-      //  println(post)
-        return post;
     }
 }

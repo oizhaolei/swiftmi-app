@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class ArticleDal:NSObject {
     
-    func addList(items:[AnyObject]) {
+    func addList(_ items:[AnyObject]) {
         
         for po in items {
             
@@ -22,15 +22,15 @@ class ArticleDal:NSObject {
         CoreDataManager.shared.save()
     }
     
-    func addArticle(obj:AnyObject,save:Bool){
+    func addArticle(_ obj:AnyObject,save:Bool){
         
         
         let context=CoreDataManager.shared.managedObjectContext;
         
         
-        let model = NSEntityDescription.entityForName("Article", inManagedObjectContext: context)
+        let model = NSEntityDescription.entity(forEntityName: "Article", in: context)
         
-        let article = Article(entity: model!, insertIntoManagedObjectContext: context)
+        let article = Article(entity: model!, insertInto: context)
         
         if model != nil {
  
@@ -46,7 +46,7 @@ class ArticleDal:NSObject {
     
     func deleteAll(){
         
-        CoreDataManager.shared.deleteTable("Article")
+        CoreDataManager.shared.deleteTable(request: NSFetchRequest<Article>(),tableName: "Article")
     }
     
     func save(){
@@ -59,18 +59,18 @@ class ArticleDal:NSObject {
     
     func getList()->[AnyObject]? {
         
-        let request = NSFetchRequest(entityName: "Article")
+        let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Article")
         let sort1=NSSortDescriptor(key: "articleId", ascending: false)
         
         request.fetchLimit = 30
         request.sortDescriptors = [sort1]
-        request.resultType = NSFetchRequestResultType.DictionaryResultType
+        request.resultType = NSFetchRequestResultType.dictionaryResultType
         let result = CoreDataManager.shared.executeFetchRequest(request)
         return result
         
     }
     
-    func obj2ManagedObject(obj:AnyObject,article:Article) -> Article{
+    func obj2ManagedObject(_ obj:AnyObject,article:Article) {
         
         var data = JSON(obj)
         
@@ -98,6 +98,5 @@ class ArticleDal:NSObject {
         article.language = language
         article.imageUrl = imageUrl
         
-        return article;
     }
 }

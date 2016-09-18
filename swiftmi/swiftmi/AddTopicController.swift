@@ -24,7 +24,7 @@ class AddTopicController: UIViewController {
         
     }
     
-    @IBAction func publishClick(sender: AnyObject) {
+    @IBAction func publishClick(_ sender: AnyObject) {
         
         let title = self.titleField.text
         let content = self.contentField.text
@@ -35,7 +35,7 @@ class AddTopicController: UIViewController {
             
         }
         
-        if content.isEmpty {
+        if (content?.isEmpty)! {
             Utility.showMessage("内容不能为空!")
             return
             
@@ -45,17 +45,17 @@ class AddTopicController: UIViewController {
             
             let btn = sender as! UIButton
             
-            btn.enabled = false
+            btn.isEnabled = false
           
-            let params:[String:AnyObject] = ["title":title!,"content":content!,"channelId":1]
+            let params:[String:AnyObject] = ["title":title! as AnyObject,"content":content! as AnyObject,"channelId":1 as AnyObject]
             
             
-            Alamofire.request(Router.TopicCreate(parameters: params)).responseJSON{
+            Alamofire.request(Router.topicCreate(parameters: params)).responseJSON{
                 closureResponse in
                 
             
                 
-                 btn.enabled = true 
+                 btn.isEnabled = true 
                 if closureResponse.result.isFailure {
                     
                     let alert = UIAlertView(title: "网络异常", message: "请检查网络设置", delegate: nil, cancelButtonTitle: "确定")
@@ -71,7 +71,7 @@ class AddTopicController: UIViewController {
                 
                 if result["isSuc"].boolValue {
                     
-                   self.navigationController?.popViewControllerAnimated(true)
+                   self.navigationController?.popViewController(animated: true)
                     
                     
                 } else {
@@ -83,10 +83,10 @@ class AddTopicController: UIViewController {
         }
         
     }
-    private func setView() {
+    fileprivate func setView() {
         let border = CALayer()
         let width = CGFloat(1.0)
-        border.borderColor = UIColor.lightGrayColor().CGColor
+        border.borderColor = UIColor.lightGray.cgColor
         border.frame = CGRect(x: 0, y: titleField.frame.size.height - width, width:  titleField.frame.size.width,height: width)
 
         border.borderWidth = width
@@ -94,9 +94,9 @@ class AddTopicController: UIViewController {
        titleField.layer.masksToBounds = true
         
         
-        let center: NSNotificationCenter = NSNotificationCenter.defaultCenter()
-        center.addObserver(self, selector: #selector(AddTopicController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        center.addObserver(self, selector: #selector(AddTopicController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        let center: NotificationCenter = NotificationCenter.default
+        center.addObserver(self, selector: #selector(AddTopicController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        center.addObserver(self, selector: #selector(AddTopicController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         
     }
@@ -106,26 +106,26 @@ class AddTopicController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
     }
     
-    func keyboardWillShow(notification: NSNotification) {
-        let info:NSDictionary = notification.userInfo!
+    func keyboardWillShow(_ notification: Notification) {
+        let info:NSDictionary = (notification as NSNotification).userInfo! as NSDictionary
         
         
         let duration = (info[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
         
-        let endKeyboardRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        let endKeyboardRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         
         
         
         
         
-        UIView.animateWithDuration(duration, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions(), animations: {
          
             
             for constraint in self.view.constraints {
@@ -136,7 +136,7 @@ class AddTopicController: UIViewController {
                 if let _ = cons.secondItem as? UITextView
                 {
                     
-                    if cons.secondAttribute == NSLayoutAttribute.Bottom {
+                    if cons.secondAttribute == NSLayoutAttribute.bottom {
                         
                         
                         cons.constant = 10 + endKeyboardRect.height
@@ -153,15 +153,15 @@ class AddTopicController: UIViewController {
             }, completion: nil)
     }
 
-    func keyboardWillHide(notification: NSNotification) {
-        let info:NSDictionary = notification.userInfo!
+    func keyboardWillHide(_ notification: Notification) {
+        let info:NSDictionary = (notification as NSNotification).userInfo! as NSDictionary
         
         
         let duration = (info[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
         
         
         
-        UIView.animateWithDuration(duration, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut,
+        UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions(),
             animations: {
             
                 for constraint in self.view.constraints {
@@ -172,7 +172,7 @@ class AddTopicController: UIViewController {
                 if let _ = cons.secondItem as? UITextView
                 {
                     
-                    if cons.secondAttribute == NSLayoutAttribute.Bottom {
+                    if cons.secondAttribute == NSLayoutAttribute.bottom {
                         
                         
                         cons.constant = 10

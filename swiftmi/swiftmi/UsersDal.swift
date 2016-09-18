@@ -15,15 +15,15 @@ class UsersDal: NSObject {
     
     
     
-    func addUser(obj:JSON,save:Bool)->Users? {
+    func addUser(_ obj:JSON,save:Bool)->Users? {
         
         
         let context=CoreDataManager.shared.managedObjectContext;
         
         
-        let model = NSEntityDescription.entityForName("Users", inManagedObjectContext: context)
+        let model = NSEntityDescription.entity(forEntityName: "Users", in: context)
         
-        let user = Users(entity: model!, insertIntoManagedObjectContext: context)
+        let user = Users(entity: model!, insertInto: context)
         
         if model != nil {
            
@@ -42,7 +42,7 @@ class UsersDal: NSObject {
     
     internal func deleteAll(){
         
-        CoreDataManager.shared.deleteTable("Users")
+        CoreDataManager.shared.deleteTable(request: NSFetchRequest<Users>(),tableName: "Users")
     }
     
    internal  func save(){
@@ -55,7 +55,7 @@ class UsersDal: NSObject {
     
    internal  func getCurrentUser()->Users? {
         
-        let request = NSFetchRequest(entityName: "Users")
+        let request:NSFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Users")
         request.fetchLimit = 1
         
     
@@ -74,7 +74,7 @@ class UsersDal: NSObject {
         
     }
     
-    internal func JSON2Object(obj:JSON,user:Users) -> Users{
+    internal func JSON2Object(_ obj:JSON,user:Users) -> Users{
         
         var data = obj
         

@@ -29,12 +29,12 @@ class RegisterController: UIViewController {
 
         // Do any additional setup after loading the view.
         self.title = "注册"
-         self.password.secureTextEntry = true 
+         self.password.isSecureTextEntry = true 
     }
 
     
     
-    @IBAction func regClick(sender: AnyObject) {
+    @IBAction func regClick(_ sender: AnyObject) {
         
         
         
@@ -53,17 +53,17 @@ class RegisterController: UIViewController {
         }
         
         
-        let params:[String:AnyObject] = ["username":username.text!,"password":password.text!,"email":email.text!]
+        let params:[String:AnyObject] = ["username":username.text! as AnyObject,"password":password.text! as AnyObject,"email":email.text! as AnyObject]
         
-        self.btnReg.enabled  = false
-        self.btnReg.setTitle("注册ing...", forState: UIControlState())
+        self.btnReg.isEnabled  = false
+        self.btnReg.setTitle("注册ing...", for: UIControlState())
        
         self.pleaseWait()
         
-        Alamofire.request(Router.UserRegister(parameters: params)).responseJSON{
+        Alamofire.request(Router.userRegister(parameters: params)).responseJSON{
             closureResponse in
-            self.btnReg.enabled  = true
-            self.btnReg.setTitle("注册", forState: UIControlState.Normal)
+            self.btnReg.isEnabled  = true
+            self.btnReg.setTitle("注册", for: UIControlState.normal)
             
             self.clearAllNotice()
             
@@ -85,20 +85,20 @@ class RegisterController: UIViewController {
                 
                 let token = user["token"].stringValue
                 
-                KeychainWrapper.setString(token, forKey: "token")
+                _ = KeychainWrapper.setString(token, forKey: "token")
                 Router.token  = token
                 
                 let dalUser = UsersDal()
                 
                 dalUser.deleteAll()
-                dalUser.addUser(user, save: true)
+                _ = dalUser.addUser(user, save: true)
                 if self.navigationController!.viewControllers.count>=3
                 {
                     let toView = self.navigationController!.viewControllers[self.navigationController!.viewControllers.count-3] as UIViewController;// 2
                      self.navigationController?.popToViewController(toView, animated: true)
                 }
                 else{
-                     self.navigationController?.popViewControllerAnimated(true)
+                     self.navigationController?.popViewController(animated: true)
                 }
                 
                 

@@ -12,53 +12,53 @@ class ServiceApi: NSObject {
    
     static var host:String = "http://www.swiftmi.com"
     
-     internal class func getTopicUrl(maxId:Int,count:Int) -> String {
+     internal class func getTopicUrl(_ maxId:Int,count:Int) -> String {
         
         return "\(host)/api/topic/list2/\(maxId)/\(count)"
     }
     
-    internal class func getTopicDetail(topicId:Int) -> String {
+    internal class func getTopicDetail(_ topicId:Int) -> String {
         
         return "\(host)/api/topic/\(topicId)"
     }
     
-    internal class func getTopicShareDetail(topicId:Int) -> String {
+    internal class func getTopicShareDetail(_ topicId:Int) -> String {
         
         return "\(host)/topic/\(topicId).html"
     }
     
-    internal class func getCodeShareDetail(codeId:Int) -> String {
+    internal class func getCodeShareDetail(_ codeId:Int) -> String {
         
         return "\(host)/code4swift/\(codeId).html"
     }
     
-    internal class func getCodeUrl(maxId:Int,count:Int) -> String {
+    internal class func getCodeUrl(_ maxId:Int,count:Int) -> String {
         
         return "\(host)/api/sharecode/list/\(maxId)/\(count)"
     }
     
-    internal class func getCodeDetailUrl(codeId:Int) -> String {
+    internal class func getCodeDetailUrl(_ codeId:Int) -> String {
         
         return "\(host)/api/sharecode/\(codeId)"
     }
     
-    internal class func getBookUrl(type:Int,maxId:Int,count:Int) -> String{
+    internal class func getBookUrl(_ type:Int,maxId:Int,count:Int) -> String{
         
         let url="\(host)/api/books/\(type)/\(maxId)/\(count)"
         return url
     }
     
-    class func getArticlesUrl(maxId:Int, count:Int) -> String {
+    class func getArticlesUrl(_ maxId:Int, count:Int) -> String {
         let url="\(host)/api/articles?maxId=\(maxId)&count=\(count)&withContent=1"
         return url
     }
     
-    class func getArticlesDetail(articleId:Int) -> String {
+    class func getArticlesDetail(_ articleId:Int) -> String {
         let url="\(host)/api/articles/\(articleId)"
         return url
     }
     
-    class func getArticlesShareDetail(articleId:Int) -> String {
+    class func getArticlesShareDetail(_ articleId:Int) -> String {
         let url="\(host)/articles/\(articleId).html"
         return url
     }
