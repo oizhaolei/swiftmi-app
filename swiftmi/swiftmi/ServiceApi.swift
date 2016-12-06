@@ -10,7 +10,7 @@ import UIKit
 
 class ServiceApi: NSObject {
    
-    static var host:String = "http://www.swiftmi.com"
+    static var host:String = "https://www.swiftmi.com"
     
      internal class func getTopicUrl(_ maxId:Int,count:Int) -> String {
         
