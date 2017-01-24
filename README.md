@@ -7,6 +7,8 @@ Swift 开发 QQ 交流群：305170435
 
 目前社区功能不全，欢迎贡献代码，相互学习。
 
+## AppStore
+
 [<img src="https://cloud.githubusercontent.com/assets/219689/5575342/963e0ee8-9013-11e4-8091-7ece67d64729.png" width="135" height="40" alt="AppStore"/>](https://appsto.re/cn/C3Hn7.i)
 
 ## 预览
