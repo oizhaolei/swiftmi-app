@@ -34,8 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             (platformType:SSDKPlatformType) in
             
             switch(platformType) {
-            case SSDKPlatformType.typeSinaWeibo:
-                ShareSDKConnector.connectWeibo(WeiboSDK.classForCoder())
+//            case SSDKPlatformType.typeSinaWeibo:
+//                ShareSDKConnector.connectWeibo(WeiboSDK.classForCoder())
            case SSDKPlatformType.typeWechat:
                  ShareSDKConnector.connectWeChat(WXApi.classForCoder())
             default:
@@ -50,10 +50,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 switch(platformType) {
                     
                  case SSDKPlatformType.typeSinaWeibo:
-                    appInfo?.ssdkSetupSinaWeibo(byAppKey: "568898243", appSecret: "38a4f8204cc784f81f9f0daaf31e02e3", redirectUri: "http://www.sharesdk.cn", authType: SSDKAuthTypeBoth)
+                    appInfo?.ssdkSetupSinaWeibo(byAppKey: "3314374337", appSecret: "988b7cb3d34a994aa758b80e5097c3cb", redirectUri: "https://api.weibo.com/oauth2/default.html", authType: SSDKAuthTypeBoth)
                     
                  case SSDKPlatformType.typeWechat:
-                    appInfo?.ssdkSetupWeChat(byAppId: "wx4868b35061f87885", appSecret: "64020361b8ec4c99936c0e3999a9f249")
+                    appInfo?.ssdkSetupWeChat(byAppId: "wxaae8ddda9c357128", appSecret: "20dfc209d79def9c19bbc640a85ead2a")
                     
                 default:
                     break;

@@ -39,7 +39,7 @@ class Utility: NSObject {
         
         var img = imgUrl
         if img == nil {
-            img = "http://swiftmi.qiniudn.com/swiftmi180icon.png"
+            img = "https://imgs.swiftmi.com/swiftmi180icon.png"
         }
         
         var text = desc;
@@ -55,9 +55,8 @@ class Utility: NSObject {
         
         shareParams.ssdkSetupWeChatParams(byText: text, title: title, url: URL(string:linkUrl), thumbImage: img, image: img, musicFileURL: nil, extInfo: nil, fileData: nil, emoticonData: nil, type: SSDKContentType.image, forPlatformSubType: SSDKPlatformType.typeWechat)
         
-        shareParams.ssdkSetupCopyParams(byText: textWithUrl, images: nil, url:  URL(string: linkUrl), type: SSDKContentType.text)
-        
-        shareParams.ssdkSetupSinaWeiboShareParams(byText: textWithUrl, title: textWithUrl, image: [img!], url: URL(string:linkUrl), latitude: 0.0, longitude: 0.0, objectID: "", type: SSDKContentType.auto)
+        shareParams.ssdkSetupCopyParams(byText: textWithUrl, images: nil, url:  URL(string: img!), type: SSDKContentType.text)
+        shareParams.ssdkSetupSinaWeiboShareParams(byText: textWithUrl, title: textWithUrl, image:nil, url: URL(string:linkUrl), latitude: 0.0, longitude: 0.0, objectID: "", type: SSDKContentType.text)
         
         shareParams.ssdkSetupSMSParams(byText: textWithUrl, title: textWithUrl, images: nil, attachments: nil, recipients: nil, type: SSDKContentType.text)
         

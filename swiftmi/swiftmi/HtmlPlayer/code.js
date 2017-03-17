@@ -3,12 +3,16 @@
 ;
 (function () {
 
- moment.lang("zh-cn");
- template.helper('Date', Date);
- template.helper('moment', moment);
+    moment.lang("zh-cn");
+    template.helper('Date', Date);
+    template.helper('moment', moment);
 
-    var converter1 = Markdown.getSanitizingConverter();
-    template.helper("md", converter1);
+    marked.setOptions({
+        highlight: function (code) {
+            return hljs.highlightAuto(code).value;
+        }
+    });
+    template.helper("marked", marked);
 
     var article = {
         isNight: 0,
@@ -20,15 +24,15 @@
             if (!art.code.createTime) {
                 art.code.createTime = parseInt((new Date()).getTime() / 1000);
             }
-
             var con = template("content-tmpl", art);
+
             $("#content").html(con);
-            hljs.initHighlighting();
- 
- if(window.githubWidget){
- window.githubWidget();
- }
-  
+            // hljs.initHighlighting();
+
+            if (window.githubWidget) {
+                window.githubWidget();
+            }
+
             window.location.href = "html://contentready";
 
             return 1;
@@ -51,9 +55,9 @@
             }
             return 1;
         },
-        addComment:function(comment){
-            comment.index=$("#replies").find("dl").length;
-            var con = template("comment-tmpl",{comment:comment});
+        addComment: function (comment) {
+            comment.index = $("#replies").find("dl").length;
+            var con = template("comment-tmpl", { comment: comment });
             $("#replies").append(con);
 
             $(document).scrollTop($(document).height());
