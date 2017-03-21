@@ -50,10 +50,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 switch(platformType) {
                     
                  case SSDKPlatformType.typeSinaWeibo:
-                    appInfo?.ssdkSetupSinaWeibo(byAppKey: "3314374337", appSecret: "988b7cb3d34a994aa758b80e5097c3cb", redirectUri: "https://api.weibo.com/oauth2/default.html", authType: SSDKAuthTypeBoth)
+                    appInfo?.ssdkSetupSinaWeibo(byAppKey: "3314374338", appSecret: "988b7cb3d34a994aa758b80e5097c3cb", redirectUri: "https://api.weibo.com/oauth2/default.html", authType: SSDKAuthTypeBoth)
                     
                  case SSDKPlatformType.typeWechat:
-                    appInfo?.ssdkSetupWeChat(byAppId: "wxaae8ddda9c357128", appSecret: "20dfc209d79def9c19bbc640a85ead2a")
+                    appInfo?.ssdkSetupWeChat(byAppId: "wxaae8ddda9c357129", appSecret: "20dfc209d79def9c19bbc640a85ead2a")
                     
                 default:
                     break;
