@@ -77,8 +77,7 @@ class ArticleTableViewController: UITableViewController {
             }
             
             if res.result.isFailure {
-                let alert = UIAlertView(title: "网络异常", message: "请检查网络设置", delegate: nil, cancelButtonTitle: "确定")
-                alert.show()
+                Utility.showMessage(self, title: "网络异常", message: "请检查网络设置")
                 return
             }
              

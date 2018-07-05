@@ -34,7 +34,7 @@ class PostTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     //   self.view.backgroundColor = UIColor.greenColor()
+     //   self.view.backgroundColor = UIColor.green
          self.tableView.estimatedRowHeight = 120;
         self.tableView.rowHeight = UITableViewAutomaticDimension
        
@@ -114,7 +114,7 @@ class PostTableViewController: UITableViewController {
         // Configure the cell...
         cell.selectionStyle = .none;
         cell.updateConstraintsIfNeeded()
-        // cell.contentView.backgroundColor = UIColor.grayColor()
+        // cell.contentView.backgroundColor = UIColor.gray
 
        // cell.selectedBackgroundView = cell.containerView
         
@@ -188,8 +188,7 @@ class PostTableViewController: UITableViewController {
                 self.tableView.footerEndRefreshing()
             }
             if closureResponse.result.isFailure {
-                let alert = UIAlertView(title: "网络异常", message: "请检查网络设置", delegate: nil, cancelButtonTitle: "确定")
-                alert.show()
+                Utility.showMessage(self, title: "网络异常", message: "请检查网络设置")
                 return
             }
             

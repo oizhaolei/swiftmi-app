@@ -35,10 +35,6 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
         center.addObserver(self, selector: #selector(PostDetailController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         center.addObserver(self, selector: #selector(PostDetailController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         //center.addObserver(self, selector:"keyboardWillChangeFrame:", name:UIKeyboardWillChangeFrameNotification,object:nil)
-    
-      
-
-        
        
         self.setViews()
         
@@ -71,7 +67,7 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
         self.userActivity?.invalidate()
     }
     
-    func keyboardWillShow(_ notification: Notification) {
+    @objc func keyboardWillShow(_ notification: Notification) {
         let info:NSDictionary = (notification as NSNotification).userInfo! as NSDictionary
        
         
@@ -103,7 +99,7 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
             }, completion: nil)
     }
     
-    func keyboardWillHide(_ notification: Notification) {
+    @objc func keyboardWillHide(_ notification: Notification) {
         let info:NSDictionary = (notification as NSNotification).userInfo! as NSDictionary
         
         
@@ -156,8 +152,7 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
             
             if closureResponse.result.isFailure {
                 
-                let alert = UIAlertView(title: "网络异常", message: "请检查网络设置", delegate: nil, cancelButtonTitle: "确定")
-                alert.show()
+                Utility.showMessage(self, title: "网络异常", message: "请检查网络设置")
                 
             }
             else {
@@ -352,7 +347,7 @@ class PostDetailController: UIViewController,UIScrollViewDelegate,UIWebViewDeleg
             let img = self.webView.stringByEvaluatingJavaScript(from: "article.getShareImage()")
         
         
-            Utility.share(title, desc: desc, imgUrl: img, linkUrl: url)
+            Utility.share(self, title: title, desc: desc, imgUrl: img, linkUrl: url)
         }
     }
     

@@ -124,7 +124,7 @@ class MyController: UITableViewController {
         else if (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 0 {
             
             let url = URL(string: "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=993402332")
-            UIApplication.shared.openURL(url!)
+            UIApplication.shared.open(url!)
             //self.logout()
             /*
             var webViewController:WebViewController = Utility.GetViewController("webViewController")

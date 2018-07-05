@@ -68,14 +68,10 @@ enum Router: URLRequestConvertible {
         switch self {
         case .topicComment:
             return ServiceApi.getTopicCommentUrl()
-        
         case .topicCreate:
             return ServiceApi.getCreateTopicUrl()
-            
         case .topicDetail(let topicId):
-            
             return ServiceApi.getTopicDetail(topicId)
-            
         case .topicList(let maxId,let count):
             return ServiceApi.getTopicUrl(maxId,count:count)
         case .codeList(let maxId,let count):

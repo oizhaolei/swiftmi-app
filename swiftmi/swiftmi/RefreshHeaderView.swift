@@ -8,21 +8,23 @@
 
 import UIKit
 class RefreshHeaderView: RefreshBaseView {
+    
     class func footer()->RefreshHeaderView{
-        let footer:RefreshHeaderView  = RefreshHeaderView(frame: CGRect(x: 0, y: 0,   width: UIScreen.main.bounds.width,  height: CGFloat(RefreshViewHeight)))
+        let footer:RefreshHeaderView  = RefreshHeaderView(frame:
+            CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: CGFloat(RefreshViewHeight)))
         return footer
     }
     
     // 最后的更新时间
     var lastUpdateTime:Date = Date(){
-    willSet{
+        willSet{
         
-    }
-    didSet{
-        UserDefaults.standard.set(lastUpdateTime, forKey: RefreshHeaderTimeKey)
-        UserDefaults.standard.synchronize()
-        self.updateTimeLabel()
-    }
+        }
+        didSet{
+            UserDefaults.standard.setValue(lastUpdateTime, forKey: RefreshHeaderTimeKey)
+            UserDefaults.standard.synchronize()
+            self.updateTimeLabel()
+        }
     }
     
     // 最后的更新时间lable
@@ -35,18 +37,18 @@ class RefreshHeaderView: RefreshBaseView {
         lastUpdateTimeLabel.font = UIFont.boldSystemFont(ofSize: 12)
         lastUpdateTimeLabel.textColor = RefreshLabelTextColor
         lastUpdateTimeLabel.backgroundColor = UIColor.clear
-        lastUpdateTimeLabel.textAlignment = NSTextAlignment.center
+        lastUpdateTimeLabel.textAlignment = .center
         self.addSubview(lastUpdateTimeLabel);
         
-        if  (UserDefaults.standard.object(forKey: RefreshHeaderTimeKey) == nil)  {
-            self.lastUpdateTime = Date()
+        if let date = UserDefaults.standard.object(forKey: RefreshHeaderTimeKey) as? Date {
+            self.lastUpdateTime = date
         } else {
-          self.lastUpdateTime = UserDefaults.standard.object(forKey: RefreshHeaderTimeKey) as! Date
+            self.lastUpdateTime = Date()
         }
         self.updateTimeLabel()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -63,10 +65,10 @@ class RefreshHeaderView: RefreshBaseView {
         let lastUpdateX:CGFloat = 0
         let lastUpdateHeight:CGFloat = statusHeight
         let lastUpdateWidth:CGFloat = statusWidth
-        self.lastUpdateTimeLabel.frame = CGRect(x: lastUpdateX, y: lastUpdateY, width: lastUpdateWidth, height: lastUpdateHeight);
+        self.lastUpdateTimeLabel.frame = CGRect(x: lastUpdateX, y: lastUpdateY, width: lastUpdateWidth, height: lastUpdateHeight)
     }
     
-    override func willMove(toSuperview newSuperview: UIView!) {
+    override func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
          // 设置自己的位置和尺寸
         var rect:CGRect = self.frame
@@ -76,38 +78,31 @@ class RefreshHeaderView: RefreshBaseView {
     
     func updateTimeLabel(){
         //更新时间字符串
-       ///let calendar:NSCalendar = NSCalendar.currentCalendar()
+//        let calendar = Calendar.current
+//        let components: Set<Calendar.Component> = [.year, .month, .day, .hour, .minute]
         
+//        let cmp1 = calendar.dateComponents(components, from: lastUpdateTime)
+//        let cmp2 = calendar.dateComponents(components, from: Date())
         
-        //let unitFlags:NSCalendarUnit = [NSCalendarUnit.Year,NSCalendarUnit.Month,NSCalendarUnit.Day, NSCalendarUnit.Hour,NSCalendarUnit.Minute]
-        
-       
-       // let cmp1:NSDateComponents = calendar.components(unitFlags, fromDate:lastUpdateTime)
-        //let cmp2:NSDateComponents = calendar.components(unitFlags, fromDate: NSDate())
-        let formatter:DateFormatter = DateFormatter()
-        
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm"
-        let time:String = formatter.string(from: self.lastUpdateTime)
-        self.lastUpdateTimeLabel.text = "刷新时间:"+time
-        
+        let time:String = formatter.string(from: lastUpdateTime)
+        self.lastUpdateTimeLabel.text = "最后刷新时间:"+time
     }
     
     //监听UIScrollView的contentOffset属性
-    override  func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        
         if (!self.isUserInteractionEnabled || self.isHidden){
             return
         }
-        if (self.State == RefreshState.refreshing) {
+        if (self.state == RefreshState.refreshing) {
             return
         }
-        if RefreshContentOffset == keyPath {
+        if RefreshContentOffset == keyPath{
             self.adjustStateWithContentOffset()
         }
     }
-    
-   
-    
-   
     
     //调整状态
     func adjustStateWithContentOffset()
@@ -119,32 +114,32 @@ class RefreshHeaderView: RefreshBaseView {
         }
         if self.scrollView.isDragging{
             let normal2pullingOffsetY:CGFloat = happenOffsetY - self.frame.size.height
-            if  self.State == RefreshState.normal && currentOffsetY < normal2pullingOffsetY{
-                self.State = RefreshState.pulling
-            }else if self.State == RefreshState.pulling && currentOffsetY >= normal2pullingOffsetY{
-                self.State = RefreshState.normal
+            if  self.state == RefreshState.normal && currentOffsetY < normal2pullingOffsetY{
+                self.state = RefreshState.pulling
+            }else if self.state == RefreshState.pulling && currentOffsetY >= normal2pullingOffsetY{
+                self.state = RefreshState.normal
             }
             
-        } else if self.State == RefreshState.pulling {
-            self.State = RefreshState.refreshing
+        } else if self.state == RefreshState.pulling {
+            self.state = RefreshState.refreshing
         }
     }
     
     //设置状态
-    override  var State:RefreshState {
+    override  var state:RefreshState {
     willSet {
-        if  State == newValue{
-            return;
+        if state == newValue{
+            return
         }
-        oldState = State
-        setState(newValue)
+        oldState = state
+        self.setState(newValue: newValue)
     }
     didSet{
-        switch State{
+        switch state{
         case .normal:
             self.statusLabel.text = RefreshHeaderPullToRefresh
             if RefreshState.refreshing == oldState {
-                self.arrowImage.transform = CGAffineTransform.identity
+                self.arrowImage.transform = .identity
                 self.lastUpdateTime = Date()
                 UIView.animate(withDuration: RefreshSlowAnimationDuration, animations: {
                     var contentInset:UIEdgeInsets = self.scrollView.contentInset
@@ -154,14 +149,14 @@ class RefreshHeaderView: RefreshBaseView {
                 
             }else {
                 UIView.animate(withDuration: RefreshSlowAnimationDuration, animations: {
-                     self.arrowImage.transform = CGAffineTransform.identity
+                     self.arrowImage.transform = .identity
                     })
             }
             break
         case .pulling:
             self.statusLabel.text = RefreshHeaderReleaseToRefresh
             UIView.animate(withDuration: RefreshSlowAnimationDuration, animations: {
-                 self.arrowImage.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI ))
+                 self.arrowImage.transform.rotated(by: .pi)
                 })
             break
         case .refreshing:
@@ -184,8 +179,8 @@ class RefreshHeaderView: RefreshBaseView {
     }
     }
     
-    func addState(_ state:RefreshState){
-        self.State = state
+    func addState(state:RefreshState){
+        self.state = state
     }
 }
     

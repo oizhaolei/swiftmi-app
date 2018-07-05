@@ -6,7 +6,9 @@ target 'swiftmi' do
   use_frameworks!
 
   # Pods for swiftmi
-  	pod 'SwiftyJSON', :git => 'https://github.com/IBM-Swift/SwiftyJSON.git' , :tag => '14.2.0'
+  pod 'SwiftyJSON', :git => 'https://github.com/IBM-Swift/SwiftyJSON.git' , :tag => '14.2.0'
+  pod 'Kingfisher', '~> 4.0'
+  pod 'Alamofire', '~> 4.7'
 
   target 'swiftmiTests' do
     inherit! :search_paths

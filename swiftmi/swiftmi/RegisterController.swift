@@ -39,16 +39,16 @@ class RegisterController: UIViewController {
         
         
         if username.text!.isEmpty {
-            Utility.showMessage("用户名不能为空")
+            Utility.showMessage(self, message:"用户名不能为空")
             return
         }
         if password.text!.isEmpty || (password.text! as NSString).length<6 {
-            Utility.showMessage("密码不能为空且长度大于6位数")
+            Utility.showMessage(self, message:"密码不能为空且长度大于6位数")
             return
         }
         
         if email.text!.isEmpty {
-            Utility.showMessage("email不能为空")
+            Utility.showMessage(self, message:"email不能为空")
             return
         }
         
@@ -70,8 +70,7 @@ class RegisterController: UIViewController {
             
             if closureResponse.result.isFailure {
                 
-                let alert = UIAlertView(title: "网络异常", message: "请检查网络设置", delegate: nil, cancelButtonTitle: "确定")
-                alert.show()
+                Utility.showMessage(self, title: "网络异常", message: "请检查网络设置")
                 return
             }
             
@@ -105,8 +104,7 @@ class RegisterController: UIViewController {
             } else {
                 
                 let errMsg = result["msg"].stringValue
-                let alert = UIAlertView(title: "登录失败", message: "\(errMsg)", delegate: nil, cancelButtonTitle: "确定")
-                alert.show()
+                Utility.showMessage(self, title: "登录失败", message: "\(errMsg)")
             }
         }
         

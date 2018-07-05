@@ -41,7 +41,7 @@ class RefreshBaseView: UIView {
     // 交给子类去实现 和 调用
     var  oldState:RefreshState?
     
-    var State:RefreshState = RefreshState.normal{
+    var state:RefreshState = RefreshState.normal{
     willSet{
     }
     didSet{
@@ -50,14 +50,14 @@ class RefreshBaseView: UIView {
     
     }
     
-    func setState(_ newValue:RefreshState){
+    func setState(newValue:RefreshState){
         
         
-        if self.State != RefreshState.refreshing {
+        if self.state != RefreshState.refreshing {
             
             scrollViewOriginalInset = self.scrollView.contentInset;
         }
-        if self.State == newValue {
+        if self.state == newValue {
             return
         }
         switch newValue {
@@ -92,11 +92,11 @@ class RefreshBaseView: UIView {
         statusLabel.font = UIFont.boldSystemFont(ofSize: 13)
         statusLabel.textColor = RefreshLabelTextColor
         statusLabel.backgroundColor =  UIColor.clear
-        statusLabel.textAlignment = NSTextAlignment.center
+        statusLabel.textAlignment = .center
         self.addSubview(statusLabel)
         //箭头图片
-        arrowImage = UIImageView(image: UIImage(named: "arrow_up"))
-        arrowImage.autoresizingMask = [UIViewAutoresizing.flexibleLeftMargin, UIViewAutoresizing.flexibleRightMargin]
+        arrowImage = UIImageView(image: UIImage(named: "arrow.png"))
+        arrowImage.autoresizingMask = [.flexibleLeftMargin, .flexibleRightMargin]
         self.addSubview(arrowImage)
         //状态标签
         activityView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
@@ -107,16 +107,13 @@ class RefreshBaseView: UIView {
         self.autoresizingMask = UIViewAutoresizing.flexibleWidth
         self.backgroundColor = UIColor.clear
         //设置默认状态
-        self.State = RefreshState.normal;
+        self.state = RefreshState.normal
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-   
-    
-    
     override func layoutSubviews() {
         super.layoutSubviews()
          //箭头
@@ -126,8 +123,7 @@ class RefreshBaseView: UIView {
         self.activityView.center = self.arrowImage.center
     }
     
-    
-    override func willMove(toSuperview newSuperview: UIView!) {
+    override func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
         // 旧的父控件
          
@@ -136,43 +132,43 @@ class RefreshBaseView: UIView {
             
             }
         // 新的父控件
-        if (newSuperview != nil) {
-            newSuperview.addObserver(self, forKeyPath: RefreshContentOffset, options: NSKeyValueObservingOptions.new, context: nil)
+        if let newSuperview = newSuperview as? UIScrollView {
+            newSuperview.addObserver(self, forKeyPath: RefreshContentOffset, options: .new, context: nil)
             var rect:CGRect = self.frame
             // 设置宽度   位置
             rect.size.width = newSuperview.frame.size.width
             rect.origin.x = 0
-            self.frame = frame;
+            self.frame = frame
             //UIScrollView
-            scrollView = newSuperview as! UIScrollView
-            scrollViewOriginalInset = scrollView.contentInset;
+            scrollView = newSuperview
+            scrollViewOriginalInset = scrollView.contentInset
         }
     }
     
     //显示到屏幕上
     override func draw(_ rect: CGRect) {
         superview?.draw(rect);
-        if self.State == RefreshState.willRefreshing {
-            self.State = RefreshState.refreshing
+        if self.state == RefreshState.willRefreshing {
+            self.state = RefreshState.refreshing
         }
     }
     
     // 刷新相关
     // 是否正在刷新
     func isRefreshing()->Bool{
-        return RefreshState.refreshing == self.State;
+        return RefreshState.refreshing == self.state;
     }
     
     // 开始刷新
     func beginRefreshing(){
-        // self.State = RefreshState.Refreshing;
+        // self.state = RefreshState.refreshing;
         
     
         if (self.window != nil) {
-            self.State = RefreshState.refreshing;
+            self.state = RefreshState.refreshing;
         } else {
             //不能调用set方法
-            State = RefreshState.willRefreshing;
+           state = RefreshState.willRefreshing;
             super.setNeedsDisplay()
         }
         
@@ -180,12 +176,10 @@ class RefreshBaseView: UIView {
     
     //结束刷新
     func endRefreshing(){
-        let delayInSeconds:Double = 0.3
-        let popTime:DispatchTime = DispatchTime.now() + Double(Int64(delayInSeconds)) / Double(NSEC_PER_SEC);
-        
-        DispatchQueue.main.asyncAfter(deadline: popTime, execute: {
-            self.State = RefreshState.normal;
-            })
+        let popTime = DispatchTime.now() + 0.3
+        DispatchQueue.main.asyncAfter(deadline: popTime) {
+            self.state = RefreshState.normal;
+        }
     }
 }
 

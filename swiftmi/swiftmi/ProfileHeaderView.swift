@@ -58,7 +58,7 @@ class ProfileHeaderView: UIView,UIGestureRecognizerDelegate {
 
     }
     
-    func tapLogin(_ recognizer:UITapGestureRecognizer) {
+    @objc func tapLogin(_ recognizer:UITapGestureRecognizer) {
         
         if self.tapLoginCallBack != nil && hasLogin == false {
             self.tapLoginCallBack!()
@@ -77,7 +77,7 @@ class ProfileHeaderView: UIView,UIGestureRecognizerDelegate {
     func setData(_ user:Users){
 
       
-        avatar.kf_setImage(with: URL(string: user.avatar!)!, placeholder: nil)
+        avatar.kf.setImage(with: URL(string: user.avatar!)!, placeholder: nil)
        
         self.follower.text = "\(user.follower_count)"
         self.following.text = "\(user.following_count)"

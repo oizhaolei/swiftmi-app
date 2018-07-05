@@ -211,7 +211,7 @@ class CodeDetailViewController: UIViewController,UIWebViewDelegate {
         }
         
         
-        Utility.share(title, desc: desc, imgUrl: preview, linkUrl: url)
+        Utility.share(self, title: title, desc: desc, imgUrl: preview, linkUrl: url)
         
     }
     

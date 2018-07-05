@@ -172,7 +172,7 @@ class ArticleDetailController: UIViewController,UIWebViewDelegate {
         let url = ServiceApi.getArticlesShareDetail(self.articleId!)
         let desc = data["desc"].stringValue
         let preview = data["imageUrl"].stringValue
-        Utility.share(title, desc: desc, imgUrl: preview, linkUrl: url)
+        Utility.share(self, title: title, desc: desc, imgUrl: preview, linkUrl: url)
         
     }
     

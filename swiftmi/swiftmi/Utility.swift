@@ -28,14 +28,24 @@ class Utility: NSObject {
         return dateString
     }
     
-    class func showMessage(_ msg:String) {
-        
-        let alert = UIAlertView(title: "提醒", message: msg, delegate: nil, cancelButtonTitle: "确定")
-        alert.show()
+    class func showMessage(_ parent:UIViewController, message:String) {
+        let title = "提醒"
+        Utility.showMessage(parent, title: title, message:message)
+    }
+    
+    class func showMessage(_ parent:UIViewController, title:String, message:String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let okAction = UIAlertAction(title: "确定", style: UIAlertActionStyle.default) {
+            (result : UIAlertAction) -> Void in
+            print("OK")
+        }
+        alertController.addAction(okAction)
+
+        parent.present(alertController, animated: true, completion: nil)
     }
     
     //SDKShare Show
-    final class func share(_ title:String,desc:String,imgUrl:String?,linkUrl:String) {
+    final class func share(_ parent:UIViewController,title:String,desc:String,imgUrl:String?,linkUrl:String) {
         
         var img = imgUrl
         if img == nil {
@@ -66,16 +76,13 @@ class Utility: NSObject {
         ShareSDK.showShareActionSheet(nil, items: items, shareParams: shareParams) { (state, type, userData, contentEntity, error, end:Bool) -> Void in
             switch(state) {
             case SSDKResponseState.success:
-                let alert = UIAlertView(title: "提示", message:"分享成功", delegate:self, cancelButtonTitle: "ok")
-                alert.show()
+                Utility.showMessage(parent, title: "提示", message:"分享成功")
             case SSDKResponseState.fail:
-                let alert = UIAlertView(title: "提示", message:"分享失败：\(error)", delegate:self, cancelButtonTitle: "ok")
-                alert.show()
+                Utility.showMessage(parent, title: "提示", message:"分享失败：\(String(describing: error))")
 
             default:
                 break;
             }
-            
         }
         
      }

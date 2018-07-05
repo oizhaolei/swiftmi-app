@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().isTranslucent = true
         UINavigationBar.appearance().barStyle = UIBarStyle.black
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white]
+        //UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white]
          
         
         ShareSDK.registerApp("74dcfcc8d1d3", activePlatforms: [SSDKPlatformType.typeCopy.rawValue, SSDKPlatformType.typeSinaWeibo.rawValue,SSDKPlatformType.typeWechat.rawValue,SSDKPlatformType.typeSMS.rawValue], onImport: {
@@ -120,17 +120,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         
                         let postViewController:PostDetailController = Utility.GetViewController("PostDetailController")
                         
-                         let startIndex = uniqueIdentifier.characters.index(uniqueIdentifier.startIndex, offsetBy: 8)
+                         let startIndex = uniqueIdentifier.index(uniqueIdentifier.startIndex, offsetBy: 8)
                         
-                         postViewController.postId = Int(uniqueIdentifier.substring(from: startIndex))
+                         postViewController.postId = Int(uniqueIdentifier[startIndex...])
                         nav?.pushViewController(postViewController, animated: true)
                     }
                     else if uniqueIdentifier.hasPrefix("code-") {
                         
                         let codeDetail:CodeDetailViewController = Utility.GetViewController("CodeDetailViewController")
-                        let startIndex = uniqueIdentifier.characters.index(uniqueIdentifier.startIndex, offsetBy: 5)
+                        let startIndex = uniqueIdentifier.index(uniqueIdentifier.startIndex, offsetBy: 5)
                         
-                        codeDetail.codeId = Int(uniqueIdentifier.substring(from: startIndex))
+                        codeDetail.codeId = Int(uniqueIdentifier[startIndex...])
                         nav?.pushViewController(codeDetail, animated: true)
                     }
                 

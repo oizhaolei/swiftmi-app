@@ -34,8 +34,7 @@ class LoginController: UIViewController {
     }
 
     fileprivate func showMsg(_ msg:String) {
-        let alert = UIAlertView(title: "提醒", message: msg, delegate: nil, cancelButtonTitle: "确定")
-        alert.show()
+        Utility.showMessage(self, title:"提醒", message: msg)
     }
     
     fileprivate func login() {
@@ -66,8 +65,7 @@ class LoginController: UIViewController {
             self.loginBtn.setTitle("登录", for: UIControlState.normal)
             if closureResponse.result.isFailure {
                 
-                let alert = UIAlertView(title: "网络异常", message: "请检查网络设置", delegate: nil, cancelButtonTitle: "确定")
-                alert.show()
+                Utility.showMessage(self, title:"网络异常", message:"请检查网络设置")
                 return
             }
             
@@ -82,7 +80,7 @@ class LoginController: UIViewController {
                 
                 let token = user["token"].stringValue
                 
-                KeychainWrapper.setString(token, forKey: "token")
+                KeychainWrapper.setString(token, forKey:"token")
                 Router.token  = token
               
                 let dalUser = UsersDal()
@@ -95,8 +93,7 @@ class LoginController: UIViewController {
             } else {
                 
                 let errMsg = result["msg"].stringValue
-                let alert = UIAlertView(title: "登录失败", message: "\(errMsg)", delegate: nil, cancelButtonTitle: "确定")
-                alert.show()
+                Utility.showMessage(self, title: "登录失败", message:"\(errMsg)")
             }
         }
         

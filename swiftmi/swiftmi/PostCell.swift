@@ -29,7 +29,7 @@ class PostCell: UITableViewCell {
         containerView.layer.borderWidth = 1
         containerView.layer.borderColor = UIColor(red: 0.85, green: 0.85, blue:0.85, alpha: 0.9).cgColor
         containerView.layer.masksToBounds = true
-        //self.backgroundColor = UIColor.greenColor()
+        //self.backgroundColor = UIColor.green
     
     }
 

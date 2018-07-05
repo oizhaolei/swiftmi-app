@@ -179,7 +179,7 @@ class CoreDataManager: NSObject {
     }
     
     
-    func contextWillSave(_ notification:Notification){
+    @objc func contextWillSave(_ notification:Notification){
         let context : NSManagedObjectContext! = notification.object as! NSManagedObjectContext
         let insertedObjects:NSSet = context.insertedObjects as NSSet;
         

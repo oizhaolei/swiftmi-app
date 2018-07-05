@@ -30,13 +30,13 @@ class AddTopicController: UIViewController {
         let content = self.contentField.text
         
         if title!.isEmpty {
-            Utility.showMessage("标题不能为空!")
+            Utility.showMessage(self, message:"标题不能为空!")
             return
             
         }
         
         if (content?.isEmpty)! {
-            Utility.showMessage("内容不能为空!")
+            Utility.showMessage(self, message:"内容不能为空!")
             return
             
         }
@@ -58,8 +58,7 @@ class AddTopicController: UIViewController {
                  btn.isEnabled = true 
                 if closureResponse.result.isFailure {
                     
-                    let alert = UIAlertView(title: "网络异常", message: "请检查网络设置", delegate: nil, cancelButtonTitle: "确定")
-                    alert.show()
+                    Utility.showMessage(self, message:"请检查网络设置")
                     return
                 }
                 
@@ -77,7 +76,7 @@ class AddTopicController: UIViewController {
                 } else {
                     
                     let errMsg = result["msg"].stringValue
-                    Utility.showMessage("发布失败!:\(errMsg)")
+                    Utility.showMessage(self, message:"发布失败!:\(errMsg)")
                 }
             }
         }
@@ -113,7 +112,7 @@ class AddTopicController: UIViewController {
         
     }
     
-    func keyboardWillShow(_ notification: Notification) {
+    @objc func keyboardWillShow(_ notification: Notification) {
         let info:NSDictionary = (notification as NSNotification).userInfo! as NSDictionary
         
         
@@ -153,7 +152,7 @@ class AddTopicController: UIViewController {
             }, completion: nil)
     }
 
-    func keyboardWillHide(_ notification: Notification) {
+    @objc func keyboardWillHide(_ notification: Notification) {
         let info:NSDictionary = (notification as NSNotification).userInfo! as NSDictionary
         
         
